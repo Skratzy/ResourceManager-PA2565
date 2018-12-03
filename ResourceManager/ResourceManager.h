@@ -1,6 +1,9 @@
 #pragma once
 
-#include <map>
+#include <map> // Map
+#include <vector> // Vector
+#include <functional> // Hash
+#include <string> // String
 
 #include "Resource.h"
 #include "FormatLoader.h"
