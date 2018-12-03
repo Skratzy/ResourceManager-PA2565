@@ -25,5 +25,9 @@ public:
 		m_refCount--;
 	}
 
+	const unsigned int getSize() const {
+		return m_size;
+	}
+
 };
 
