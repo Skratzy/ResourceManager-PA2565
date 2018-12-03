@@ -1,4 +1,5 @@
 #include "ResourceManager.h"
+#include "Defines.h"
 
 
 
@@ -20,7 +21,7 @@ void ResourceManager::decrementReference(long key)
 {
 	if (m_resources.at(key)->derefer() == 0)
 	{
-		delete m_resources.at(key);
+		RM_FREE(m_resources.at(key));
 		m_resources.erase(key);
-	}
+	}	
 }
