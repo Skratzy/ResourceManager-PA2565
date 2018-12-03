@@ -13,14 +13,15 @@ class ResourceManager
 private:
 	std::map<long, Resource*> m_resources;
 	std::vector<FormatLoader*> m_formatLoaders;
-	unsigned int memUsage;
+	unsigned int m_capacity;
+	unsigned int m_memUsage;
 	std::hash<std::string> m_pathHasher;
 
 private:
 
 
 public:
-	ResourceManager();
+	ResourceManager(unsigned int capacity = 256);
 	~ResourceManager();
 
 	Resource* load(const std::string& path);

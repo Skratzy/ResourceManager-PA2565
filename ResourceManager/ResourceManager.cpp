@@ -2,8 +2,11 @@
 
 #include <experimental/filesystem>
 
-ResourceManager::ResourceManager()
+
+ResourceManager::ResourceManager(unsigned int capacity)
 {
+	m_capacity = capacity;
+	m_memUsage = 0;
 }
 
 
@@ -35,6 +38,8 @@ Resource * ResourceManager::load(const std::string & path)
 			if (FL->extensionSupported(ext)) {
 				// Load the resource and return it
 				res = FL->load(path);
+				// Update memory usage
+				m_memUsage += res->getSize();
 				res->refer();
 				// Add the loaded resource to the map
 				m_resources.emplace(hashedPath, res);
