@@ -12,7 +12,7 @@ private:
 public:
 	Resource(const long GUID)
 		: m_GUID(GUID) {}
-	virtual ~Resource();
+	virtual ~Resource() {}
 
 	const long getGUID() const {
 		return m_GUID;

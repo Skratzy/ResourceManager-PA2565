@@ -11,7 +11,7 @@ protected:
 	std::vector<std::string> m_supportedExtensions;
 
 public:
-	virtual ~FormatLoader();
+	virtual ~FormatLoader() {}
 
 	virtual Resource* load(const std::string& path) = 0;
 
