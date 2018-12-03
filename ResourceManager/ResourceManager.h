@@ -9,10 +9,11 @@ class ResourceManager
 {
 private:
 	std::map<long, Resource*> m_resources;
-	unsigned int memUsage;
+	unsigned int m_capacity;
+	unsigned int m_memUsage;
 
 public:
-	ResourceManager();
+	ResourceManager(unsigned int capacity = 256);
 	~ResourceManager();
 
 	Resource* load(const std::string& path);
