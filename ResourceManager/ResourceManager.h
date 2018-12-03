@@ -16,5 +16,6 @@ public:
 	~ResourceManager();
 
 	Resource* load(const std::string& path);
+	void decrementReference(long key);
 };
 
