@@ -2,7 +2,9 @@
 #include <iostream>
 #include <fstream>
 
+#include "PNGLoader.h"
 #include "Defines.h"
+#include <crtdbg.h>
 
 void unbufferedRead() {
 	std::ifstream fileStream;
@@ -33,7 +35,17 @@ void testHash() {
 	std::cout << "Path [" << apa2 << "]  ID [" << test(apa2) << "]." << std::endl;
 }
 
+void readImage() {
+	PNGLoader loader;
+	Resource* imageResource = loader.load("Assets/testImage.png", 0);
+	// Breakpoint and look at image
+	delete imageResource;
+}
+
 int main() {
+	_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
+
+	readImage();
 
 	getchar();
 	return 0;

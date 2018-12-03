@@ -37,7 +37,12 @@ Resource * ResourceManager::load(const std::string & path)
 			// Check if the format loader supports the extension
 			if (FL->extensionSupported(ext)) {
 				// Load the resource and return it
-				res = FL->load(path);
+					/*
+						OBS!!!
+						CONVERT FILEPATH TO GUID BELOW
+					*/
+				const long GUID_derived_from_filepath = 0;
+				res = FL->load(path, GUID_derived_from_filepath);
 				// Update memory usage
 				m_memUsage += res->getSize();
 				res->refer();

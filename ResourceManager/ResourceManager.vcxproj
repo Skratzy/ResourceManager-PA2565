@@ -115,12 +115,16 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="LodePNG.cpp" />
     <ClCompile Include="Main.cpp" />
+    <ClCompile Include="PNGLoader.cpp" />
     <ClCompile Include="ResourceManager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Defines.h" />
     <ClInclude Include="FormatLoader.h" />
+    <ClInclude Include="LodePNG.h" />
+    <ClInclude Include="PNGLoader.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="ResourceManager.h" />
   </ItemGroup>
