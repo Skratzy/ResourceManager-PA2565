@@ -9,10 +9,12 @@
 #define RM_FREE(s) free(s)
 /*
 	s: Debug message - to be printed
-	l: Severity level - higher => more sever
+	l: Severity level
+		0 -> print the message
+		1 -> print the message and abort
 */
 #define RM_DEBUG_MESSAGE(s, l) { \
 	switch(l) { \
-	case 0: std::cout << s << std::endl; break; \
+	case 0: std::cerr << s << std::endl; break; \
 	case 1: std::cerr << s; abort(); \
 }}
