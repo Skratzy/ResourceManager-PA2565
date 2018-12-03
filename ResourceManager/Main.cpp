@@ -2,6 +2,8 @@
 #include <iostream>
 #include <fstream>
 
+#include "Defines.h"
+
 void unbufferedRead() {
 	std::ifstream fileStream;
 	fileStream.rdbuf()->pubsetbuf(0, 0);
@@ -32,7 +34,6 @@ void testHash() {
 }
 
 int main() {
-
 
 	getchar();
 	return 0;
