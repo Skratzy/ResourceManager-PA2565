@@ -2,8 +2,12 @@
 #include <iostream>
 #include <fstream>
 
+#include "PNGLoader.h"
 
 int main() {
+	PNGLoader temp;
+	Resource* resource = temp.load("Assets/testImage.png", 0);
+
 	std::hash<std::string> test;
 	std::string apa("rootfolder/tex/monkeh.apa");
 	std::string apa2("rootfolder/tex/monkey.apa");
