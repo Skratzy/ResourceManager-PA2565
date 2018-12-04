@@ -16,11 +16,13 @@ public:
 		return m_GUID;
 	}
 
-	void refer() {
+	unsigned int refer() {
 		m_refCount++;
+		return m_refCount;
 	}
-	void derefer() {
+	unsigned int derefer() {
 		m_refCount--;
+		return m_refCount;
 	}
 
 	void setSize(int size) {

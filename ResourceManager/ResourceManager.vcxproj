@@ -125,6 +125,8 @@
     <ClInclude Include="FormatLoader.h" />
     <ClInclude Include="LodePNG.h" />
     <ClInclude Include="PNGLoader.h" />
+    <ClInclude Include="MyMesh.h" />
+    <ClInclude Include="OBJLoader.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="ResourceManager.h" />
   </ItemGroup>

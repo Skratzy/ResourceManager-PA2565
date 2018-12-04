@@ -56,4 +56,14 @@ Resource * ResourceManager::load(const std::string & path)
 	}
 
 	return res;
+	
+}
+
+void ResourceManager::decrementReference(long key)
+{
+	if (m_resources.at(key)->derefer() == 0)
+	{
+		RM_FREE(m_resources.at(key));
+		m_resources.erase(key);
+	}	
 }
