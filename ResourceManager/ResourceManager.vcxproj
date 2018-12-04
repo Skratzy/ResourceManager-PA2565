@@ -121,6 +121,7 @@
   <ItemGroup>
     <ClInclude Include="Defines.h" />
     <ClInclude Include="FormatLoader.h" />
+    <ClInclude Include="MyMesh.h" />
     <ClInclude Include="OBJLoader.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="ResourceManager.h" />

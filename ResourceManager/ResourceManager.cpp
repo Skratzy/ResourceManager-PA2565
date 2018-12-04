@@ -14,7 +14,7 @@ ResourceManager::~ResourceManager()
 
 Resource * ResourceManager::load(const std::string & path)
 {
-	return nullptr;
+	
 }
 
 void ResourceManager::decrementReference(long key)
