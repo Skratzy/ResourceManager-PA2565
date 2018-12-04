@@ -64,6 +64,7 @@ void ResourceManager::decrementReference(long key)
 	if (m_resources.at(key)->derefer() == 0)
 	{
 		RM_FREE(m_resources.at(key));
+		m_memUsage -= m_resources.at(key)->getSize();
 		m_resources.erase(key);
 	}	
 }
