@@ -2,9 +2,14 @@
 #include <iostream>
 #include <fstream>
 
-void unbufferedRead() {
+#include "PNGLoader.h"
+#include "Defines.h"
+#include <crtdbg.h>
+
+void read(bool buffered) {
 	std::ifstream fileStream;
-	fileStream.rdbuf()->pubsetbuf(0, 0);
+	if (!buffered)
+		fileStream.rdbuf()->pubsetbuf(0, 0);
 	fileStream.open("test.txt");
 
 	// get length of file:
@@ -15,9 +20,8 @@ void unbufferedRead() {
 	char* buffer = new char[length];
 
 	fileStream.read(buffer, length);
-	std::string data(buffer, length);
 
-	std::cout << data << std::endl;
+	delete[] buffer;
 }
 
 void testHash() {
@@ -31,8 +35,25 @@ void testHash() {
 	std::cout << "Path [" << apa2 << "]  ID [" << test(apa2) << "]." << std::endl;
 }
 
-int main() {
+void readImage() {
+	PNGLoader loader;
+	Resource* imageResource = loader.load("Assets/testImage.png", 0);
+	// Breakpoint and look at image
+	delete imageResource;
+}
 
+void bufferedUnbufferedTiming() {
+	auto start = std::chrono::high_resolution_clock::now();
+	read(true);
+	std::cout << std::chrono::duration_cast<std::chrono::nanoseconds>(std::chrono::high_resolution_clock::now() - start).count() << std::endl;
+
+	start = std::chrono::high_resolution_clock::now();
+	read(true);
+	std::cout << std::chrono::duration_cast<std::chrono::nanoseconds>(std::chrono::high_resolution_clock::now() - start).count() << std::endl;
+}
+
+int main() {
+	_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
 
 	getchar();
 	return 0;
