@@ -2,6 +2,7 @@
 #include "Defines.h"
 
 #include <experimental/filesystem>
+#include <new>
 
 
 ResourceManager::ResourceManager(unsigned int capacity)
@@ -66,4 +67,13 @@ void ResourceManager::decrementReference(long key)
 		RM_FREE(m_resources.at(key));
 		m_resources.erase(key);
 	}	
+}
+
+template <typename T>
+void ResourceManager::registerFormatLoader()
+{
+	// Allocating memory required for the format loader and initializing it using a placement new
+	FormatLoader* toRegister = new (RM_MALLOC(sizeof(T))) T();
+	// Put the new format loader in the vector
+	m_formatLoaders.emplace_back(toRegister);
 }

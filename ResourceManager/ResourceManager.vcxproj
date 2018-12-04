@@ -117,6 +117,7 @@
   <ItemGroup>
     <ClCompile Include="LodePNG.cpp" />
     <ClCompile Include="Main.cpp" />
+    <ClCompile Include="OBJLoader.cpp" />
     <ClCompile Include="PNGLoader.cpp" />
     <ClCompile Include="ResourceManager.cpp" />
   </ItemGroup>
