@@ -6,9 +6,10 @@
 #include "Defines.h"
 #include <crtdbg.h>
 
-void unbufferedRead() {
+void read(bool buffered) {
 	std::ifstream fileStream;
-	fileStream.rdbuf()->pubsetbuf(0, 0);
+	if (!buffered)
+		fileStream.rdbuf()->pubsetbuf(0, 0);
 	fileStream.open("test.txt");
 
 	// get length of file:
@@ -19,9 +20,8 @@ void unbufferedRead() {
 	char* buffer = new char[length];
 
 	fileStream.read(buffer, length);
-	std::string data(buffer, length);
 
-	std::cout << data << std::endl;
+	delete[] buffer;
 }
 
 void testHash() {
@@ -42,10 +42,18 @@ void readImage() {
 	delete imageResource;
 }
 
+void bufferedUnbufferedTiming() {
+	auto start = std::chrono::high_resolution_clock::now();
+	read(true);
+	std::cout << std::chrono::duration_cast<std::chrono::nanoseconds>(std::chrono::high_resolution_clock::now() - start).count() << std::endl;
+
+	start = std::chrono::high_resolution_clock::now();
+	read(true);
+	std::cout << std::chrono::duration_cast<std::chrono::nanoseconds>(std::chrono::high_resolution_clock::now() - start).count() << std::endl;
+}
+
 int main() {
 	_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
-
-	readImage();
 
 	getchar();
 	return 0;
