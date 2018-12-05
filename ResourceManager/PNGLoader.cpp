@@ -1,6 +1,7 @@
+#include <iostream>
+
 #include "PNGLoader.h"
 #include "LodePNG.h"
-#include <iostream>
 
 using namespace lodepng;
 using namespace std;

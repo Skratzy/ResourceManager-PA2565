@@ -1,5 +1,5 @@
-#ifndef OBJ_LOADER_HPP
-#define OBJ_LOADER_HPP
+#ifndef _RM_OBJ_LOADER_HPP
+#define _RM_OBJ_LOADER_HPP
 
 #include <vector>
 #include <string>
@@ -19,4 +19,4 @@ public:
 	virtual Resource* load(const std::string& path);
 };
 
-#endif
+#endif //_RM_OBJ_LOADER_HPP

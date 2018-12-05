@@ -1,21 +1,34 @@
+#include <experimental/filesystem>
+#include <mutex>
+
 #include "ResourceManager.h"
 #include "Defines.h"
 
-#include <experimental/filesystem>
-#include <new>
-#include <mutex>
 
-
-ResourceManager::ResourceManager(unsigned int capacity)
+ResourceManager::ResourceManager()
 {
-	m_capacity = capacity;
+	m_capacity = 0;
 	m_memUsage = 0;
+	m_initialized = false;
 }
 
 
 ResourceManager::~ResourceManager()
 {
+	for (auto FL : m_formatLoaders)
+		RM_DELETE(FL);
+	for (auto RES : m_resources)
+		RM_DELETE(RES.second);
 }
+
+
+void ResourceManager::init(const unsigned int capacity) {
+	if (!m_initialized) {
+		m_capacity = capacity;
+		m_initialized = true;
+	}
+}
+
 
 Resource * ResourceManager::load(const std::string & path)
 {
@@ -54,8 +67,6 @@ Resource * ResourceManager::load(const std::string & path)
 				// Load the resource and return it
 				res = FL->load(path, hashedPath);
 				// Update memory usage
-
-
 				m_memUsage += res->getSize();
 				if (m_memUsage > m_capacity) {
 					RM_DEBUG_MESSAGE("ResourceManager::load() - Memory usage exceeds the memory limit.", 0);
@@ -64,8 +75,6 @@ Resource * ResourceManager::load(const std::string & path)
 				res->refer();
 				// Add the loaded resource to the map
 				m_resources.emplace(hashedPath, res);
-
-
 				return res;
 			}
 		}
@@ -87,11 +96,8 @@ void ResourceManager::decrementReference(long key)
 	}	
 }
 
-template <typename T>
-void ResourceManager::registerFormatLoader()
+void ResourceManager::registerFormatLoader(FormatLoader* formatLoader)
 {
-	// Allocating memory required for the format loader and initializing it using a placement new
-	FormatLoader* toRegister = new (RM_MALLOC(sizeof(T))) T();
 	// Put the new format loader in the vector
-	m_formatLoaders.emplace_back(toRegister);
+	m_formatLoaders.emplace_back(formatLoader);
 }

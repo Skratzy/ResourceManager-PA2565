@@ -1,4 +1,5 @@
-#pragma once
+#ifndef _RM_FORMAT_LOADET_
+#define _RM_FORMAT_LOADET_
 
 #include <vector>
 #include <string>
@@ -23,3 +24,4 @@ public:
 	}
 };
 
+#endif //_RM_FORMAT_LOADET_

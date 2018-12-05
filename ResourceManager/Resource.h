@@ -1,4 +1,5 @@
-#pragma once
+#ifndef _RM_RESOURCE_
+#define _RM_RESOURCE_
 
 class Resource
 {
@@ -35,3 +36,4 @@ public:
 
 };
 
+#endif //_RM_RESOURCE_
