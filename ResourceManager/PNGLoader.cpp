@@ -20,7 +20,7 @@ Resource* PNGLoader::load(const std::string& filePath, const long GUID)
 		cout << "ERROR: " << error << lodepng_error_text(error)	<< " at filePath: " << filePath << endl;
 	}
 	else {
-		resource = new TextureResource(width, height, image, GUID);
+		resource = new TextureResource(width, height, image, GUID, true);
 	}
 
 	return resource;

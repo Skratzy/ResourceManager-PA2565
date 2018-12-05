@@ -31,7 +31,7 @@ Resource * JPGLoader::load(const std::string & path, const long GUID)
 		}
 
 		// Attach the formatted image to a textureresource
-		resource = new TextureResource(width, height, image, GUID);
+		resource = new TextureResource(width, height, image, GUID, false);
 	}
 
 	return resource;
