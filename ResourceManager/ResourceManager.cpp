@@ -3,6 +3,7 @@
 
 #include <experimental/filesystem>
 #include <new>
+#include <mutex>
 
 
 ResourceManager::ResourceManager(unsigned int capacity)
@@ -32,6 +33,18 @@ Resource * ResourceManager::load(const std::string & path)
 	}
 	// Else load it
 	else {
+		// Only one thread can create and load new resources to the resource manager
+		std::mutex m;
+		std::lock_guard<std::mutex> lock(m);
+		// Additional check if several threads tries to load the same asset it does
+		// not create the same resource more than once.
+		auto it = m_resources.find(hashedPath);
+		if (it != m_resources.end()) {
+			// Found the resource
+			res = it->second;
+			res->refer();
+			return res;
+		}		
 		std::string ext = fs::path(path).extension().generic_string();
 
 		// Find the format loader corresponding to the extension
@@ -41,6 +54,8 @@ Resource * ResourceManager::load(const std::string & path)
 				// Load the resource and return it
 				res = FL->load(path, hashedPath);
 				// Update memory usage
+
+
 				m_memUsage += res->getSize();
 				if (m_memUsage > m_capacity) {
 					RM_DEBUG_MESSAGE("ResourceManager::load() - Memory usage exceeds the memory limit.", 0);
@@ -49,6 +64,8 @@ Resource * ResourceManager::load(const std::string & path)
 				res->refer();
 				// Add the loaded resource to the map
 				m_resources.emplace(hashedPath, res);
+
+
 				return res;
 			}
 		}
