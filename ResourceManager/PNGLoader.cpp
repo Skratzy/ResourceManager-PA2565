@@ -1,3 +1,5 @@
+#include <iostream>
+
 #include "PNGLoader.h"
 #include "LodePNG.h"
 #include <iostream>

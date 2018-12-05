@@ -1,3 +1,5 @@
+#include <experimental/filesystem>
+
 #include "ResourceManager.h"
 #include "Defines.h"
 
@@ -5,17 +7,26 @@
 #include <new>
 #include "PNGLoader.h"
 
-
-ResourceManager::ResourceManager(unsigned int capacity)
+ResourceManager::ResourceManager()
 {
-	m_capacity = capacity;
+	m_capacity = 0;
 	m_memUsage = 0;
+	m_initialized = false;
 }
 
 
 ResourceManager::~ResourceManager()
 {
 }
+
+
+void ResourceManager::init(const unsigned int capacity) {
+	if (!m_initialized) {
+		m_capacity = capacity;
+		m_initialized = true;
+	}
+}
+
 
 Resource * ResourceManager::load(const std::string & path)
 {
@@ -71,11 +82,8 @@ void ResourceManager::decrementReference(long key)
 	}	
 }
 
-template <typename T>
-void ResourceManager::registerFormatLoader()
+void ResourceManager::registerFormatLoader(FormatLoader* formatLoader)
 {
-	// Allocating memory required for the format loader and initializing it using a placement new
-	FormatLoader* toRegister = new (RM_MALLOC(sizeof(T))) T();
 	// Put the new format loader in the vector
-	m_formatLoaders.emplace_back(toRegister);
+	m_formatLoaders.emplace_back(formatLoader);
 }

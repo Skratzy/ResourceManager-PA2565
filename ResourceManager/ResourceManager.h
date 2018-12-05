@@ -1,4 +1,5 @@
-#pragma once
+#ifndef _RM_RESOURCE_MANAGER_
+#define _RM_RESOURCE_MANAGER_
 
 #include <map> // Map
 #include <vector> // Vector
@@ -16,6 +17,7 @@ private:
 	unsigned int m_capacity;
 	unsigned int m_memUsage;
 	std::hash<std::string> m_pathHasher;
+	bool m_initialized;
 
 private:
 
@@ -30,16 +32,17 @@ public:
 	ResourceManager(ResourceManager const&)	 = delete;
 	void operator=(ResourceManager const&)	 = delete;
 
-	ResourceManager(unsigned int capacity = 256);
+	ResourceManager();
 	~ResourceManager();
 
+	void init(const unsigned int capacity);
 
 	Resource* load(const std::string& path);
 	void decrementReference(long key);
 
-	template <typename T>
-	void registerFormatLoader();
+	void registerFormatLoader(FormatLoader* formatLoader);
 
 	//void incrementReference(long key); SHOULDN'T BE NEEDED (done when loading already existing)
 };
 
+#endif //_RM_RESOURCE_MANAGER_

@@ -1,7 +1,10 @@
 #include <experimental/filesystem>
 #include <iostream>
 #include <fstream>
+#include <crtdbg.h>
 
+#include "ziplib/zip.h"
+#include "ResourceManager.h"
 #include "PNGLoader.h"
 #include "Defines.h"
 #include <crtdbg.h>
@@ -51,6 +54,26 @@ void bufferedUnbufferedTiming() {
 	start = std::chrono::high_resolution_clock::now();
 	read(true);
 	std::cout << std::chrono::duration_cast<std::chrono::nanoseconds>(std::chrono::high_resolution_clock::now() - start).count() << std::endl;
+}
+
+void readFileInZip(const char* zipPath, const char* filePath)
+{
+	int err = 0;
+	zip* archive = zip_open(zipPath, 0, &err);
+	zip_stat_t* stat = new zip_stat_t;
+	zip_stat_init(stat);
+	zip_stat(archive, filePath, ZIP_FL_NOCASE | ZIP_FL_NODIR, stat);
+	zip_file* fileUncompressed = zip_fopen(archive, filePath, 0);
+	auto length = stat->size;
+	char* buffer = new char[length + 1];
+	zip_fread(fileUncompressed, buffer, length);
+	buffer[length] = '\0';
+	std::cout << buffer << std::endl;
+
+	delete[] buffer;
+	delete stat;
+	zip_fclose(fileUncompressed);
+	zip_close(archive);
 }
 
 int main() {
