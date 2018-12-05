@@ -6,6 +6,7 @@
 
 #define RM_ASSERT(s) assert(s)
 #define RM_MALLOC(s) malloc(s)
+#define RM_NEW(s, t) new(RM_MALLOC(sizeof(s))) s(t) 
 #define RM_FREE(s) free(s)
 /*
 	s: Debug message - to be printed
