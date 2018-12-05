@@ -74,9 +74,11 @@ void readFileInZip(const char* zipPath, const char* filePath)
 	zip_close(archive);
 }
 
-int main() {
+/*int main() {
 	_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
+
+
 
 	getchar();
 	return 0;
-}
+}*/

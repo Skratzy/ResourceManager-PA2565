@@ -29,4 +29,15 @@
 	case 1: std::cerr << s; abort(); \
 }}
 
+#define SOKOL_IMPL
+#define SOKOL_D3D11
+#define SOKOL_D3D11_SHADER_COMPILER
+#define SOKOL_LOG(s) OutputDebugStringA(s)
+#define HANDMADE_MATH_IMPLEMENTATION
+#define HANDMADE_MATH_NO_SSE
+
+extern "C" {
+#include "HandmadeMath.h"
+}
+
 #endif //_RM_DEFINES_

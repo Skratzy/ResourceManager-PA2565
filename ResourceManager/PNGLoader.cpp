@@ -3,9 +3,6 @@
 #include "PNGLoader.h"
 #include "LodePNG.h"
 
-using namespace lodepng;
-using namespace std;
-
 Resource* PNGLoader::load(const std::string& filePath, const long GUID)
 {
 	std::vector<unsigned char> image;
@@ -14,8 +11,8 @@ Resource* PNGLoader::load(const std::string& filePath, const long GUID)
 	Resource* ptr = nullptr;
 	
 	// 'decode' both checks for error and assigns values to 'image', 'width, and 'height'
-	if (unsigned int error = decode(image, width, height, filePath)) {
-		cout << "ERROR: " << error << lodepng_error_text(error)	<< " at filePath: " << filePath << endl;
+	if (unsigned int error = lodepng::decode(image, width, height, filePath)) {
+		std::cout << "ERROR: " << error << lodepng_error_text(error)	<< " at filePath: " << filePath << std::endl;
 	}
 	else {
 		ptr = new ResourcePNG(width, height, image, GUID);

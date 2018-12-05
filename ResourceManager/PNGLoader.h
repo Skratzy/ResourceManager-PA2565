@@ -23,7 +23,7 @@ public:
 
 class PNGLoader : public FormatLoader {
 public:
-	PNGLoader() {};
+	PNGLoader() { m_supportedExtensions.push_back(".png"); };
 	~PNGLoader() {};
 	/*
 	Returns a resource with the following data:

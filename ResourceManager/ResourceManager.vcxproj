@@ -131,21 +131,28 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="d3d11entry.c" />
     <ClCompile Include="LodePNG.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="OBJLoader.cpp" />
     <ClCompile Include="PNGLoader.cpp" />
     <ClCompile Include="ResourceManager.cpp" />
+    <ClCompile Include="texcube-d3d11.cpp" />
+    <ClCompile Include="Transform.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="d3d11entry.h" />
     <ClInclude Include="Defines.h" />
     <ClInclude Include="FormatLoader.h" />
+    <ClInclude Include="HandmadeMath.h" />
     <ClInclude Include="LodePNG.h" />
     <ClInclude Include="PNGLoader.h" />
     <ClInclude Include="MyMesh.h" />
     <ClInclude Include="OBJLoader.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="ResourceManager.h" />
+    <ClInclude Include="sokol_gfx.h" />
+    <ClInclude Include="Transform.hpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
