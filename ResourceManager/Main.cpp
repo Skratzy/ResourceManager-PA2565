@@ -48,8 +48,6 @@ void testReadTextures() {
 	Resource* png = manager.load("Assets/testImage.png");
 	Resource* jpg = manager.load("Assets/testImage1.jpg");
 	// Breakpoint and look at image
-	delete png;
-	delete jpg;
 }
 
 void bufferedUnbufferedTiming() {
