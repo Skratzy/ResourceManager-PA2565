@@ -1,8 +1,10 @@
-#pragma once
+#ifndef _RM_PNG_LOADER_
+#define _RM_PNG_LOADER_
+
+#include <string>
 
 #include "FormatLoader.h"
 #include "Resource.h"
-#include <string>
 
 class ResourcePNG : public Resource {
 public:
@@ -38,3 +40,4 @@ public:
 	Resource* load(const std::string& path, const long GUID);
 };
 
+#endif //_RM_PNG_LOADER_

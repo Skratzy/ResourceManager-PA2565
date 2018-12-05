@@ -1,7 +1,8 @@
-#ifndef MY_MESH_HPP
-#define MY_MESH_HPP
+#ifndef _RM_MY_MESH_HPP_
+#define _RM_MY_MESH_HPP_
 
 #include <vector>
+
 #include "Resource.h"
 
 struct vertex
@@ -21,4 +22,4 @@ public:
 	std::vector<int> indices;
 };
 
-#endif
+#endif //_RM_MY_MESH_HPP_

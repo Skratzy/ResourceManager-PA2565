@@ -1,4 +1,5 @@
-#pragma once
+#ifndef _RM_DEFINES_
+#define _RM_DEFINES_
 
 #include <assert.h>
 #include <malloc.h>
@@ -26,3 +27,5 @@
 	case 0: std::cerr << s << std::endl; break; \
 	case 1: std::cerr << s; abort(); \
 }}
+
+#endif //_RM_DEFINES_

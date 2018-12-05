@@ -1,4 +1,5 @@
-#pragma once
+#ifndef _RM_RESOURCE_MANAGER_
+#define _RM_RESOURCE_MANAGER_
 
 #include <map> // Map
 #include <vector> // Vector
@@ -44,3 +45,4 @@ public:
 	//void incrementReference(long key); SHOULDN'T BE NEEDED (done when loading already existing)
 };
 
+#endif //_RM_RESOURCE_MANAGER_

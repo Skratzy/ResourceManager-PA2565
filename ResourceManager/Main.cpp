@@ -54,8 +54,6 @@ void bufferedUnbufferedTiming() {
 	std::cout << std::chrono::duration_cast<std::chrono::nanoseconds>(std::chrono::high_resolution_clock::now() - start).count() << std::endl;
 }
 
-std::vector<std::string> ListOfFiles;
-
 void readFileInZip(const char* zipPath, const char* filePath)
 {
 	int err = 0;

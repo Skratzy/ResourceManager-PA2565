@@ -1,7 +1,7 @@
+#include <experimental/filesystem>
+
 #include "ResourceManager.h"
 #include "Defines.h"
-
-#include <experimental/filesystem>
 
 
 ResourceManager::ResourceManager()
