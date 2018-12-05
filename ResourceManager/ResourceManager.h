@@ -27,8 +27,7 @@ public:
 	Resource* load(const std::string& path);
 	void decrementReference(long key);
 
-	template <typename T>
-	void registerFormatLoader();
+	void registerFormatLoader(FormatLoader* formatLoader);
 
 	//void incrementReference(long key); SHOULDN'T BE NEEDED (done when loading already existing)
 };
