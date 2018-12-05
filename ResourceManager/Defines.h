@@ -12,10 +12,11 @@
 */
 #define RM_MALLOC(s) malloc(s)
 /*
-	s: Type
+	TYPE: Type
 */
-#define RM_NEW(s) new(RM_MALLOC(sizeof(s))) s
+#define RM_NEW(TYPE) new(RM_MALLOC(sizeof(TYPE))) TYPE
 #define RM_FREE(s) free(s)
+#define RM_DELETE(s) delete s
 /*
 	s: Debug message - to be printed
 	l: Severity level
