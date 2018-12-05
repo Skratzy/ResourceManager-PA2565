@@ -19,7 +19,6 @@ private:
 
 private:
 
-
 public:
 	ResourceManager(unsigned int capacity = 256);
 	~ResourceManager();

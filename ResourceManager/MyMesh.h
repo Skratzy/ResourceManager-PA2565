@@ -14,8 +14,11 @@ class MyMesh : public Resource
 private:
 
 public:
-	MyMesh();
-	virtual ~MyMesh();
+	MyMesh(int verticesCount, int indicesCount, const long GUID) : Resource(GUID)
+	{
+		vertices.resize(verticesCount);
+		indices.resize(indicesCount);
+	}
 
 	std::vector<vertex> vertices;
 	std::vector<int> indices;
