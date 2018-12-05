@@ -4,20 +4,19 @@
 #define TINYOBJLOADER_IMPLEMENTATION
 #include "tiny_obj_loader.h"
 
-#include "OBJ_Loader.h"
-
 Resource* OBJLoader::load(const std::string& path, const long GUID)
 {	
+	// OBJ_Loader Library Variables
+	/// ----------------------------------------
 	tinyobj::attrib_t attrib;
 	std::vector<tinyobj::shape_t> shapes;
 	std::vector<tinyobj::material_t> materials;
 	std::string warning;
 	std::string error;
-	/*const char *filepath;
-	const char *mtl_basedir = NULL;
-	bool triangulate = true;
-	bool default_vcols_fallback = true;*/
+	/// ----------------------------------------
 
+	// STEP 1: LOAD THE OBJ FILE
+	/// ----------------------------------
 	try
 	{
 		tinyobj::LoadObj(
@@ -33,36 +32,79 @@ Resource* OBJLoader::load(const std::string& path, const long GUID)
 	{
 		std::cout << "ERROR!" << e.what();
 	}
+	/// ----------------------------------
 
-	//MyMesh* meshToBeReturned = static_cast<MyMesh*>(RM_MALLOC(sizeof(MyMesh)));
-	MyMesh* meshToBeReturned = new MyMesh(attrib.vertices.size(), shapes.at(0).mesh.indices.size(), GUID);
+	// STEP 2: REFORMAT THE DATA TO FIT OUR 'MyMesh' OBJECT
+	/// ----------------------------------------------------
+	// Calculate TOTAL number of INDICES
+	int numberOfIndices = 0;
+	for (int i = 0; i < shapes.size(); i++)
+		numberOfIndices += shapes.at(i).mesh.indices.size();
+	// Allocate enough space for our ENTIRE MESH
+	MyMesh* meshToBeReturned = new MyMesh(
+		static_cast<int>(attrib.vertices.size() / 3),
+		static_cast<int>(attrib.normals.size() / 3),
+		static_cast<int>(attrib.texcoords.size() / 2),
+		numberOfIndices, GUID);
 
-	for (int i = 0; i < attrib.vertices.size(); i++)
+	int currVertex = 0; // They have a list of INDIVIDUAL COORDINATES, we have a list of vertices
+	/// VERTICES
+	for (int i = 0; i < attrib.vertices.size(); /*i++*/)
 	{
-		meshToBeReturned->vertices.at(i).x = attrib.vertices.at(i);
+		// X
+		meshToBeReturned->vertices.at(currVertex).x = attrib.vertices.at(i);
+		i++;
+		// Y
+		meshToBeReturned->vertices.at(currVertex).y = attrib.vertices.at(i);
+		i++;
+		// Z
+		meshToBeReturned->vertices.at(currVertex).z = attrib.vertices.at(i);
+		i++;
+		// Incrementing once; OUR OWN next vertex (1 vertex, 3 floats)
+		currVertex++;
 	}
+	/// NORMALS
+	int currNormal = 0;
+	for (int i = 0; i < attrib.normals.size(); /*i++*/)
+	{
+		// X
+		meshToBeReturned->normals.at(currNormal).x = attrib.normals.at(i);
+		i++;
+		// Y
+		meshToBeReturned->normals.at(currNormal).y = attrib.normals.at(i);
+		i++;
+		// Z
+		meshToBeReturned->normals.at(currNormal).z = attrib.normals.at(i);
+		i++;
+		// Incrementing once; OUR OWN next normal (1 normal, 3 floats)
+		currNormal++;
+	}
+	/// TEXCOORDS
 
+	int currTexCoord = 0;
+	for (int i = 0; i < attrib.texcoords.size(); /*i++*/)
+	{
+		// U
+		meshToBeReturned->texCoords.at(currTexCoord).u = attrib.texcoords.at(i);
+		i++;
+		// V
+		meshToBeReturned->texCoords.at(currTexCoord).v = attrib.texcoords.at(i);
+		i++;
+		// Incrementing once; OUR OWN next uv-coordinate (1 TexCoord, 2 floats)
+		currTexCoord++;
+	}
+	/// INDICES
+	int index = 0;
+	for (int i = 0; i < shapes.size(); i++)
+	{
+		for (int k = 0; k < shapes.at(i).mesh.indices.size(); k++)
+		{
+			meshToBeReturned->indices_v.at(index) = shapes.at(i).mesh.indices.at(k).vertex_index;
+			meshToBeReturned->indices_n.at(index) = shapes.at(i).mesh.indices.at(k).normal_index;
+			meshToBeReturned->indices_tx.at(index) = shapes.at(i).mesh.indices.at(k).texcoord_index;
+			index++;
+		}
+	}
+	/// ----------------------------------------------------
 	return meshToBeReturned;
 }
-
-//Resource* OBJLoader::load(const std::string& path)
-//{
-//	MyMesh* meshToBeReturned = static_cast<MyMesh*>(RM_MALLOC(sizeof(MyMesh)));
-//	objl::Loader loader;
-//
-//	loader.LoadFile(path);
-//
-//	meshToBeReturned->vertices.resize(loader.LoadedVertices.size());
-//	for (int i = 0; i < loader.LoadedVertices.size(); i++)
-//	{
-//		meshToBeReturned->vertices.at(i).x = loader.LoadedVertices.at(i).Position.X;
-//		meshToBeReturned->vertices.at(i).y = loader.LoadedVertices.at(i).Position.Y;
-//		meshToBeReturned->vertices.at(i).z = loader.LoadedVertices.at(i).Position.Z;
-//	}
-//
-//	meshToBeReturned->indices.resize(loader.LoadedIndices.size());
-//	for (int i = 0; i < loader.LoadedIndices.size(); i++)
-//		meshToBeReturned->indices.at(i) = loader.LoadedIndices.at(i);
-//
-//	return static_cast<Resource*>(meshToBeReturned);
-//}

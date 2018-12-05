@@ -9,19 +9,39 @@ struct vertex
 	float x, y, z;
 };
 
+struct uv
+{
+	float u, v;
+};
+
 class MyMesh : public Resource
 {
 private:
 
 public:
-	MyMesh(int verticesCount, int indicesCount, const long GUID) : Resource(GUID)
+	MyMesh(
+		int vertexCount,
+		int normalsCount,
+		int texCoordsCount,
+		int indexCount,
+		const long GUID) : Resource(GUID)
 	{
-		vertices.resize(verticesCount);
-		indices.resize(indicesCount);
+		vertices.resize(vertexCount);
+		normals.resize(normalsCount);
+		texCoords.resize(texCoordsCount);
+
+		indices_v.resize(indexCount);
+		indices_n.resize(indexCount);
+		indices_tx.resize(indexCount);
 	}
 
 	std::vector<vertex> vertices;
-	std::vector<int> indices;
+	std::vector<vertex> normals;
+	std::vector<uv> texCoords;
+
+	std::vector<int> indices_v;
+	std::vector<int> indices_n;
+	std::vector<int> indices_tx;
 };
 
 #endif
