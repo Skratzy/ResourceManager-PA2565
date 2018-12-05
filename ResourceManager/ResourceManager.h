@@ -21,8 +21,18 @@ private:
 
 
 public:
+
+	// ResourceManager Singleton functionalities
+	static ResourceManager& getInstance() {
+		static ResourceManager instance;
+		return instance;
+	}
+	ResourceManager(ResourceManager const&)	 = delete;
+	void operator=(ResourceManager const&)	 = delete;
+
 	ResourceManager(unsigned int capacity = 256);
 	~ResourceManager();
+
 
 	Resource* load(const std::string& path);
 	void decrementReference(long key);
