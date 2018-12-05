@@ -13,6 +13,24 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Source Files\Textures %28CPP%29">
+      <UniqueIdentifier>{d33bc7c7-8f99-43bf-90b4-d82bfaa3a4cc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Textures %28H%29">
+      <UniqueIdentifier>{39034c86-553b-4e2e-bdcd-21f16118a5bb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Textures %28H%29\.png %28H%29">
+      <UniqueIdentifier>{ae37862a-fcf2-4185-a11e-43f01356c857}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Textures %28H%29\.jpg %28H%29">
+      <UniqueIdentifier>{b5837655-d087-4108-a427-d96be1d42bbc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Textures %28CPP%29\.png %28CPP%29">
+      <UniqueIdentifier>{fb2f544d-0591-47aa-abfe-af16372ff548}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Textures %28CPP%29\.jpg %28CPP%29">
+      <UniqueIdentifier>{8142e93a-acd4-48bd-9236-ae72ca1309d0}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -21,14 +39,17 @@
     <ClCompile Include="ResourceManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="PNGLoader.cpp">
+    <ClCompile Include="OBJLoader.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="LodePNG.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\Textures %28CPP%29\.png %28CPP%29</Filter>
     </ClCompile>
-    <ClCompile Include="OBJLoader.cpp">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="PNGLoader.cpp">
+      <Filter>Source Files\Textures %28CPP%29\.png %28CPP%29</Filter>
+    </ClCompile>
+    <ClCompile Include="JPGLoader.cpp">
+      <Filter>Source Files\Textures %28CPP%29\.jpg %28CPP%29</Filter>
     </ClCompile>
     <ClCompile Include="texcube-d3d11.cpp">
       <Filter>Source Files</Filter>
@@ -56,14 +77,23 @@
     <ClInclude Include="LodePNG.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="PNGLoader.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="OBJLoader.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="MyMesh.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="PNGLoader.h">
+      <Filter>Header Files\Textures %28H%29\.png %28H%29</Filter>
+    </ClInclude>
+    <ClInclude Include="JPGLoader.h">
+      <Filter>Header Files\Textures %28H%29\.jpg %28H%29</Filter>
+    </ClInclude>
+    <ClInclude Include="TextureResource.h">
+      <Filter>Header Files\Textures %28H%29</Filter>
+    </ClInclude>
+    <ClInclude Include="CImg.h">
+      <Filter>Header Files\Textures %28H%29\.jpg %28H%29</Filter>
     </ClInclude>
     <ClInclude Include="d3d11entry.h">
       <Filter>Header Files</Filter>

@@ -4,6 +4,9 @@
 #include "ResourceManager.h"
 #include "Defines.h"
 
+#include <experimental/filesystem>
+#include <new>
+#include "PNGLoader.h"
 
 ResourceManager::ResourceManager()
 {

@@ -6,20 +6,7 @@
 #include "FormatLoader.h"
 #include "Resource.h"
 
-class ResourcePNG : public Resource {
-public:
-	unsigned int m_width;
-	unsigned int m_height;
-	std::vector<unsigned char> m_image;
-	// Constructor is used to attach image to 
-	ResourcePNG(int width, int height, std::vector<unsigned char> image, const long GUID) : Resource(GUID) {
-		this->m_width = width;
-		this->m_height = height;
-		this->m_image = image;
-		this->setSize(sizeof(unsigned char) * 4 * width * height);
-	}
-	~ResourcePNG() {};
-};
+class Resource;
 
 class PNGLoader : public FormatLoader {
 public:
