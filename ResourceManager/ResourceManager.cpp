@@ -1,4 +1,5 @@
 #include <experimental/filesystem>
+#include <mutex>
 
 #include "ResourceManager.h"
 #include "Defines.h"
@@ -45,6 +46,18 @@ Resource * ResourceManager::load(const std::string & path)
 	}
 	// Else load it
 	else {
+		// Only one thread can create and load new resources to the resource manager
+		std::mutex m;
+		std::lock_guard<std::mutex> lock(m);
+		// Additional check if several threads tries to load the same asset it does
+		// not create the same resource more than once.
+		auto it = m_resources.find(hashedPath);
+		if (it != m_resources.end()) {
+			// Found the resource
+			res = it->second;
+			res->refer();
+			return res;
+		}		
 		std::string ext = fs::path(path).extension().generic_string();
 
 		// Find the format loader corresponding to the extension
