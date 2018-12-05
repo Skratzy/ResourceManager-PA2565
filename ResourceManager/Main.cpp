@@ -6,6 +6,7 @@
 #include "ziplib/zip.h"
 #include "ResourceManager.h"
 #include "PNGLoader.h"
+#include "JPGLoader.h"
 #include "Defines.h"
 #include <crtdbg.h>
 #include "ResourceManager.h"
@@ -39,11 +40,16 @@ void testHash() {
 	std::cout << "Path [" << apa2 << "]  ID [" << test(apa2) << "]." << std::endl;
 }
 
-void readImage() {
-	PNGLoader loader;
-	Resource* imageResource = loader.load("Assets/testImage.png", 0);
+void testReadTextures() {
+	ResourceManager& manager = ResourceManager::getInstance();
+	manager.registerFormatLoader(RM_NEW(PNGLoader));
+	manager.registerFormatLoader(RM_NEW(JPGLoader));
+
+	Resource* png = manager.load("Assets/testImage.png");
+	Resource* jpg = manager.load("Assets/testImage1.jpg");
 	// Breakpoint and look at image
-	delete imageResource;
+	delete png;
+	delete jpg;
 }
 
 void bufferedUnbufferedTiming() {
@@ -78,7 +84,7 @@ void readFileInZip(const char* zipPath, const char* filePath)
 
 int main() {
 	_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
-
+	testReadTextures();
 	getchar();
 	return 0;
 }

@@ -10,7 +10,9 @@ class Resource;
 
 class PNGLoader : public FormatLoader {
 public:
-	PNGLoader() {};
+	PNGLoader() {
+		this->m_supportedExtensions.push_back(".png");
+	};
 	~PNGLoader() {};
 	/*
 	Returns a resource with the following data:

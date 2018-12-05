@@ -25,6 +25,12 @@
     <Filter Include="Header Files\Textures %28H%29\.jpg %28H%29">
       <UniqueIdentifier>{b5837655-d087-4108-a427-d96be1d42bbc}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Textures %28CPP%29\.png %28CPP%29">
+      <UniqueIdentifier>{fb2f544d-0591-47aa-abfe-af16372ff548}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Textures %28CPP%29\.jpg %28CPP%29">
+      <UniqueIdentifier>{8142e93a-acd4-48bd-9236-ae72ca1309d0}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -33,14 +39,17 @@
     <ClCompile Include="ResourceManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="PNGLoader.cpp">
+    <ClCompile Include="OBJLoader.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="LodePNG.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\Textures %28CPP%29\.png %28CPP%29</Filter>
     </ClCompile>
-    <ClCompile Include="OBJLoader.cpp">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="PNGLoader.cpp">
+      <Filter>Source Files\Textures %28CPP%29\.png %28CPP%29</Filter>
+    </ClCompile>
+    <ClCompile Include="JPGLoader.cpp">
+      <Filter>Source Files\Textures %28CPP%29\.jpg %28CPP%29</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -73,6 +82,9 @@
     </ClInclude>
     <ClInclude Include="TextureResource.h">
       <Filter>Header Files\Textures %28H%29</Filter>
+    </ClInclude>
+    <ClInclude Include="CImg.h">
+      <Filter>Header Files\Textures %28H%29\.jpg %28H%29</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
