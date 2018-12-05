@@ -14,6 +14,10 @@ ResourceManager::ResourceManager()
 
 ResourceManager::~ResourceManager()
 {
+	for (auto FL : m_formatLoaders)
+		RM_DELETE(FL);
+	for (auto RES : m_resources)
+		RM_DELETE(RES.second);
 }
 
 
