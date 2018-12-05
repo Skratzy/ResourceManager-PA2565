@@ -81,8 +81,6 @@ void ResourceManager::decrementReference(long key)
 
 void ResourceManager::registerFormatLoader(FormatLoader* formatLoader)
 {
-	// Allocating memory required for the format loader and initializing it using a placement new
-	FormatLoader* toRegister = formatLoader;
 	// Put the new format loader in the vector
-	m_formatLoaders.emplace_back(toRegister);
+	m_formatLoaders.emplace_back(formatLoader);
 }
