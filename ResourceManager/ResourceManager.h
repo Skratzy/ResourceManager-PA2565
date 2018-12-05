@@ -16,6 +16,7 @@ private:
 	unsigned int m_capacity;
 	unsigned int m_memUsage;
 	std::hash<std::string> m_pathHasher;
+	bool m_initialized;
 
 private:
 
@@ -30,9 +31,10 @@ public:
 	ResourceManager(ResourceManager const&)	 = delete;
 	void operator=(ResourceManager const&)	 = delete;
 
-	ResourceManager(unsigned int capacity = 256);
+	ResourceManager();
 	~ResourceManager();
 
+	void init(const unsigned int capacity);
 
 	Resource* load(const std::string& path);
 	void decrementReference(long key);

@@ -4,16 +4,26 @@
 #include <experimental/filesystem>
 
 
-ResourceManager::ResourceManager(unsigned int capacity)
+ResourceManager::ResourceManager()
 {
-	m_capacity = capacity;
+	m_capacity = 0;
 	m_memUsage = 0;
+	m_initialized = false;
 }
 
 
 ResourceManager::~ResourceManager()
 {
 }
+
+
+void ResourceManager::init(const unsigned int capacity) {
+	if (!m_initialized) {
+		m_capacity = capacity;
+		m_initialized = true;
+	}
+}
+
 
 Resource * ResourceManager::load(const std::string & path)
 {
