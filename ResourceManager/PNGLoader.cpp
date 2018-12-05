@@ -1,6 +1,7 @@
 #include "PNGLoader.h"
 #include "LodePNG.h"
 #include <iostream>
+#include "TextureResource.h"
 
 using namespace lodepng;
 using namespace std;
@@ -17,7 +18,7 @@ Resource* PNGLoader::load(const std::string& filePath, const long GUID)
 		cout << "ERROR: " << error << lodepng_error_text(error)	<< " at filePath: " << filePath << endl;
 	}
 	else {
-		ptr = new ResourcePNG(width, height, image, GUID);
+		ptr = new TextureResource(width, height, image, GUID);
 	}
 
 	return ptr;

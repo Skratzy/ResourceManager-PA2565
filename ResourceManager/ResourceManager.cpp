@@ -3,6 +3,7 @@
 
 #include <experimental/filesystem>
 #include <new>
+#include "PNGLoader.h"
 
 
 ResourceManager::ResourceManager(unsigned int capacity)

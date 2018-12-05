@@ -13,6 +13,18 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Source Files\Textures %28CPP%29">
+      <UniqueIdentifier>{d33bc7c7-8f99-43bf-90b4-d82bfaa3a4cc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Textures %28H%29">
+      <UniqueIdentifier>{39034c86-553b-4e2e-bdcd-21f16118a5bb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Textures %28H%29\.png %28H%29">
+      <UniqueIdentifier>{ae37862a-fcf2-4185-a11e-43f01356c857}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Textures %28H%29\.jpg %28H%29">
+      <UniqueIdentifier>{b5837655-d087-4108-a427-d96be1d42bbc}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -47,14 +59,20 @@
     <ClInclude Include="LodePNG.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="PNGLoader.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="OBJLoader.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="MyMesh.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="PNGLoader.h">
+      <Filter>Header Files\Textures %28H%29\.png %28H%29</Filter>
+    </ClInclude>
+    <ClInclude Include="JPGLoader.h">
+      <Filter>Header Files\Textures %28H%29\.jpg %28H%29</Filter>
+    </ClInclude>
+    <ClInclude Include="TextureResource.h">
+      <Filter>Header Files\Textures %28H%29</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

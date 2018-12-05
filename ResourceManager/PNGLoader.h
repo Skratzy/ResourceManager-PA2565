@@ -1,23 +1,12 @@
-#pragma once
+#pragma once/*
+#ifndef _RM_PNGLOADER_H
+#define _RM_PNGLOADER_H*/
 
 #include "FormatLoader.h"
 #include "Resource.h"
 #include <string>
 
-class ResourcePNG : public Resource {
-public:
-	unsigned int m_width;
-	unsigned int m_height;
-	std::vector<unsigned char> m_image;
-	// Constructor is used to attach image to 
-	ResourcePNG(int width, int height, std::vector<unsigned char> image, const long GUID) : Resource(GUID) {
-		this->m_width = width;
-		this->m_height = height;
-		this->m_image = image;
-		this->setSize(sizeof(unsigned char) * 4 * width * height);
-	}
-	~ResourcePNG() {};
-};
+class Resource;
 
 class PNGLoader : public FormatLoader {
 public:
@@ -38,3 +27,4 @@ public:
 	Resource* load(const std::string& path, const long GUID);
 };
 
+//#endif

@@ -5,6 +5,7 @@
 #include "PNGLoader.h"
 #include "Defines.h"
 #include <crtdbg.h>
+#include "ResourceManager.h"
 
 void read(bool buffered) {
 	std::ifstream fileStream;
