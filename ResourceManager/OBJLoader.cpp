@@ -21,6 +21,7 @@ Resource* OBJLoader::load(const std::string& path, const long GUID)
 	{
 		tinyobj::LoadObj(
 			&attrib,
+
 			&shapes,
 			&materials,
 			&warning,
@@ -85,23 +86,26 @@ Resource* OBJLoader::load(const std::string& path, const long GUID)
 	{
 		// U
 		meshToBeReturned->texCoords.at(currTexCoord).u = attrib.texcoords.at(i);
-		i++;
+		i++; // INCREMENT (for-loop)
 		// V
 		meshToBeReturned->texCoords.at(currTexCoord).v = attrib.texcoords.at(i);
-		i++;
+		i++; // INCREMENT (for-loop)
 		// Incrementing once; OUR OWN next uv-coordinate (1 TexCoord, 2 floats)
-		currTexCoord++;
+		currTexCoord++; // INCREMENT (to our next texCoord)
 	}
 	/// INDICES
 	int index = 0;
-	for (int i = 0; i < shapes.size(); i++)
+	for (int i = 0; i < shapes.size(); i++) // PER SHAPE
 	{
-		for (int k = 0; k < shapes.at(i).mesh.indices.size(); k++)
+		for (int k = 0; k < shapes.at(i).mesh.indices.size(); k++) // PER INDEX (per shape)
 		{
+			// Vertex Index
 			meshToBeReturned->indices_v.at(index) = shapes.at(i).mesh.indices.at(k).vertex_index;
+			// Normal Index
 			meshToBeReturned->indices_n.at(index) = shapes.at(i).mesh.indices.at(k).normal_index;
+			// TexCoord Index
 			meshToBeReturned->indices_tx.at(index) = shapes.at(i).mesh.indices.at(k).texcoord_index;
-			index++;
+			index++; // INCREMEMENT (to our next set of indices)
 		}
 	}
 	/// ----------------------------------------------------
