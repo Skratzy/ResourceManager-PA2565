@@ -1,12 +1,9 @@
 #include <experimental/filesystem>
-
+#include <new>
 
 #include "ResourceManager.h"
 #include "../Defines.h"
 
-#include <experimental/filesystem>
-#include <new>
-#include "FormatLoaders/PNGLoader.h"
 
 ResourceManager::ResourceManager()
 {
