@@ -30,13 +30,13 @@ Resource* OBJLoader::load(const std::string& path, const long GUID)
 	}
 	catch(const std::exception& e)
 	{
-		std::cout << "ERROR!" << e.what();
+		std::cout << "ERROR: " << e.what();
 	}
 	/// ----------------------------------
 
 	// STEP 2: REFORMAT THE DATA TO FIT OUR 'MyMesh' OBJECT
 	/// ----------------------------------------------------
-	// Calculate TOTAL number of INDICES
+	// Calculate TOTAL number of INDICES (Shape#1-indices-count + Shape#2-indices-count + ...)
 	int numberOfIndices = 0;
 	for (int i = 0; i < shapes.size(); i++)
 		numberOfIndices += shapes.at(i).mesh.indices.size();
@@ -47,40 +47,39 @@ Resource* OBJLoader::load(const std::string& path, const long GUID)
 		static_cast<int>(attrib.texcoords.size() / 2),
 		numberOfIndices, GUID);
 
-	int currVertex = 0; // They have a list of INDIVIDUAL COORDINATES, we have a list of vertices
+	int currVertex = 0; // They have a list of INDIVIDUAL COORDINATES, we have a list of VERTICES
 	/// VERTICES
 	for (int i = 0; i < attrib.vertices.size(); /*i++*/)
 	{
 		// X
 		meshToBeReturned->vertices.at(currVertex).x = attrib.vertices.at(i);
-		i++;
+		i++; // INCREMENT (for-loop)
 		// Y
 		meshToBeReturned->vertices.at(currVertex).y = attrib.vertices.at(i);
-		i++;
+		i++; // INCREMENT (for-loop)
 		// Z
 		meshToBeReturned->vertices.at(currVertex).z = attrib.vertices.at(i);
-		i++;
-		// Incrementing once; OUR OWN next vertex (1 vertex, 3 floats)
-		currVertex++;
+		i++; // INCREMENT (for-loop)
+		// Incrementing once; OUR OWN next vertex (1 vertex holding 3 floats)
+		currVertex++; // INCREMENT (to our next vertex)
 	}
 	/// NORMALS
-	int currNormal = 0;
+	int currNormal = 0; // They have a list of INDIVIDUAL COORDINATES, we have a list of NORMALS
 	for (int i = 0; i < attrib.normals.size(); /*i++*/)
 	{
 		// X
 		meshToBeReturned->normals.at(currNormal).x = attrib.normals.at(i);
-		i++;
+		i++; // INCREMENT (for-loop)
 		// Y
 		meshToBeReturned->normals.at(currNormal).y = attrib.normals.at(i);
-		i++;
+		i++; // INCREMENT (for-loop)
 		// Z
 		meshToBeReturned->normals.at(currNormal).z = attrib.normals.at(i);
-		i++;
-		// Incrementing once; OUR OWN next normal (1 normal, 3 floats)
-		currNormal++;
+		i++; // INCREMENT (for-loop)
+		// Incrementing once; OUR OWN next normal (1 normal holding 3 floats)
+		currNormal++; // INCREMENT (to our next normal)
 	}
 	/// TEXCOORDS
-
 	int currTexCoord = 0;
 	for (int i = 0; i < attrib.texcoords.size(); /*i++*/)
 	{

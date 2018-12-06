@@ -36,7 +36,7 @@ public:
 	}
 
 	std::vector<vertex> vertices;
-	std::vector<vertex> normals;
+	std::vector<vertex> normals; // Normals use the same struct as vertices (x, y, z)
 	std::vector<uv> texCoords;
 
 	std::vector<int> indices_v;
