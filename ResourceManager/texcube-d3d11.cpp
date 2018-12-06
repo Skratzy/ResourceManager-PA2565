@@ -13,10 +13,10 @@ extern "C" {
 }
 
 #include "Sokol/Objects/Transform.hpp"
-#include "ResourceManager/ResourceManager.h"
-#include "ResourceManager/FormatLoaders/PNGLoader.h"
-#include "ResourceManager/FormatLoaders/JPGLoader.h"
-#include "ResourceManager/Resources/TextureResource.h"
+#include "ResManAPI/ResourceManager.h"
+#include "ResManAPI/FormatLoaders/PNGLoader.h"
+#include "ResManAPI/FormatLoaders/JPGLoader.h"
+#include "ResManAPI/Resources/TextureResource.h"
 
 /* a uniform block with a model-view-projection matrix */
 typedef struct {
