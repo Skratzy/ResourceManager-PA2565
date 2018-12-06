@@ -74,7 +74,7 @@ Resource * ResourceManager::load(const char* path)
 				// Update memory usage
 				m_memUsage += res->getSize();
 				if (m_memUsage > m_capacity) {
-					RM_DEBUG_MESSAGE("ResourceManager::load() - Memory usage exceeds the memory limit.", 0);
+					RM_DEBUG_MESSAGE(("ResourceManager::load() - Memory usage exceeds the memory limit. (" + std::to_string(m_memUsage / (1024)) + "KB / " + std::to_string(m_capacity / (1024)) + "KB) (Usage / Capacity)"), 0);
 				}
 				// Increase the reference count of the resource
 				res->refer();
