@@ -4,9 +4,7 @@
 #include <vector>
 #include <string>
 
-#include "../Resources/MyMesh.h"
 #include "FormatLoader.h"
-#include "OBJ_Loader.h"
 
 class OBJLoader : public FormatLoader
 {

@@ -1,9 +1,11 @@
 #include "../../Defines.h"
 #include "OBJLoader.h"
+#include "OBJ_Loader.h"
+#include "../Resources/MeshResource.h"
 
 Resource* OBJLoader::load(const std::string& path)
 {
-	MyMesh* meshToBeReturned = static_cast<MyMesh*>(RM_MALLOC(sizeof(MyMesh)));
+	MeshResource* meshToBeReturned = static_cast<MeshResource*>(RM_MALLOC(sizeof(MeshResource)));
 	objl::Loader loader;
 
 	loader.LoadFile(path);
@@ -20,5 +22,5 @@ Resource* OBJLoader::load(const std::string& path)
 	for (int i = 0; i < loader.LoadedIndices.size(); i++)
 		meshToBeReturned->indices.at(i) = loader.LoadedIndices.at(i);
 
-	return static_cast<Resource*>(meshToBeReturned);
+	return meshToBeReturned;
 }

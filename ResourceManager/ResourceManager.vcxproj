@@ -95,7 +95,7 @@
     </ClCompile>
     <Link>
       <AdditionalLibraryDirectories>$(SolutionDir)lib\$(Platform)\$(Configuration);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>libz-static.lib;libzip-static.lib;jpeg-9b/jpeg.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>libz-static.lib;libzip-static.lib;jpeg.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -108,7 +108,7 @@
     </ClCompile>
     <Link>
       <AdditionalLibraryDirectories>$(SolutionDir)lib\$(Platform)\$(Configuration);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>libz-static.lib;libzip-static.lib;jpeg-9b/jpeg.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>libz-static.lib;libzip-static.lib;jpeg.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -125,7 +125,7 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <AdditionalLibraryDirectories>$(SolutionDir)lib\$(Platform)\$(Configuration);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>libz-static.lib;libzip-static.lib;jpeg-9b/jpeg.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>libz-static.lib;libzip-static.lib;jpeg.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -142,7 +142,7 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <AdditionalLibraryDirectories>$(SolutionDir)lib\$(Platform)\$(Configuration);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>libz-static.lib;libzip-static.lib;jpeg-9b/jpeg.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>libz-static.lib;libzip-static.lib;jpeg.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
@@ -165,7 +165,6 @@
     <ClInclude Include="ResourceManager\FormatLoaders\JPGLoader.h" />
     <ClInclude Include="ResourceManager\FormatLoaders\LodePNG.h" />
     <ClInclude Include="ResourceManager\FormatLoaders\PNGLoader.h" />
-    <ClInclude Include="Sokol\Objects\MyMesh.h" />
     <ClInclude Include="ResourceManager\FormatLoaders\OBJLoader.h" />
     <ClInclude Include="ResourceManager\Resources\Resource.h" />
     <ClInclude Include="ResourceManager\ResourceManager.h" />

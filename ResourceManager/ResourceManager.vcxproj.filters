@@ -80,17 +80,11 @@
     <ClInclude Include="ResourceManager\FormatLoaders\FormatLoader.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="ResourceManager\FormatLoaders\CImg.h">
-      <Filter>Header Files\Textures %28H%29\.jpg %28H%29</Filter>
-    </ClInclude>
     <ClInclude Include="ResourceManager\FormatLoaders\OBJLoader.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="ResourceManager\FormatLoaders\PNGLoader.h">
       <Filter>Header Files\Textures %28H%29\.png %28H%29</Filter>
-    </ClInclude>
-    <ClInclude Include="Sokol\Objects\MyMesh.h">
-      <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="ResourceManager\ResourceManager.h">
       <Filter>Header Files</Filter>
@@ -106,6 +100,9 @@
     </ClInclude>
     <ClInclude Include="Sokol\Objects\Transform.hpp">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ResourceManager\FormatLoaders\CImg.h">
+      <Filter>Header Files\Textures %28H%29\.jpg %28H%29</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
