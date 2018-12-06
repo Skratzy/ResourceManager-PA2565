@@ -2,8 +2,6 @@
 //  texcube-d3d11.c
 //  Texture creation and rendering.
 //------------------------------------------------------------------------------
-#include <fstream>
-
 #include "Defines.h"
 
 extern "C" {
@@ -23,7 +21,19 @@ typedef struct {
 } vs_params_t;
 
 int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _In_ LPSTR lpCmdLine, _In_ int nCmdShow) {
-    /* setup d3d11 app wrapper and sokol_gfx */
+	// Check for memory leaks
+	_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
+
+	// Open a debug console window if running in debug mode
+#ifdef _DEBUG
+	AllocConsole();
+	FILE* a;
+	freopen_s(&a, "CONIN$", "r", stdin);
+	freopen_s(&a, "CONOUT$", "w", stdout);
+	freopen_s(&a, "CONOUT$", "w", stderr);
+#endif
+
+	/* setup d3d11 app wrapper and sokol_gfx */
     const int msaa_samples = 4;
     const int width = 800;
     const int height = 600;
@@ -35,102 +45,6 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 	sgDesc.d3d11_render_target_view_cb = d3d11_render_target_view;
 	sgDesc.d3d11_depth_stencil_view_cb = d3d11_depth_stencil_view;
     sg_setup(&sgDesc);
-
-	float positions[] = {
-		-1.0f, -1.0f, -1.0f,
-		1.0f, -1.0f, -1.0f,
-		1.0f,  1.0f, -1.0f,
-		1.0f,  1.0f, -1.0f,
-
-		1.0f, -1.0f,  1.0f,
-		1.0f, -1.0f,  1.0f,
-		1.0f,  1.0f,  1.0f,
-		1.0f,  1.0f,  1.0f,
-
-		1.0f, -1.0f, -1.0f,
-		1.0f,  1.0f, -1.0f,
-		1.0f,  1.0f,  1.0f,
-		1.0f, -1.0f,  1.0f,
-
-		1.0f, -1.0f, -1.0f,
-		1.0f,  1.0f, -1.0f,
-		1.0f,  1.0f,  1.0f,
-		1.0f, -1.0f,  1.0f,
-
-		1.0f, -1.0f, -1.0f,
-		1.0f, -1.0f,  1.0f,
-		1.0f, -1.0f,  1.0f,
-		1.0f, -1.0f, -1.0f,
-
-		1.0f,  1.0f, -1.0f,
-		1.0f,  1.0f,  1.0f,
-		1.0f,  1.0f,  1.0f,
-		1.0f,  1.0f, -1.0f
-	};
-
-	float colors[] = {
-		1.0f, 0.0f, 0.0f, 1.0f,
-		1.0f, 0.0f, 0.0f, 1.0f,
-		1.0f, 0.0f, 0.0f, 1.0f,
-		1.0f, 0.0f, 0.0f, 1.0f,
-
-		0.0f, 1.0f, 0.0f, 1.0f,
-		0.0f, 1.0f, 0.0f, 1.0f,
-		0.0f, 1.0f, 0.0f, 1.0f,
-		0.0f, 1.0f, 0.0f, 1.0f,
-
-		0.0f, 0.0f, 1.0f, 1.0f,
-		0.0f, 0.0f, 1.0f, 1.0f,
-		0.0f, 0.0f, 1.0f, 1.0f,
-		0.0f, 0.0f, 1.0f, 1.0f,
-
-		1.0f, 0.5f, 0.0f, 1.0f,
-		1.0f, 0.5f, 0.0f, 1.0f,
-		1.0f, 0.5f, 0.0f, 1.0f,
-		1.0f, 0.5f, 0.0f, 1.0f,
-
-		0.0f, 0.5f, 1.0f, 1.0f,
-		0.0f, 0.5f, 1.0f, 1.0f,
-		0.0f, 0.5f, 1.0f, 1.0f,
-		0.0f, 0.5f, 1.0f, 1.0f,
-
-		1.0f, 0.0f, 0.5f, 1.0f,
-		1.0f, 0.0f, 0.5f, 1.0f,
-		1.0f, 0.0f, 0.5f, 1.0f,
-		1.0f, 0.0f, 0.5f, 1.0f
-	};
-
-	float uvs[] = {
-		0.0f, 0.0f,
-		1.0f, 0.0f,
-		1.0f, 1.0f,
-		0.0f, 1.0f,
-
-		0.0f, 0.0f,
-		1.0f, 0.0f,
-		1.0f, 1.0f,
-		0.0f, 1.0f,
-
-		0.0f, 0.0f,
-		1.0f, 0.0f,
-		1.0f, 1.0f,
-		0.0f, 1.0f,
-
-		0.0f, 0.0f,
-		1.0f, 0.0f,
-		1.0f, 1.0f,
-		0.0f, 1.0f,
-
-		0.0f, 0.0f,
-		1.0f, 0.0f,
-		1.0f, 1.0f,
-		0.0f, 1.0f,
-
-		0.0f, 0.0f,
-		1.0f, 0.0f,
-		1.0f, 1.0f,
-		0.0f, 1.0f
-	};
 
     /* cube vertex buffer */
     float vertices[] = {

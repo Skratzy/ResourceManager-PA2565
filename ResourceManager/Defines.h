@@ -5,6 +5,7 @@
 #include <malloc.h>
 #include <iostream>
 #include <new>
+#include <windows.h>
 
 #define RM_ASSERT(s) assert(s)
 /*
@@ -24,9 +25,22 @@
 		1 -> print the message and abort
 */
 #define RM_DEBUG_MESSAGE(s, l) { \
+	HANDLE stdHandle = GetStdHandle(STD_OUTPUT_HANDLE); \
+	CONSOLE_SCREEN_BUFFER_INFO conScrBufInf; \
+	GetConsoleScreenBufferInfo(stdHandle, &conScrBufInf); \
 	switch(l) { \
-	case 0: std::cerr << s << std::endl; break; \
-	case 1: std::cerr << s; abort(); \
+	case 0: \
+		SetConsoleTextAttribute(stdHandle, BACKGROUND_RED | BACKGROUND_GREEN | BACKGROUND_INTENSITY); \
+		std::cerr << "WARNING: " << s << std::endl; \
+		SetConsoleTextAttribute(stdHandle, conScrBufInf.wAttributes); \
+		break; \
+	case 1:\
+		SetConsoleTextAttribute(stdHandle, BACKGROUND_RED | BACKGROUND_INTENSITY);\
+		std::cerr << "ERROR: " << s << std::endl;\
+		SetConsoleTextAttribute(stdHandle, conScrBufInf.wAttributes);\
+		abort();\
+		break;\
+	default: break;\
 }}
 
 #define SOKOL_IMPL
