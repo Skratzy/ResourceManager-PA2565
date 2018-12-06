@@ -5,6 +5,7 @@
 #include <vector> // Vector
 #include <functional> // Hash
 #include <string> // String
+#include <mutex>
 
 #include "Resources/Resource.h"
 #include "FormatLoaders/FormatLoader.h"
@@ -16,6 +17,7 @@ private:
 	std::vector<FormatLoader*> m_formatLoaders;
 	unsigned int m_capacity;
 	unsigned int m_memUsage;
+	std::mutex m_mutex;
 	std::hash<std::string> m_pathHasher;
 	bool m_initialized;
 

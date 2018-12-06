@@ -1,5 +1,5 @@
 #include <experimental/filesystem>
-#include <mutex>
+
 
 #include "ResourceManager.h"
 #include "../Defines.h"
@@ -39,6 +39,7 @@ Resource * ResourceManager::load(const char* path)
 	namespace fs = std::experimental::filesystem;
 	long hashedPath = m_pathHasher(path);
 
+
 	// Check if the resource already exists in the system
 	auto it = m_resources.find(hashedPath);
 	if (it != m_resources.end()) {
@@ -50,8 +51,9 @@ Resource * ResourceManager::load(const char* path)
 	// Else load it
 	else {
 		// Only one thread can create and load new resources to the resource manager
-		std::mutex m;
-		std::lock_guard<std::mutex> lock(m);
+
+		std::lock_guard<std::mutex> lock(m_mutex);
+
 		// Additional check if several threads tries to load the same asset it does
 		// not create the same resource more than once.
 		auto it = m_resources.find(hashedPath);
@@ -84,7 +86,6 @@ Resource * ResourceManager::load(const char* path)
 
 		RM_DEBUG_MESSAGE("ResourceManager::load() - Did not find a format loader that supported the extension '" + ext + "'", 0);
 	}
-
 	return res;
 	
 }

@@ -2,6 +2,9 @@
 //  texcube-d3d11.c
 //  Texture creation and rendering.
 //------------------------------------------------------------------------------
+
+#include <thread>
+
 #include "Defines.h"
 
 extern "C" {
@@ -112,10 +115,24 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 	sg_image_desc sgid{ 0 };
 	sg_image_content sgic{ 0 };
 	/*TESTING*/
+	ResourceManager &manager = ResourceManager::getInstance();
+	ResourceManager::getInstance().init(1024 * 300);
 	ResourceManager::getInstance().registerFormatLoader(RM_NEW(PNGLoader));
 	ResourceManager::getInstance().registerFormatLoader(RM_NEW(JPGLoader));
-	//auto pngRes = reinterpret_cast<TextureResource*>(ResourceManager::getInstance().load("Assets/testfile.png"));
+	
+	const char* path;
+	path = "Assets/testfile.jpg";
+	void* testPtr;
+	auto f = [&manager, path, &testPtr] {
+		testPtr = manager.load(path);
+	};
+
+	std::thread t1(f);
+	std::thread t2(f);
+	//auto pngRes1 = reinterpret_cast<TextureResource*>(ResourceManager::getInstance().load("Assets/testfile.jpg"));
 	auto pngRes = reinterpret_cast<TextureResource*>(ResourceManager::getInstance().load("Assets/testfile.jpg"));
+	t1.join();
+	t2.join();
 	sgic.subimage[0][0].ptr = pngRes->m_image.data();
 	sgic.subimage[0][0].size = pngRes->m_image.size();
 	sgid.width = pngRes->m_width;
