@@ -33,7 +33,7 @@ void ResourceManager::init(const unsigned int capacity) {
 }
 
 
-Resource * ResourceManager::load(const std::string & path)
+Resource * ResourceManager::load(const char* path)
 {
 	Resource* res = nullptr;
 	namespace fs = std::experimental::filesystem;

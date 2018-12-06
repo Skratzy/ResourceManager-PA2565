@@ -24,7 +24,7 @@ public:
 	2------->
 	3------->
 	*/
-	Resource* load(const std::string& path, const long GUID);
+	Resource* load(const char* path, const long GUID);
 };
 
 #endif //_RM_PNG_LOADER_

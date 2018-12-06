@@ -37,7 +37,7 @@ public:
 
 	void init(const unsigned int capacity);
 
-	Resource* load(const std::string& path);
+	Resource* load(const char* path);
 	void decrementReference(long key);
 
 	void registerFormatLoader(FormatLoader* formatLoader);

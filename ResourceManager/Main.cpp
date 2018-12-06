@@ -8,7 +8,6 @@
 #include "PNGLoader.h"
 #include "JPGLoader.h"
 #include "Defines.h"
-#include <crtdbg.h>
 #include "ResourceManager.h"
 
 void read(bool buffered) {

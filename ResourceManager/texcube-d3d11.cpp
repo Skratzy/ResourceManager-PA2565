@@ -14,6 +14,8 @@ extern "C" {
 #include "Transform.hpp"
 #include "ResourceManager.h"
 #include "PNGLoader.h"
+#include "JPGLoader.h"
+#include "TextureResource.h"
 
 /* a uniform block with a model-view-projection matrix */
 typedef struct {
@@ -197,9 +199,11 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 	sg_image_content sgic{ 0 };
 	/*TESTING*/
 	ResourceManager::getInstance().registerFormatLoader(RM_NEW(PNGLoader));
-	auto pngRes = reinterpret_cast<ResourcePNG*>(ResourceManager::getInstance().load("Assets/testImage.png"));
+	ResourceManager::getInstance().registerFormatLoader(RM_NEW(JPGLoader));
+	//auto pngRes = reinterpret_cast<TextureResource*>(ResourceManager::getInstance().load("Assets/testfile.png"));
+	auto pngRes = reinterpret_cast<TextureResource*>(ResourceManager::getInstance().load("Assets/testfile.jpg"));
 	sgic.subimage[0][0].ptr = pngRes->m_image.data();
-	sgic.subimage[0][0].size = pngRes->getSize();
+	sgic.subimage[0][0].size = pngRes->m_image.size();
 	sgid.width = pngRes->m_width;
 	sgid.height = pngRes->m_height;
 	/*END OF TESTING*/
@@ -207,6 +211,19 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 	sgic.subimage[0][0].size = sizeof(pixels);
 	sgid.width = 4;
 	sgid.height = 4;*/
+	/*
+	
+        case SG_PIXELFORMAT_RGBA8:          return DXGI_FORMAT_R8G8B8A8_UNORM;
+        case SG_PIXELFORMAT_R10G10B10A2:    return DXGI_FORMAT_R10G10B10A2_UNORM;
+        case SG_PIXELFORMAT_RGBA32F:        return DXGI_FORMAT_R32G32B32A32_FLOAT;
+        case SG_PIXELFORMAT_RGBA16F:        return DXGI_FORMAT_R16G16B16A16_FLOAT;
+        case SG_PIXELFORMAT_R32F:           return DXGI_FORMAT_R32_FLOAT;
+        case SG_PIXELFORMAT_R16F:           return DXGI_FORMAT_R16_FLOAT;
+        case SG_PIXELFORMAT_L8:             return DXGI_FORMAT_R8_UNORM;
+        case SG_PIXELFORMAT_DXT1:           return DXGI_FORMAT_BC1_UNORM;
+        case SG_PIXELFORMAT_DXT3:           return DXGI_FORMAT_BC2_UNORM;
+        case SG_PIXELFORMAT_DXT5:           return DXGI_FORMAT_BC3_UNORM;
+	*/
 	sgid.pixel_format = SG_PIXELFORMAT_RGBA8;
 	sgid.min_filter = SG_FILTER_NEAREST;
 	sgid.mag_filter = SG_FILTER_NEAREST;

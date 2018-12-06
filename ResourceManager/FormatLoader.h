@@ -13,7 +13,7 @@ protected:
 
 public:
 	virtual ~FormatLoader() {}
-	virtual Resource* load(const std::string& path, const long GUID) = 0;
+	virtual Resource* load(const char* path, const long GUID) = 0;
 
 	bool extensionSupported(const std::string& extension) {
 		for (auto ext : m_supportedExtensions) {

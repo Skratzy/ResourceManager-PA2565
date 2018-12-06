@@ -8,9 +8,9 @@
 using namespace cimg_library;
 using namespace std;
 
-Resource * JPGLoader::load(const std::string & path, const long GUID)
+Resource * JPGLoader::load(const char* path, const long GUID)
 {
-	CImg<unsigned char> source("Assets/testImage1.jpg");
+	CImg<unsigned char> source(path);
 	unsigned int width = source.width();
 	unsigned int height = source.height();
 	std::vector<unsigned char> image; 
@@ -27,6 +27,7 @@ Resource * JPGLoader::load(const std::string & path, const long GUID)
 				image.push_back(*source.data(x, y, 0, 0));
 				image.push_back(*source.data(x, y, 0, 1));
 				image.push_back(*source.data(x, y, 0, 2));
+				image.push_back(char(255));
 			}
 		}
 
