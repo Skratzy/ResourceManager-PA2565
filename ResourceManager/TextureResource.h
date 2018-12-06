@@ -10,7 +10,7 @@ public:
 	unsigned int m_height;
 	std::vector<unsigned char> m_image;
 	// Constructor is used to attach image to the resource
-	TextureResource(int width, int height, std::vector<unsigned char> image, const long GUID, bool 4channel) : Resource(GUID) {
+	TextureResource(int width, int height, std::vector<unsigned char> image, const long GUID, bool channel) : Resource(GUID) {
 		this->m_width = width;
 		this->m_height = height;
 		this->m_image = image;
