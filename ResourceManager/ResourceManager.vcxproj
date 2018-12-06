@@ -146,6 +146,12 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="ResManAPI\FormatLoaders\JPGLoader.cpp" />
+    <ClCompile Include="ResManAPI\FormatLoaders\LodePNG.cpp" />
+    <ClCompile Include="ResManAPI\FormatLoaders\OBJLoader.cpp" />
+    <ClCompile Include="ResManAPI\FormatLoaders\PNGLoader.cpp" />
+    <ClCompile Include="ResManAPI\Main.cpp" />
+    <ClCompile Include="ResManAPI\ResourceManager.cpp" />
     <ClCompile Include="ResourceManager\FormatLoaders\JPGLoader.cpp" />
     <ClCompile Include="Sokol\d3d11entry.c" />
     <ClCompile Include="ResourceManager\FormatLoaders\LodePNG.cpp" />
@@ -157,6 +163,17 @@
     <ClCompile Include="Sokol\Objects\Transform.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="ResManAPI\FormatLoaders\CImg.h" />
+    <ClInclude Include="ResManAPI\FormatLoaders\FormatLoader.h" />
+    <ClInclude Include="ResManAPI\FormatLoaders\JPGLoader.h" />
+    <ClInclude Include="ResManAPI\FormatLoaders\LodePNG.h" />
+    <ClInclude Include="ResManAPI\FormatLoaders\OBJLoader.h" />
+    <ClInclude Include="ResManAPI\FormatLoaders\OBJ_Loader.h" />
+    <ClInclude Include="ResManAPI\FormatLoaders\PNGLoader.h" />
+    <ClInclude Include="ResManAPI\ResourceManager.h" />
+    <ClInclude Include="ResManAPI\Resources\MeshResource.h" />
+    <ClInclude Include="ResManAPI\Resources\Resource.h" />
+    <ClInclude Include="ResManAPI\Resources\TextureResource.h" />
     <ClInclude Include="Sokol\d3d11entry.h" />
     <ClInclude Include="ResourceManager\FormatLoaders\CImg.h" />
     <ClInclude Include="Defines.h" />
@@ -169,6 +186,7 @@
     <ClInclude Include="ResourceManager\Resources\Resource.h" />
     <ClInclude Include="ResourceManager\ResourceManager.h" />
     <ClInclude Include="ResourceManager\Resources\TextureResource.h" />
+    <ClInclude Include="Sokol\Objects\Model.h" />
     <ClInclude Include="Sokol\sokol_gfx.h" />
     <ClInclude Include="Sokol\Objects\Transform.hpp" />
   </ItemGroup>
