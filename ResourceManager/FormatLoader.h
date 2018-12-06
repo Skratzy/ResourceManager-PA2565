@@ -1,5 +1,5 @@
-#ifndef _RM_FORMAT_LOADET_
-#define _RM_FORMAT_LOADET_
+#ifndef _RM_FORMAT_LOADER_
+#define _RM_FORMAT_LOADER_
 
 #include <vector>
 #include <string>
@@ -24,4 +24,4 @@ public:
 	}
 };
 
-#endif //_RM_FORMAT_LOADET_
+#endif //_RM_FORMAT_LOADER_
