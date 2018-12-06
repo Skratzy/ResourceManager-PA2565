@@ -36,24 +36,6 @@
     <ClCompile Include="Sokol\d3d11entry.c">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="ResourceManager\FormatLoaders\LodePNG.cpp">
-      <Filter>Source Files\Textures %28CPP%29\.png %28CPP%29</Filter>
-    </ClCompile>
-    <ClCompile Include="ResourceManager\FormatLoaders\JPGLoader.cpp">
-      <Filter>Source Files\Textures %28CPP%29\.jpg %28CPP%29</Filter>
-    </ClCompile>
-    <ClCompile Include="ResourceManager\FormatLoaders\PNGLoader.cpp">
-      <Filter>Source Files\Textures %28CPP%29\.png %28CPP%29</Filter>
-    </ClCompile>
-    <ClCompile Include="ResourceManager\FormatLoaders\OBJLoader.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="ResourceManager\ResourceManager.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="ResourceManager\Main.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="texcube-d3d11.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -89,38 +71,11 @@
     <ClInclude Include="Sokol\HandmadeMath.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="ResourceManager\FormatLoaders\LodePNG.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="ResourceManager\FormatLoaders\JPGLoader.h">
-      <Filter>Header Files\Textures %28H%29\.jpg %28H%29</Filter>
-    </ClInclude>
-    <ClInclude Include="ResourceManager\FormatLoaders\FormatLoader.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="ResourceManager\FormatLoaders\OBJLoader.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="ResourceManager\FormatLoaders\PNGLoader.h">
-      <Filter>Header Files\Textures %28H%29\.png %28H%29</Filter>
-    </ClInclude>
-    <ClInclude Include="ResourceManager\ResourceManager.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Sokol\sokol_gfx.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="ResourceManager\Resources\TextureResource.h">
-      <Filter>Header Files\Textures %28H%29</Filter>
-    </ClInclude>
-    <ClInclude Include="ResourceManager\Resources\Resource.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Sokol\Objects\Transform.hpp">
       <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="ResourceManager\FormatLoaders\CImg.h">
-      <Filter>Header Files\Textures %28H%29\.jpg %28H%29</Filter>
     </ClInclude>
     <ClInclude Include="Sokol\Objects\Model.h">
       <Filter>Header Files</Filter>

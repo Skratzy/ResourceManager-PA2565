@@ -15,7 +15,7 @@ public:
 	Model(MeshResource* mesh, TextureResource* tex);
 	~Model();
 
-
+	void draw();
 
 };
 
