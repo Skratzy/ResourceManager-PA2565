@@ -1,4 +1,4 @@
-#include "Defines.h"
+#include "../../Defines.h"
 #include "OBJLoader.h"
 
 Resource* OBJLoader::load(const std::string& path)

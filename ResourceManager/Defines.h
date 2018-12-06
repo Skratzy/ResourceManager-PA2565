@@ -51,7 +51,7 @@
 #define HANDMADE_MATH_NO_SSE
 
 extern "C" {
-#include "HandmadeMath.h"
+#include "Sokol/HandmadeMath.h"
 }
 
 #endif //_RM_DEFINES_

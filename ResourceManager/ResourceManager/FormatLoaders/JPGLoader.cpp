@@ -1,5 +1,5 @@
 #include "JPGLoader.h"
-#include "TextureResource.h"
+#include "../Resources/TextureResource.h"
 #include <iostream>
 
 #define cimg_use_jpeg

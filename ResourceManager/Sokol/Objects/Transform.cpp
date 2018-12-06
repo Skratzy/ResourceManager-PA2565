@@ -1,7 +1,5 @@
 #include "Transform.hpp"
 
-#include <iostream>
-
 Transform::Transform()
 {
 	m_scale = HMM_Vec3(1.f, 1.f, 1.f);

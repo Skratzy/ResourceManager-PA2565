@@ -3,7 +3,7 @@
 #include "PNGLoader.h"
 #include "LodePNG.h"
 #include <iostream>
-#include "TextureResource.h"
+#include "../Resources/TextureResource.h"
 
 Resource* PNGLoader::load(const char* path, const long GUID)
 {

@@ -5,9 +5,9 @@
 
 #include "ziplib/zip.h"
 #include "ResourceManager.h"
-#include "PNGLoader.h"
-#include "JPGLoader.h"
-#include "Defines.h"
+#include "FormatLoaders/PNGLoader.h"
+#include "FormatLoaders/JPGLoader.h"
+#include "../Defines.h"
 #include "ResourceManager.h"
 
 void read(bool buffered) {

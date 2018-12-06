@@ -4,7 +4,7 @@
 #include <vector>
 #include <string>
 
-#include "MyMesh.h"
+#include "../Resources/MyMesh.h"
 #include "FormatLoader.h"
 #include "OBJ_Loader.h"
 

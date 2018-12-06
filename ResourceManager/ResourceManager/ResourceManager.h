@@ -6,8 +6,8 @@
 #include <functional> // Hash
 #include <string> // String
 
-#include "Resource.h"
-#include "FormatLoader.h"
+#include "Resources/Resource.h"
+#include "FormatLoaders/FormatLoader.h"
 
 class ResourceManager
 {

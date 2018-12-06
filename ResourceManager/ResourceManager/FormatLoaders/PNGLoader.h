@@ -4,7 +4,7 @@
 #include <string>
 
 #include "FormatLoader.h"
-#include "Resource.h"
+#include "../Resources/Resource.h"
 
 class Resource;
 

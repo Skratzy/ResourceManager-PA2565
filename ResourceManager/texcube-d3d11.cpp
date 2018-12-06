@@ -5,15 +5,15 @@
 #include "Defines.h"
 
 extern "C" {
-	#include "d3d11entry.h"
-	#include "sokol_gfx.h"
+	#include "Sokol/d3d11entry.h"
+	#include "Sokol/sokol_gfx.h"
 }
 
-#include "Transform.hpp"
-#include "ResourceManager.h"
-#include "PNGLoader.h"
-#include "JPGLoader.h"
-#include "TextureResource.h"
+#include "Sokol/Objects/Transform.hpp"
+#include "ResourceManager/ResourceManager.h"
+#include "ResourceManager/FormatLoaders/PNGLoader.h"
+#include "ResourceManager/FormatLoaders/JPGLoader.h"
+#include "ResourceManager/Resources/TextureResource.h"
 
 /* a uniform block with a model-view-projection matrix */
 typedef struct {
