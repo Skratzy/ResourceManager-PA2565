@@ -13,7 +13,7 @@ Resource * JPGLoader::load(const char* path, const long GUID)
 	CImg<unsigned char> source(path);
 	unsigned int width = source.width();
 	unsigned int height = source.height();
-	std::vector<unsigned char> image; 
+	std::vector<unsigned char> image;
 	Resource* resource = nullptr;
 	
 	if (source.size() == 0) {
@@ -21,8 +21,8 @@ Resource * JPGLoader::load(const char* path, const long GUID)
 	}
 	else {
 		// Conversion of a single char array into the vector
-		for (int y = 0; y < height; y++) {
-			for (int x = 0; x < width; x++) {
+		for (unsigned int y = 0; y < height; y++) {
+			for (unsigned int x = 0; x < width; x++) {
 				// source.data(pixel_x, pixel_y, depth, color(0,1,2 = red,green,blue)
 				image.push_back(*source.data(x, y, 0, 0));
 				image.push_back(*source.data(x, y, 0, 1));

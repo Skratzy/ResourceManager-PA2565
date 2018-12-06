@@ -18,7 +18,7 @@ void read(bool buffered) {
 
 	// get length of file:
 	fileStream.seekg(0, fileStream.end);
-	int length = fileStream.tellg();
+	unsigned int length = static_cast<unsigned int>(fileStream.tellg());
 	fileStream.seekg(0, fileStream.beg);
 
 	char* buffer = new char[length];
@@ -67,7 +67,7 @@ void readFileInZip(const char* zipPath, const char* filePath)
 	zip_stat_init(stat);
 	zip_stat(archive, filePath, ZIP_FL_NOCASE | ZIP_FL_NODIR, stat);
 	zip_file* fileUncompressed = zip_fopen(archive, filePath, 0);
-	auto length = stat->size;
+	unsigned int length = static_cast<unsigned int>(stat->size);
 	char* buffer = new char[length + 1];
 	zip_fread(fileUncompressed, buffer, length);
 	buffer[length] = '\0';

@@ -11,7 +11,7 @@ Resource* OBJLoader::load(const std::string& path)
 	loader.LoadFile(path);
 
 	meshToBeReturned->vertices.resize(loader.LoadedVertices.size());
-	for (int i = 0; i < loader.LoadedVertices.size(); i++)
+	for (unsigned int i = 0; i < loader.LoadedVertices.size(); i++)
 	{
 		meshToBeReturned->vertices.at(i).x = loader.LoadedVertices.at(i).Position.X;
 		meshToBeReturned->vertices.at(i).y = loader.LoadedVertices.at(i).Position.Y;
@@ -19,7 +19,7 @@ Resource* OBJLoader::load(const std::string& path)
 	}
 
 	meshToBeReturned->indices.resize(loader.LoadedIndices.size());
-	for (int i = 0; i < loader.LoadedIndices.size(); i++)
+	for (unsigned int i = 0; i < loader.LoadedIndices.size(); i++)
 		meshToBeReturned->indices.at(i) = loader.LoadedIndices.at(i);
 
 	return meshToBeReturned;
