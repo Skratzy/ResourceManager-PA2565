@@ -1,15 +1,13 @@
 #include "JPGLoader.h"
 #include "../Resources/TextureResource.h"
-#include <iostream>
 
 #define cimg_use_jpeg
 #include "CImg.h"
 
-using namespace cimg_library;
-using namespace std;
-
 Resource * JPGLoader::load(const char* path, const long GUID)
 {
+	using namespace cimg_library;
+
 	CImg<unsigned char> source(path);
 	unsigned int width = source.width();
 	unsigned int height = source.height();
@@ -17,7 +15,8 @@ Resource * JPGLoader::load(const char* path, const long GUID)
 	Resource* resource = nullptr;
 	
 	if (source.size() == 0) {
-		cout << "ERROR: " << path << "did not load succesfully!" << endl;		
+		std::string debugMessage = (path + std::string(" did not load succesfully!"));
+		RM_DEBUG_MESSAGE(debugMessage, 0);
 	}
 	else {
 		// Conversion of a single char array into the vector
@@ -32,7 +31,7 @@ Resource * JPGLoader::load(const char* path, const long GUID)
 		}
 
 		// Attach the formatted image to a textureresource
-		resource = new TextureResource(width, height, image, GUID, false);
+		resource = new TextureResource(width, height, image, GUID);
 	}
 
 	return resource;

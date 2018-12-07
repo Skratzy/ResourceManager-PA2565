@@ -7,10 +7,8 @@ class Resource;
 
 class JPGLoader : public FormatLoader {
 public:
-	JPGLoader() {
-		this->m_supportedExtensions.push_back(".jpg");
-	}
-	~JPGLoader() {}
+	JPGLoader() { m_supportedExtensions.push_back(".jpg"); };
+	~JPGLoader() {};
 	/*
 	Returns a resource with the following data:
 	- int height;

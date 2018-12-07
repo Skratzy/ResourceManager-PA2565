@@ -5,23 +5,25 @@
 
 #include <thread>
 
+
+#define SOKOL_IMPL
+#define SOKOL_D3D11
+#define SOKOL_D3D11_SHADER_COMPILER
+#define SOKOL_LOG(s) OutputDebugStringA(s)
+#define HANDMADE_MATH_IMPLEMENTATION
+#define HANDMADE_MATH_NO_SSE
+
 #include "Defines.h"
 
 extern "C" {
 	#include "Sokol/d3d11entry.h"
-	#include "Sokol/sokol_gfx.h"
 }
 
-#include "Sokol/Objects/Transform.hpp"
 #include "ResManAPI/ResourceManager.h"
 #include "ResManAPI/FormatLoaders/PNGLoader.h"
 #include "ResManAPI/FormatLoaders/JPGLoader.h"
-#include "ResManAPI/Resources/TextureResource.h"
-
-/* a uniform block with a model-view-projection matrix */
-typedef struct {
-    hmm_mat4 mvp;
-} vs_params_t;
+#include "ResManAPI/FormatLoaders/OBJLoader.h"
+#include "Sokol/Objects/Model.h"
 
 int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _In_ LPSTR lpCmdLine, _In_ int nCmdShow) {
 	// Check for memory leaks
@@ -112,54 +114,6 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
         0xFFFFFFFF, 0x00000000, 0xFFFFFFFF, 0x00000000,
         0x00000000, 0xFFFFFFFF, 0x00000000, 0xFFFFFFFF,
     };
-	sg_image_desc sgid{ 0 };
-	sg_image_content sgic{ 0 };
-	/*TESTING*/
-	ResourceManager &manager = ResourceManager::getInstance();
-	ResourceManager::getInstance().init(1024 * 300);
-	ResourceManager::getInstance().registerFormatLoader(RM_NEW(PNGLoader));
-	ResourceManager::getInstance().registerFormatLoader(RM_NEW(JPGLoader));
-	
-	const char* path;
-	path = "Assets/testfile.jpg";
-	void* testPtr;
-	auto f = [&manager, path, &testPtr] {
-		testPtr = manager.load(path);
-	};
-
-	std::thread t1(f);
-	std::thread t2(f);
-	//auto pngRes1 = reinterpret_cast<TextureResource*>(ResourceManager::getInstance().load("Assets/testfile.jpg"));
-	auto pngRes = reinterpret_cast<TextureResource*>(ResourceManager::getInstance().load("Assets/testfile.jpg"));
-	t1.join();
-	t2.join();
-	sgic.subimage[0][0].ptr = pngRes->m_image.data();
-	sgic.subimage[0][0].size = pngRes->m_image.size();
-	sgid.width = pngRes->m_width;
-	sgid.height = pngRes->m_height;
-	/*END OF TESTING*/
-	/*sgic.subimage[0][0].ptr = pixels;
-	sgic.subimage[0][0].size = sizeof(pixels);
-	sgid.width = 4;
-	sgid.height = 4;*/
-	/*
-	
-        case SG_PIXELFORMAT_RGBA8:          return DXGI_FORMAT_R8G8B8A8_UNORM;
-        case SG_PIXELFORMAT_R10G10B10A2:    return DXGI_FORMAT_R10G10B10A2_UNORM;
-        case SG_PIXELFORMAT_RGBA32F:        return DXGI_FORMAT_R32G32B32A32_FLOAT;
-        case SG_PIXELFORMAT_RGBA16F:        return DXGI_FORMAT_R16G16B16A16_FLOAT;
-        case SG_PIXELFORMAT_R32F:           return DXGI_FORMAT_R32_FLOAT;
-        case SG_PIXELFORMAT_R16F:           return DXGI_FORMAT_R16_FLOAT;
-        case SG_PIXELFORMAT_L8:             return DXGI_FORMAT_R8_UNORM;
-        case SG_PIXELFORMAT_DXT1:           return DXGI_FORMAT_BC1_UNORM;
-        case SG_PIXELFORMAT_DXT3:           return DXGI_FORMAT_BC2_UNORM;
-        case SG_PIXELFORMAT_DXT5:           return DXGI_FORMAT_BC3_UNORM;
-	*/
-	sgid.pixel_format = SG_PIXELFORMAT_RGBA8;
-	sgid.min_filter = SG_FILTER_NEAREST;
-	sgid.mag_filter = SG_FILTER_NEAREST;
-	sgid.content = sgic;
-    sg_image img = sg_make_image(&sgid);
 
 
 	/*std::ifstream vs_stream;
@@ -192,7 +146,8 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 	sgsd.fs.images[0].type = SG_IMAGETYPE_2D;
 	sgsd.vs.source =
 		"cbuffer params: register(b0) {\n"
-		"  float4x4 mvp;\n"
+		"  float4x4 m;\n"
+		"  float4x4 vp;\n"
 		"};\n"
 		"struct vs_in {\n"
 		"  float4 pos: POSITION;\n"
@@ -206,6 +161,7 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 		"};\n"
 		"vs_out main(vs_in inp) {\n"
 		"  vs_out outp;\n"
+		"  float4x4 mvp = mul(vp, m);\n"
 		"  outp.pos = mul(mvp, inp.pos);\n"
 		"  outp.color = float4(1.0f, 1.0f, 1.0f, 1.0f);\n"
 		"  outp.uv = inp.uv;\n"
@@ -241,31 +197,32 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 	/* default pass action (clear to gray) */
 	sg_pass_action pass_action = { 0 };
 
-	/* a draw state with the resource bindings */
-	sg_draw_state draw_state{ 0 };
-	draw_state.pipeline = pip;
-	draw_state.vertex_buffers[0] = vbuf;
-	draw_state.index_buffer = ibuf;
-	draw_state.fs_images[0] = img;
-
     /* view-projection matrix */
     hmm_mat4 proj = HMM_Perspective(60.0f, static_cast<float>(width)/static_cast<float>(height), 0.01f, 10.0f);
     hmm_mat4 view = HMM_LookAt(HMM_Vec3(0.0f, 1.5f, 6.0f), HMM_Vec3(0.0f, 0.0f, 0.0f), HMM_Vec3(0.0f, 1.0f, 0.0f));
     hmm_mat4 view_proj = HMM_MultiplyMat4(proj, view);
 
     float rx = 0.0f, ry = 0.0f;
+	vs_params_t vsParams;
+	vsParams.vp = view_proj;
 
-	Transform transform1;
-	Transform transform2;
 
-	transform1.translate(HMM_Vec3(-2.f, 0.f, 0.f));
-	transform2.translate(HMM_Vec3(2.f, 0.f, 0.f));
-	
-	vs_params_t vs_params;
+	// Initialize the resource manager and register the format loaders to it
+	ResourceManager &rm = ResourceManager::getInstance();
+	rm.init(1024 * 300);
+	rm.registerFormatLoader(RM_NEW(PNGLoader));
+	rm.registerFormatLoader(RM_NEW(JPGLoader));
+	rm.registerFormatLoader(RM_NEW(OBJLoader));
+
+
+	Model model1(reinterpret_cast<MeshResource*>(rm.load("Assets/teapot.obj")), reinterpret_cast<TextureResource*>(rm.load("Assets/testImage.png")), pip);
     while (d3d11_process_events()) {
         /* draw frame */
         sg_begin_default_pass(&pass_action, d3d11_width(), d3d11_height());
-        sg_apply_draw_state(&draw_state);
+
+		model1.draw(vsParams);
+
+        /*sg_apply_draw_state(&draw_state);
 
 		transform1.rotateAroundX(2.f);
 		transform1.rotateAroundY(-4.f);
@@ -277,7 +234,7 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 		transform2.rotateAroundY(0.2f);
 		vs_params.mvp = HMM_MultiplyMat4(view_proj, transform2.getMatrix());
 		sg_apply_uniform_block(SG_SHADERSTAGE_VS, 0, &vs_params, sizeof(vs_params));
-		sg_draw(0, 36, 1);
+		sg_draw(0, 36, 1);*/
 
         sg_end_pass();
         sg_commit();

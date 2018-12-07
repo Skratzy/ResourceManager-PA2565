@@ -12,9 +12,10 @@ private:
 
 
 public:
+	OBJLoader();
 	virtual ~OBJLoader() {}
 
-	virtual Resource* load(const std::string& path);
+	virtual Resource* load(const char* path, const long GUID);
 };
 
 #endif //_RM_OBJ_LOADER_HPP

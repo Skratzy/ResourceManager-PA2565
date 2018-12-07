@@ -3,14 +3,19 @@
 #include "OBJ_Loader.h"
 #include "../Resources/MeshResource.h"
 
-Resource* OBJLoader::load(const std::string& path)
+OBJLoader::OBJLoader()
+{
+	m_supportedExtensions.push_back(".obj");
+}
+
+Resource* OBJLoader::load(const char* path, const long GUID)
 {
 	MeshResource* meshToBeReturned = static_cast<MeshResource*>(RM_MALLOC(sizeof(MeshResource)));
 	objl::Loader loader;
 
 	loader.LoadFile(path);
 
-	meshToBeReturned->vertices.resize(loader.LoadedVertices.size());
+	/*meshToBeReturned->vertices.resize(loader.LoadedVertices.size() * 3);
 	for (unsigned int i = 0; i < loader.LoadedVertices.size(); i++)
 	{
 		meshToBeReturned->vertices.at(i).x = loader.LoadedVertices.at(i).Position.X;
@@ -20,7 +25,21 @@ Resource* OBJLoader::load(const std::string& path)
 
 	meshToBeReturned->indices.resize(loader.LoadedIndices.size());
 	for (unsigned int i = 0; i < loader.LoadedIndices.size(); i++)
-		meshToBeReturned->indices.at(i) = loader.LoadedIndices.at(i);
+		meshToBeReturned->indices.at(i) = loader.LoadedIndices.at(i);*/
+
+	std::vector<float> vertices(loader.LoadedVertices.size() * 3);
+	for (unsigned int i = 0; i < loader.LoadedVertices.size(); i++)
+	{
+		int index = i * 3;
+		vertices.at(index) = loader.LoadedVertices.at(i).Position.X;
+		vertices.at(index + 1) = loader.LoadedVertices.at(i).Position.Y;
+		vertices.at(index + 2) = loader.LoadedVertices.at(i).Position.Z;
+	}
+	std::vector<float> indices(loader.LoadedVertices.size());
+	for (unsigned int i = 0; i < loader.LoadedIndices.size(); i++)
+		indices.at(i) = loader.LoadedIndices.at(i);
+
+
 
 	return meshToBeReturned;
 }

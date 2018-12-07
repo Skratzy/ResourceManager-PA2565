@@ -1,9 +1,7 @@
-#include <iostream>
-
 #include "PNGLoader.h"
-#include "LodePNG.h"
-#include <iostream>
 #include "../Resources/TextureResource.h"
+
+#include "LodePNG.h"
 
 Resource* PNGLoader::load(const char* path, const long GUID)
 {
@@ -14,10 +12,10 @@ Resource* PNGLoader::load(const char* path, const long GUID)
 	
 	// 'decode' both checks for error and assigns values to 'image', 'width, and 'height'
 	if (unsigned int error = lodepng::decode(image, width, height, path)) {
-		std::cout << "ERROR: " << error << lodepng_error_text(error)	<< " at filePath: " << path << std::endl;
+		RM_DEBUG_MESSAGE(std::to_string(error) + lodepng_error_text(error) + " at filePath: " + path, 0);
 	}
 	else {
-		resource = new TextureResource(width, height, image, GUID, true);
+		resource = new TextureResource(width, height, image, GUID);
 	}
 
 	return resource;

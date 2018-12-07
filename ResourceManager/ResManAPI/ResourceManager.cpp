@@ -3,6 +3,8 @@
 
 #include "ResourceManager.h"
 #include "../Defines.h"
+#include "Resources/Resource.h"
+#include "FormatLoaders/FormatLoader.h"
 
 
 ResourceManager::ResourceManager()
