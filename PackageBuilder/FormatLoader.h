@@ -4,7 +4,7 @@
 #include <vector>
 #include <string>
 
-#include "Resource.h"
+//#include "Resource.h"
 
 class FormatLoader
 {
@@ -13,7 +13,7 @@ protected:
 
 public:
 	virtual ~FormatLoader() {}
-	virtual Resource* load(const char* path, const long GUID) = 0;
+	virtual std::string load(const std::string& path) = 0;
 
 	bool extensionSupported(const std::string& extension) {
 		for (auto ext : m_supportedExtensions) {

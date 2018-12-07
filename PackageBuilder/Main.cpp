@@ -4,6 +4,7 @@
 #include <iostream>
 #include <fstream>
 #include "MyMesh.h"
+#include "Defines.h"
 
 using namespace std::experimental::filesystem;
 
@@ -20,19 +21,18 @@ void zipEntity(path path, std::vector<FormatLoader*> loaders) {
 		std::string extension = path.extension().generic_string();
 		for (auto FL : loaders) {
 			if (FL->extensionSupported(extension)) {
-				Resource* res = FL->load(path.string().c_str(), 1);//FIX GUID
+				std::string res = FL->load(path.string().c_str());//FIX GUID
 
 				//Get loaded resource data and write to file.
 
 				std::ofstream myfile;
 				if (extension == ".obj") {
-					MyMesh* mesh = reinterpret_cast<MyMesh*>(res);
 					std::string file = path.stem().string();
 					file += ".mesh";
 					myfile.open(file.c_str());
 
 					//Write mesh specific data
-					myfile << mesh->vertices.size();
+					myfile << res;
 
 					myfile.close();
 				}
@@ -55,11 +55,16 @@ int main(int argc, char* argv[]) {
 
 	//std::vector<Resource*> resources;
 
-	OBJLoader* obj;
+	//OBJLoader* obj = new malloc(sizeof(OBJLoader)) OBJLoader;
 
-	loaders.emplace_back(obj);
 
-	fs::path folder = fs::path(argv[0]);
+
+	loaders.emplace_back(new OBJLoader);
+	//loaders.back()->m_supportedExtensions.push_back("obj");
+	//loaders.back()->setExtension("obj");
+
+	//fs::path folder = fs::path(argv[0]);
+	fs::path folder = fs::path("C:/Users/enukp/source/repos/Skratzy/ResourceManager/PackageBuilder/testfolder");
 
 
 	zipEntity(folder, loaders);

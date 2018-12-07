@@ -10,9 +10,11 @@ private:
 
 
 public:
-	virtual ~OBJLoader() {}
+	OBJLoader() { m_supportedExtensions.push_back(".obj"); };
 
-	virtual Resource* load(const std::string& path);
+	~OBJLoader() {};
+
+	std::string load(const std::string& path);
 };
 
 #endif //_PT_OBJ_LOADER_HPP
