@@ -1,4 +1,5 @@
-#pragma once
+#ifndef SOKOL_GFX_TEST
+#define SOKOL_GFX_TEST
 /*
     sokol_gfx.h -- simple 3D API wrapper
 
@@ -9241,3 +9242,5 @@ SOKOL_API_IMPL void sg_update_image(sg_image img_id, const sg_image_content* dat
 #endif
 
 #endif /* SOKOL_IMPL */
+
+#endif //SOKOL_GFX_TEST

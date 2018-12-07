@@ -152,7 +152,10 @@
     <ClCompile Include="ResManAPI\FormatLoaders\PNGLoader.cpp" />
     <ClCompile Include="ResManAPI\Main.cpp" />
     <ClCompile Include="ResManAPI\ResourceManager.cpp" />
+    <ClCompile Include="ResManAPI\Resources\MeshResource.cpp" />
+    <ClCompile Include="ResManAPI\Resources\TextureResource.cpp" />
     <ClCompile Include="Sokol\d3d11entry.c" />
+    <ClCompile Include="Sokol\Objects\Model.cpp" />
     <ClCompile Include="texcube-d3d11.cpp" />
     <ClCompile Include="Sokol\Objects\Transform.cpp" />
   </ItemGroup>

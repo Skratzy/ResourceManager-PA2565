@@ -43,7 +43,7 @@ Resource* OBJLoader::load(const std::string& path, const long GUID)
 	for (int i = 0; i < shapes.size(); i++)
 		numberOfIndices += shapes.at(i).mesh.indices.size();
 	// Allocate enough space for our ENTIRE MESH
-	MyMesh* meshToBeReturned = new MyMesh(
+	MeshResource* meshToBeReturned = new MeshResource(
 		static_cast<int>(attrib.vertices.size() / 3),
 		static_cast<int>(attrib.normals.size() / 3),
 		static_cast<int>(attrib.texcoords.size() / 2),

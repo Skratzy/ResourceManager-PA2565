@@ -1,28 +1,25 @@
 #ifndef _RM_TEXTURE_RESOURCE_H
 #define _RM_TEXTURE_RESOURCE_H
 
-#include "Resource.h"
 #include <vector>
 
+#include "Resource.h"
+#include "../../Defines.h"
+
+
 class TextureResource : public Resource {
-public:
+private:
 	unsigned int m_width;
 	unsigned int m_height;
 	std::vector<unsigned char> m_image;
+	sg_image m_imgBuffer;
+
+public:
 	// Constructor is used to attach image to the resource
-	TextureResource(int width, int height, std::vector<unsigned char> image, const long GUID, bool channel) : Resource(GUID) {
-		this->m_width = width;
-		this->m_height = height;
-		this->m_image = image;
-		if (true) {
-			this->setSize(sizeof(unsigned char) * 4 * width * height);
-		}
-		else {
-			this->setSize(sizeof(unsigned char) * 3 * width * height);
-		}
-		
-	}
+	TextureResource(int width, int height, std::vector<unsigned char> image, const long GUID);
 	~TextureResource() {};
+
+	sg_image& getImage();
 };
 
 #endif // _RM_TEXTURE_RESOURCE_H

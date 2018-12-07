@@ -1,10 +1,7 @@
 #ifndef _RM_PNG_LOADER_
 #define _RM_PNG_LOADER_
 
-#include <string>
-
 #include "FormatLoader.h"
-#include "../Resources/Resource.h"
 
 class Resource;
 

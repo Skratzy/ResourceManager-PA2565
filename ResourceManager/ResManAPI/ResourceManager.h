@@ -7,8 +7,8 @@
 #include <string> // String
 #include <mutex>
 
-#include "Resources/Resource.h"
-#include "FormatLoaders/FormatLoader.h"
+class Resource;
+class FormatLoader;
 
 class ResourceManager
 {
