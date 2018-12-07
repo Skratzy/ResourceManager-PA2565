@@ -23,7 +23,6 @@ Resource* OBJLoader::load(const std::string& path, const long GUID)
 	{
 		tinyobj::LoadObj(
 			&attrib,
-
 			&shapes,
 			&materials,
 			&warning,
