@@ -22,7 +22,7 @@ public:
 	Model(MeshResource * mesh, TextureResource * tex, sg_pipeline& pipeline);
 	~Model();
 
-	void draw(vs_params_t vsParams);
+	void draw(vs_params_t& vsParams);
 
 	Transform& getTransform();
 

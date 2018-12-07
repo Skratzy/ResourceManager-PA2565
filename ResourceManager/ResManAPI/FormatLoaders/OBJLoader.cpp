@@ -10,7 +10,6 @@ OBJLoader::OBJLoader()
 
 Resource* OBJLoader::load(const char* path, const long GUID)
 {
-	MeshResource* meshToBeReturned = static_cast<MeshResource*>(RM_MALLOC(sizeof(MeshResource)));
 	objl::Loader loader;
 
 	loader.LoadFile(path);
@@ -39,6 +38,7 @@ Resource* OBJLoader::load(const char* path, const long GUID)
 	for (unsigned int i = 0; i < loader.LoadedIndices.size(); i++)
 		indices.at(i) = loader.LoadedIndices.at(i);
 
+	MeshResource* meshToBeReturned = static_cast<MeshResource*>( new (RM_MALLOC(sizeof(MeshResource))) MeshResource(vertices, indices, GUID) );
 
 
 	return meshToBeReturned;

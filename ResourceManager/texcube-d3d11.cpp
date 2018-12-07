@@ -151,12 +151,12 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 		"};\n"
 		"struct vs_in {\n"
 		"  float4 pos: POSITION;\n"
-		"  float4 color: COLOR1;\n"
-		"  float2 uv: TEXCOORD1;\n"
+		//"  float4 color: COLOR1;\n"
+		//"  float2 uv: TEXCOORD1;\n"
 		"};\n"
 		"struct vs_out {\n"
 		"  float4 color: COLOR0;\n"
-		"  float2 uv: TEXCOORD0;\n"
+		//"  float2 uv: TEXCOORD0;\n"
 		"  float4 pos: SV_Position;\n"
 		"};\n"
 		"vs_out main(vs_in inp) {\n"
@@ -164,14 +164,16 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 		"  float4x4 mvp = mul(vp, m);\n"
 		"  outp.pos = mul(mvp, inp.pos);\n"
 		"  outp.color = float4(1.0f, 1.0f, 1.0f, 1.0f);\n"
-		"  outp.uv = inp.uv;\n"
+		//"  outp.uv = inp.uv;\n"
 		"  return outp;\n"
 		"};\n";
 	sgsd.fs.source =
-		"Texture2D<float4> tex: register(t0);\n"
-		"sampler smp: register(s0);\n"
-		"float4 main(float4 color: COLOR0, float2 uv: TEXCOORD0): SV_Target0 {\n"
-		"  return tex.Sample(smp, uv) * color;\n"
+		//"Texture2D<float4> tex: register(t0);\n"
+		//"sampler smp: register(s0);\n"
+		"float4 main(float4 color: COLOR0): SV_Target0 {\n"
+		//"float4 main(float4 color: COLOR0, float2 uv: TEXCOORD0): SV_Target0 {\n"
+		"  return color;\n"
+		//"  return tex.Sample(smp, uv) * color;\n"
 		"}\n";
     /* create shader */
 	sg_shader shd = sg_make_shader(&sgsd);
@@ -180,17 +182,17 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 	sg_pipeline_desc sgpd{ 0 };
 	sgpd.layout.attrs[0].sem_name = "POSITION";
 	sgpd.layout.attrs[0].format = SG_VERTEXFORMAT_FLOAT3;
-	sgpd.layout.attrs[1].sem_name = "COLOR";
+	/*sgpd.layout.attrs[1].sem_name = "COLOR";
 	sgpd.layout.attrs[1].sem_index = 1;
 	sgpd.layout.attrs[1].format = SG_VERTEXFORMAT_FLOAT4;
 	sgpd.layout.attrs[2].sem_name = "TEXCOORD";
 	sgpd.layout.attrs[2].sem_index = 1;
-	sgpd.layout.attrs[2].format = SG_VERTEXFORMAT_FLOAT2;
+	sgpd.layout.attrs[2].format = SG_VERTEXFORMAT_FLOAT2;*/
 	sgpd.shader = shd;
 	sgpd.index_type = SG_INDEXTYPE_UINT16;
 	sgpd.depth_stencil.depth_compare_func = SG_COMPAREFUNC_LESS_EQUAL;
 	sgpd.depth_stencil.depth_write_enabled = true;
-	sgpd.rasterizer.cull_mode = SG_CULLMODE_BACK;
+	sgpd.rasterizer.cull_mode = SG_CULLMODE_NONE;
 	sgpd.rasterizer.sample_count = msaa_samples;
 	sg_pipeline pip = sg_make_pipeline(&sgpd);
 
@@ -221,6 +223,7 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
         sg_begin_default_pass(&pass_action, d3d11_width(), d3d11_height());
 
 		model1.draw(vsParams);
+		//model1.getTransform().translate(HMM_Vec3(0.0f, 0.0f, 4.0f));
 
         /*sg_apply_draw_state(&draw_state);
 
