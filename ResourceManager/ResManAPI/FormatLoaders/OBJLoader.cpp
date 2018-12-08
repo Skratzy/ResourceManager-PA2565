@@ -34,7 +34,7 @@ Resource* OBJLoader::load(const char* path, const long GUID)
 		vertices.at(index + 1) = loader.LoadedVertices.at(i).Position.Y;
 		vertices.at(index + 2) = loader.LoadedVertices.at(i).Position.Z;
 	}
-	std::vector<float> indices(loader.LoadedVertices.size());
+	std::vector<unsigned int> indices(loader.LoadedVertices.size());
 	for (unsigned int i = 0; i < loader.LoadedIndices.size(); i++)
 		indices.at(i) = loader.LoadedIndices.at(i);
 

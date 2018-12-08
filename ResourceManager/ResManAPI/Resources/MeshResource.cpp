@@ -1,51 +1,51 @@
 #include "MeshResource.h"
 
-MeshResource::MeshResource(std::vector<float>& vertices, std::vector<float>& indices, const long GUID)
+MeshResource::MeshResource(std::vector<float>& vertices, std::vector<unsigned int>& indices, const long GUID)
 	: Resource(GUID)
-{/* cube vertex buffer */
-    float verticess[] = {
-        /* pos */              
-        -1.0f, -1.0f, -1.0f,
-         1.0f, -1.0f, -1.0f,
-         1.0f,  1.0f, -1.0f,
-        -1.0f,  1.0f, -1.0f,
+{
+	/* cube vertex buffer */
+    /*float verticess[] = {
+		-1.0f, -1.0f, -1.0f,
+		 1.0f, -1.0f, -1.0f,
+		 1.0f,  1.0f, -1.0f,
+		-1.0f,  1.0f, -1.0f,
 
-        -1.0f, -1.0f,  1.0f, 
-         1.0f, -1.0f,  1.0f,
-         1.0f,  1.0f,  1.0f,
-        -1.0f,  1.0f,  1.0f,
+		-1.0f, -1.0f,  1.0f,
+		 1.0f, -1.0f,  1.0f,
+		 1.0f,  1.0f,  1.0f,
+		-1.0f,  1.0f,  1.0f,
 
-        -1.0f, -1.0f, -1.0f,
-        -1.0f,  1.0f, -1.0f,
-        -1.0f,  1.0f,  1.0f,
-        -1.0f, -1.0f,  1.0f,
+		-1.0f, -1.0f, -1.0f,
+		-1.0f,  1.0f, -1.0f,
+		-1.0f,  1.0f,  1.0f,
+		-1.0f, -1.0f,  1.0f,
 
-         1.0f, -1.0f, -1.0f,
-         1.0f,  1.0f, -1.0f,
-         1.0f,  1.0f,  1.0f,
-         1.0f, -1.0f,  1.0f,
+		 1.0f, -1.0f, -1.0f,
+		 1.0f,  1.0f, -1.0f,
+		 1.0f,  1.0f,  1.0f,
+		 1.0f, -1.0f,  1.0f,
 
-        -1.0f, -1.0f, -1.0f,
-        -1.0f, -1.0f,  1.0f,
-         1.0f, -1.0f,  1.0f,
-         1.0f, -1.0f, -1.0f,
+		-1.0f, -1.0f, -1.0f,
+		-1.0f, -1.0f,  1.0f,
+		 1.0f, -1.0f,  1.0f,
+		 1.0f, -1.0f, -1.0f,
 
-        -1.0f,  1.0f, -1.0f,
-        -1.0f,  1.0f,  1.0f,
-         1.0f,  1.0f,  1.0f,
-         1.0f,  1.0f, -1.0f
+		-1.0f,  1.0f, -1.0f,
+		-1.0f,  1.0f,  1.0f,
+		 1.0f,  1.0f,  1.0f,
+		 1.0f,  1.0f, -1.0f
     };
 	
-
-
 	sg_buffer_desc sgVbd{ 0 };
 	sgVbd.type = SG_BUFFERTYPE_VERTEXBUFFER;
-	sgVbd.size = sizeof(verticess);
+	m_vertexCount = sizeof(verticess);
+	sgVbd.size = m_vertexCount;
+	m_vertexCount /= sizeof(float);
 	sgVbd.content = verticess;
-	m_vertexBuffer = sg_make_buffer(&sgVbd);
+	m_vertexBuffer = sg_make_buffer(&sgVbd);*/
 
 	/* create an index buffer for the cube */
-	uint16_t indicess[] = {
+	/*uint16_t indicess[] = {
 		0, 1, 2,  0, 2, 3,
 		6, 5, 4,  7, 6, 4,
 		8, 9, 10,  8, 10, 11,
@@ -56,20 +56,19 @@ MeshResource::MeshResource(std::vector<float>& vertices, std::vector<float>& ind
 
 	sg_buffer_desc sgIbd{ 0 };
 	sgIbd.type = SG_BUFFERTYPE_INDEXBUFFER;
-	sgIbd.size = sizeof(indicess);
+	m_indexCount = sizeof(indicess);
+	sgIbd.size = m_indexCount;
+	m_indexCount /= sizeof(uint16_t);
 	sgIbd.content = indicess;
-	m_indexBuffer = sg_make_buffer(&sgIbd);
-	
-	
-	
+	m_indexBuffer = sg_make_buffer(&sgIbd);*/
 	
 	m_isIndexed = false;
 
-	/*m_vertexCount = vertices.size();
 	// Build vertex buffer
 	sg_buffer_desc sgVbd{ 0 };
 	sgVbd.type = SG_BUFFERTYPE_VERTEXBUFFER;
-	sgVbd.size = m_vertexCount;
+	m_vertexCount = vertices.size();
+	sgVbd.size = m_vertexCount * sizeof(float);
 	sgVbd.content = vertices.data();
 	m_vertexBuffer = sg_make_buffer(&sgVbd);
 
@@ -82,10 +81,11 @@ MeshResource::MeshResource(std::vector<float>& vertices, std::vector<float>& ind
 		// Build index buffer
 		sg_buffer_desc sgIbd{ 0 };
 		sgIbd.type = SG_BUFFERTYPE_INDEXBUFFER;
-		sgIbd.size = m_indexCount;
+		m_indexCount = indices.size();
+		sgIbd.size = m_indexCount * sizeof(unsigned int);
 		sgIbd.content = indices.data();
 		m_indexBuffer = sg_make_buffer(&sgIbd);
-	}*/
+	}
 }
 
 MeshResource::~MeshResource()

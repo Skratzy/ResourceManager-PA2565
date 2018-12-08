@@ -43,6 +43,9 @@
 	default: break;\
 }}
 
+#define HANDMADE_MATH_IMPLEMENTATION
+#define HANDMADE_MATH_NO_SSE
+
 #ifdef __cplusplus
 extern "C" {
 #include "Sokol/HandmadeMath.h"

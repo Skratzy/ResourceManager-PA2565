@@ -11,6 +11,8 @@ Model::Model(MeshResource * mesh, TextureResource * tex, sg_pipeline& pipeline)
 	m_drawState.vertex_buffers[0] = mesh->getVertexBuffer();
 	m_drawState.index_buffer = mesh->getIndexBuffer();
 	m_drawState.fs_images[0] = tex->getImage();
+	m_vertexCount = mesh->getVertexCount();
+	m_indexCount = mesh->getIndexCount();
 }
 
 Model::~Model()

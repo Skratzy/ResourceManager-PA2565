@@ -10,8 +10,6 @@
 #define SOKOL_D3D11
 #define SOKOL_D3D11_SHADER_COMPILER
 #define SOKOL_LOG(s) OutputDebugStringA(s)
-#define HANDMADE_MATH_IMPLEMENTATION
-#define HANDMADE_MATH_NO_SSE
 
 #include "Defines.h"
 
@@ -162,6 +160,7 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 		"vs_out main(vs_in inp) {\n"
 		"  vs_out outp;\n"
 		"  float4x4 mvp = mul(vp, m);\n"
+		"  inp.pos.w = 1.0f;\n"
 		"  outp.pos = mul(mvp, inp.pos);\n"
 		"  outp.color = float4(1.0f, 1.0f, 1.0f, 1.0f);\n"
 		//"  outp.uv = inp.uv;\n"
@@ -189,7 +188,7 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 	sgpd.layout.attrs[2].sem_index = 1;
 	sgpd.layout.attrs[2].format = SG_VERTEXFORMAT_FLOAT2;*/
 	sgpd.shader = shd;
-	sgpd.index_type = SG_INDEXTYPE_UINT16;
+	sgpd.index_type = SG_INDEXTYPE_UINT32;
 	sgpd.depth_stencil.depth_compare_func = SG_COMPAREFUNC_LESS_EQUAL;
 	sgpd.depth_stencil.depth_write_enabled = true;
 	sgpd.rasterizer.cull_mode = SG_CULLMODE_NONE;
@@ -200,7 +199,7 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 	sg_pass_action pass_action = { 0 };
 
     /* view-projection matrix */
-    hmm_mat4 proj = HMM_Perspective(60.0f, static_cast<float>(width)/static_cast<float>(height), 0.01f, 10.0f);
+    hmm_mat4 proj = HMM_Perspective(60.0f, static_cast<float>(width)/static_cast<float>(height), 0.01f, 1000.0f);
     hmm_mat4 view = HMM_LookAt(HMM_Vec3(0.0f, 1.5f, 6.0f), HMM_Vec3(0.0f, 0.0f, 0.0f), HMM_Vec3(0.0f, 1.0f, 0.0f));
     hmm_mat4 view_proj = HMM_MultiplyMat4(proj, view);
 
@@ -223,7 +222,8 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
         sg_begin_default_pass(&pass_action, d3d11_width(), d3d11_height());
 
 		model1.draw(vsParams);
-		//model1.getTransform().translate(HMM_Vec3(0.0f, 0.0f, 4.0f));
+		model1.getTransform().rotateAroundX(1.0f);
+		//model1.getTransform().translate(HMM_Vec3(0.0f, 0.0f, -1.0f));
 
         /*sg_apply_draw_state(&draw_state);
 

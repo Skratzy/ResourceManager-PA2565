@@ -5477,7 +5477,7 @@ _SOKOL_PRIVATE void _sg_begin_pass(_sg_pass* pass, const sg_pass_action* action,
     memset(&vp, 0, sizeof(vp));
     vp.Width = (FLOAT) w;
     vp.Height = (FLOAT) h;
-    vp.MaxDepth = 1.0f;
+    vp.MaxDepth = 1.0f; // CHANGED
     ID3D11DeviceContext_RSSetViewports(_sg_d3d11.ctx, 1, &vp);
     D3D11_RECT rect;
     rect.left = 0;
