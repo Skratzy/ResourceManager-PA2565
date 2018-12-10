@@ -167,6 +167,7 @@
     <ClInclude Include="ResManAPI\FormatLoaders\OBJLoader.h" />
     <ClInclude Include="ResManAPI\FormatLoaders\OBJ_Loader.h" />
     <ClInclude Include="ResManAPI\FormatLoaders\PNGLoader.h" />
+    <ClInclude Include="ResManAPI\FormatLoaders\tiny_obj_loader.h" />
     <ClInclude Include="ResManAPI\ResourceManager.h" />
     <ClInclude Include="ResManAPI\Resources\MeshResource.h" />
     <ClInclude Include="ResManAPI\Resources\Resource.h" />
