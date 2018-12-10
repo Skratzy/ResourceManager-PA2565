@@ -41,9 +41,9 @@ Resource* OBJLoader::load(const char* path, const long GUID)
 	if (attrib.vertices.size() < 1)
 		RM_DEBUG_MESSAGE("Couldn't find any vertex positions in " + std::string(path), 1);
 	if (attrib.normals.size() < 1)
-		RM_DEBUG_MESSAGE("Couldn't find any vertex normals in " + std::string(path), 1);
+		RM_DEBUG_MESSAGE("Couldn't find any vertex normals in " + std::string(path), 0);
 	if (attrib.texcoords.size() < 1)
-		RM_DEBUG_MESSAGE("Couldn't find any vertex UVs in " + std::string(path), 1);
+		RM_DEBUG_MESSAGE("Couldn't find any vertex UVs in " + std::string(path), 0);
 
 	std::vector<uint32_t> indices;
 	std::vector<float> verticesData;
@@ -59,12 +59,25 @@ Resource* OBJLoader::load(const char* path, const long GUID)
 			verticesData.push_back(attrib.vertices[3 * index.vertex_index + 1]);
 			verticesData.push_back(attrib.vertices[3 * index.vertex_index + 2]);
 			
-			verticesData.push_back(attrib.normals[3 * index.normal_index + 0]);
-			verticesData.push_back(attrib.normals[3 * index.normal_index + 1]);
-			verticesData.push_back(attrib.normals[3 * index.normal_index + 2]);
+			if (attrib.normals.size() > 0) {
+				verticesData.push_back(attrib.normals[3 * index.normal_index + 0]);
+				verticesData.push_back(attrib.normals[3 * index.normal_index + 1]);
+				verticesData.push_back(attrib.normals[3 * index.normal_index + 2]);
+			}
+			else {
+				verticesData.push_back(-1.f);
+				verticesData.push_back(-1.f);
+				verticesData.push_back(0.f);
+			}
 
-			verticesData.push_back(attrib.texcoords[2 * index.texcoord_index + 0]);
-			verticesData.push_back(1.f - attrib.texcoords[2 * index.texcoord_index + 1]);
+			if (attrib.texcoords.size() > 0) {
+				verticesData.push_back(attrib.texcoords[2 * index.texcoord_index + 0]);
+				verticesData.push_back(1.f - attrib.texcoords[2 * index.texcoord_index + 1]);
+			}
+			else {
+				verticesData.push_back(0.f);
+				verticesData.push_back(0.f);				
+			}
 		}
 	}
 

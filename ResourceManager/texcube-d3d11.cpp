@@ -4,7 +4,8 @@
 //------------------------------------------------------------------------------
 
 #include <thread>
-
+#include <fstream>
+#include <sstream>
 
 #define SOKOL_IMPL
 #define SOKOL_D3D11
@@ -21,6 +22,9 @@ extern "C" {
 #include "ResManAPI/FormatLoaders/JPGLoader.h"
 #include "ResManAPI/FormatLoaders/OBJLoader.h"
 #include "Sokol/Objects/Model.h"
+
+
+#include "ziplib/zip.h"
 
 int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _In_ LPSTR lpCmdLine, _In_ int nCmdShow) {
 	// Check for memory leaks
@@ -48,44 +52,38 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 	sgDesc.d3d11_depth_stencil_view_cb = d3d11_depth_stencil_view;
     sg_setup(&sgDesc);
 
+
+	std::ifstream file;
+	file.open("Assets/VertShader.hlsl", std::ifstream::in);
+	std::string vsString;
+	if (file.is_open()) {
+		std::stringstream stream;
+
+		stream << file.rdbuf();
+
+		vsString = stream.str();
+	}
+	else RM_DEBUG_MESSAGE("Couldn't open the vertex shader.", 1);
+	file.close();
+
+	file.open("Assets/PixelShader.hlsl", std::ifstream::in);
+	std::string psString;
+	if (file.is_open()) {
+		std::stringstream stream;
+
+		stream << file.rdbuf();
+
+		psString = stream.str();
+	}
+	else RM_DEBUG_MESSAGE("Couldn't open the pixel shader.", 1);
+	file.close();
+
+
 	sg_shader_desc sgsd{ 0 };
 	sgsd.vs.uniform_blocks[0].size = sizeof(vs_params_t);
 	sgsd.fs.images[0].type = SG_IMAGETYPE_2D;
-	sgsd.vs.source =
-		"cbuffer params: register(b0) {\n"
-		"  float4x4 m;\n"
-		"  float4x4 vp;\n"
-		"};\n"
-		"struct vs_in {\n"
-		"  float4 pos: POSITION;\n"
-		"  float4 normal: NORMAL1;\n"
-		"  float2 uv: TEXCOORD1;\n"
-		"};\n"
-		"struct vs_out {\n"
-		"  float4 color: COLOR0;\n"
-		"  float2 uv: TEXCOORD0;\n"
-		"  float4 pos: SV_Position;\n"
-		"};\n"
-		"vs_out main(vs_in inp) {\n"
-		"  vs_out outp;\n"
-		"  float4x4 mvp = mul(vp, m);\n"
-		"  inp.pos.w = 1.0f;\n"
-		"  outp.pos = mul(mvp, inp.pos);\n"
-		//"  outp.color = float4((inp.pos.x + 1.0f) * 0.5f, (inp.pos.y + 1.0f) * 0.5f, (inp.pos.z + 1.0f) * 0.5f, 1.0f);\n"
-		//"  outp.color = inp.color;\n"
-		"  outp.uv = inp.uv;\n"
-		"  outp.color = float4(1.0f, 1.0f, 1.0f, 1.0f);\n"
-		//"  outp.uv = inp.uv;\n"
-		"  return outp;\n"
-		"};\n";
-	sgsd.fs.source =
-		"Texture2D<float4> tex: register(t0);\n"
-		"sampler smp: register(s0);\n"
-		//"float4 main(float4 color: COLOR0): SV_Target0 {\n"
-		"float4 main(float4 color: COLOR0, float2 uv: TEXCOORD0): SV_Target0 {\n"
-		//"  return color;\n"
-		"  return tex.Sample(smp, uv) * color;\n"
-		"}\n";
+	sgsd.vs.source = vsString.c_str();
+	sgsd.fs.source = psString.c_str();
     /* create shader */
 	sg_shader shd = sg_make_shader(&sgsd);
 
@@ -118,7 +116,8 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
     float rx = 0.0f, ry = 0.0f;
 	vs_params_t vsParams;
 	vsParams.vp = view_proj;
-
+	auto sunDirVec = HMM_Vec4(-1.f, 0.f, 0.f, 0.f);
+	vsParams.sunDir = sunDirVec;
 
 	// Initialize the resource manager and register the format loaders to it
 	ResourceManager &rm = ResourceManager::getInstance();
@@ -127,31 +126,17 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 	rm.registerFormatLoader(RM_NEW(JPGLoader));
 	rm.registerFormatLoader(RM_NEW(OBJLoader));
 
-
-	Model model1(reinterpret_cast<MeshResource*>(rm.load("Assets/stuffWithNormals.obj")), reinterpret_cast<TextureResource*>(rm.load("Assets/chalet.jpg")), pip);
-	model1.getTransform().translate(HMM_Vec3(0.f, -1.5f, 0.f));
+	Transform sunDir;
+	Model model1(reinterpret_cast<MeshResource*>(rm.load("Assets/teapot.obj")), reinterpret_cast<TextureResource*>(rm.load("Assets/testImage.png")), pip);
+	model1.getTransform().translate(HMM_Vec3(0.f, -1.5f, -5.f));
     while (d3d11_process_events()) {
         /* draw frame */
         sg_begin_default_pass(&pass_action, d3d11_width(), d3d11_height());
 
+		sunDir.rotateAroundY(1.f);
+		vsParams.sunDir = HMM_MultiplyMat4ByVec4(sunDir.getMatrix(), sunDirVec);
+		
 		model1.draw(vsParams);
-		model1.getTransform().rotateAroundY(1.0f);
-		//model1.getTransform().translate(HMM_Vec3(0.f, 0.f, -1.f));
-		//model1.getTransform().translate(HMM_Vec3(0.0f, 0.0f, -1.0f));
-
-        /*sg_apply_draw_state(&draw_state);
-
-		transform1.rotateAroundX(2.f);
-		transform1.rotateAroundY(-4.f);
-		vs_params.mvp = HMM_MultiplyMat4(view_proj, transform1.getMatrix());
-        sg_apply_uniform_block(SG_SHADERSTAGE_VS, 0, &vs_params, sizeof(vs_params));
-        sg_draw(0, 36, 1);
-
-		transform2.rotateAroundX(0.1f);
-		transform2.rotateAroundY(0.2f);
-		vs_params.mvp = HMM_MultiplyMat4(view_proj, transform2.getMatrix());
-		sg_apply_uniform_block(SG_SHADERSTAGE_VS, 0, &vs_params, sizeof(vs_params));
-		sg_draw(0, 36, 1);*/
 
         sg_end_pass();
         sg_commit();

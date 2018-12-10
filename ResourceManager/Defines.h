@@ -59,6 +59,7 @@ extern "C" {
 typedef struct {
 	hmm_mat4 m;
 	hmm_mat4 vp;
+	hmm_vec4 sunDir;
 } vs_params_t;
 
 #endif //_RM_DEFINES_
