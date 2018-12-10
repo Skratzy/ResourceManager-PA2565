@@ -21,7 +21,7 @@ Transform::~Transform()
 void Transform::translate(hmm_vec3 translation)
 {
 	m_matUpdated = true;
-	m_translation = translation;
+	m_translation = HMM_AddVec3(m_translation,translation);
 }
 
 void Transform::rotateAroundX(float angle)

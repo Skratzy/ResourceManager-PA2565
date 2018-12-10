@@ -162,7 +162,8 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 		"  float4x4 mvp = mul(vp, m);\n"
 		"  inp.pos.w = 1.0f;\n"
 		"  outp.pos = mul(mvp, inp.pos);\n"
-		"  outp.color = float4(1.0f, 1.0f, 1.0f, 1.0f);\n"
+		"  outp.color = float4((inp.pos.x + 1.0f) * 0.5f, (inp.pos.y + 1.0f) * 0.5f, (inp.pos.z + 1.0f) * 0.5f, 1.0f);\n"
+		//"  outp.color = float4(1.0f, 1.0f, 1.0f, 1.0f);\n"
 		//"  outp.uv = inp.uv;\n"
 		"  return outp;\n"
 		"};\n";
@@ -217,12 +218,16 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 
 
 	Model model1(reinterpret_cast<MeshResource*>(rm.load("Assets/teapot.obj")), reinterpret_cast<TextureResource*>(rm.load("Assets/testImage.png")), pip);
+	model1.getTransform().translate(HMM_Vec3(0.f, -1.5f, 0.f));
     while (d3d11_process_events()) {
         /* draw frame */
         sg_begin_default_pass(&pass_action, d3d11_width(), d3d11_height());
 
 		model1.draw(vsParams);
 		model1.getTransform().rotateAroundX(1.0f);
+		model1.getTransform().rotateAroundY(1.0f);
+		model1.getTransform().rotateAroundZ(1.0f);
+		//model1.getTransform().translate(HMM_Vec3(0.f, 0.f, -1.f));
 		//model1.getTransform().translate(HMM_Vec3(0.0f, 0.0f, -1.0f));
 
         /*sg_apply_draw_state(&draw_state);
