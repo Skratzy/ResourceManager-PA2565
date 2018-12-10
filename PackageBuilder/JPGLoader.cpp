@@ -1,9 +1,11 @@
 #include "JPGLoader.h"
 #include "TextureResource.h"
 #include <iostream>
+#include <ziplib/zip.h>
 
 #define cimg_use_jpeg
 #include "CImg.h"
+#include "removeStack.h"
 
 using namespace cimg_library;
 
@@ -53,8 +55,4 @@ our::string JPGLoader::load(const std::string& path)
 	}
 
 	return res;
-}
-
-void JPGLoader::write(our::string & data)
-{
 }

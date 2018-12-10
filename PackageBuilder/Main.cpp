@@ -8,6 +8,8 @@
 #include "MyMesh.h"
 #include "Defines.h"
 #include <ziplib/zip.h>
+#include "removeStack.h"
+#include <crtdbg.h>
 
 using namespace std::experimental::filesystem;
 
@@ -80,9 +82,9 @@ void createPackage(path path, std::vector<FormatLoader*> loaders) {
 
 
 int main(int argc, char* argv[]) {
-	
+	_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
 	namespace fs = std::experimental::filesystem;
-	
+
 	std::vector<FormatLoader*> loaders;
 	loaders.push_back(new PNGLoader);
 	loaders.push_back(new OBJLoader);
