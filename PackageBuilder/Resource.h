@@ -9,8 +9,8 @@ private:
 	unsigned int m_size;	// Initialize at inheritors constructor!
 
 public:
-	Resource(const long GUID)
-		: m_GUID(GUID) {}
+	Resource()
+		: m_GUID() {}
 	virtual ~Resource() {}
 
 	const long getGUID() const {

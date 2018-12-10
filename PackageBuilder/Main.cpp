@@ -1,5 +1,7 @@
 #include "FormatLoader.h"
 #include "OBJLoader.h"
+#include "PNGLoader.h"
+#include "JPGLoader.h"
 #include <experimental/filesystem>
 #include <iostream>
 #include <fstream>
@@ -23,7 +25,7 @@ void zipEntity(zip* archive, path path, std::vector<FormatLoader*> loaders) {
 		std::string extension = path.extension().generic_string();
 		for (auto FL : loaders) {
 			if (FL->extensionSupported(extension)) {
-				std::string res = FL->load(path.string().c_str());
+				our::string res = FL->load(path.string().c_str());//FIX GUID
 
 				//Get loaded resource data and write to file.
 
@@ -55,14 +57,17 @@ void zipEntity(zip* archive, path path, std::vector<FormatLoader*> loaders) {
 }
 
 
-
 int main(int argc, char* argv[]) {
 	
 	namespace fs = std::experimental::filesystem;
 	
 	std::vector<FormatLoader*> loaders;
+	loaders.push_back(new PNGLoader);
+	loaders.push_back(new OBJLoader);
+	loaders.push_back(new JPGLoader);
 
-	//std::vector<Resource*> resources;
+	fs::path folder = fs::path("Assets");
+	zipEntity(folder, loaders);
 
 	//OBJLoader* obj = new malloc(sizeof(OBJLoader)) OBJLoader;
 
@@ -73,22 +78,22 @@ int main(int argc, char* argv[]) {
 	//loaders.back()->setExtension("obj");
 
 	//fs::path folder = fs::path(argv[0]);
-	//fs::path folder = fs::path("C:/Users/enukp/source/repos/Skratzy/ResourceManager/PackageBuilder/testfolder2");
+	//fs::path folder = fs::path("C:/Users/enukp/source/repos/Skratzy/ResourceManager/PackageBuilder/testfolder");
+
 	fs::path folder = fs::path("testfolder");
 
 	int err = 0;
 	zip* archive = zip_open("C:/Users/enukp/source/repos/Skratzy/ResourceManager/PackageBuilder/testarchive.zip", ZIP_CREATE, &err);
-	
 
-	
+
+
 	//zip_dir_add(archive, "C:/Users/enukp/source/repos/Skratzy/ResourceManager/PackageBuilder/testfolder3.zip", 0);
 
 	zipEntity(archive, folder, loaders);
 	zip_close(archive);
-	
-	//getchar();
 
 
+	getchar();
 	return 0;
 }
 
