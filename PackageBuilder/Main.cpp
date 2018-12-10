@@ -66,14 +66,14 @@ int main(int argc, char* argv[]) {
 	loaders.push_back(new OBJLoader);
 	loaders.push_back(new JPGLoader);
 
-	fs::path folder = fs::path("Assets");
-	zipEntity(folder, loaders);
+	//fs::path folder = fs::path("Assets");
+	//zipEntity(folder, loaders);
 
 	//OBJLoader* obj = new malloc(sizeof(OBJLoader)) OBJLoader;
 
 
 
-	loaders.emplace_back(new OBJLoader);
+	//loaders.emplace_back(new OBJLoader);
 	//loaders.back()->m_supportedExtensions.push_back("obj");
 	//loaders.back()->setExtension("obj");
 
