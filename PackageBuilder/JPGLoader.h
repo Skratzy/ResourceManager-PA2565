@@ -24,7 +24,6 @@ public:
 	3------->
 	*/
 	our::string load(const std::string& path);
-	void write(our::string &data);
 };
 
 #endif
