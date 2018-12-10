@@ -1,6 +1,7 @@
 #include "FormatLoader.h"
 #include "OBJLoader.h"
 #include "PNGLoader.h"
+#include "JPGLoader.h"
 #include <experimental/filesystem>
 #include <iostream>
 #include <fstream>
@@ -52,29 +53,19 @@ int main(int argc, char* argv[]) {
 	namespace fs = std::experimental::filesystem;
 	
 	std::vector<FormatLoader*> loaders;
-
-	//std::vector<Resource*> resources;
-
-	//OBJLoader* obj = new malloc(sizeof(OBJLoader)) OBJLoader;
-
-
 	loaders.push_back(new PNGLoader);
-	PNGLoader asdf;
-	
-	our::string temp = asdf.load("Assets/testImage.png");
-	loaders.emplace_back(new OBJLoader);
-	//loaders.back()->m_supportedExtensions.push_back("obj");
-	//loaders.back()->setExtension("obj");
+	loaders.push_back(new OBJLoader);
+	loaders.push_back(new JPGLoader);
 
-	//fs::path folder = fs::path(argv[0]);
-	//fs::path folder = fs::path("C:/Users/enukp/source/repos/Skratzy/ResourceManager/PackageBuilder/testfolder");
-	fs::path folder = fs::path("testfolder");
-
+	fs::path folder = fs::path("Assets");
 	zipEntity(folder, loaders);
-	
+
+	// TEST
+	///PNGLoader asdf;
+	///our::string temp = asdf.load("Assets/testImage.png");
+
+
 	getchar();
-
-
 	return 0;
 }
 

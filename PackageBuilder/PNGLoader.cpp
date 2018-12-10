@@ -34,7 +34,7 @@ our::string PNGLoader::load(const std::string& path)
 		// Convert each point of data in the vector and append
 		for (int i = 0; i < image.size(); i++) {
 			// Delimiter
-			if ((i % 3) == 0) {
+			if ((i % 4) == 0) {	/// '4' since it's 4 channels per pixel
 				res.append((unsigned char*)"\n");
 			}
 			else {
@@ -46,4 +46,8 @@ our::string PNGLoader::load(const std::string& path)
 	}
 
 	return res;
+}
+
+void PNGLoader::write(our::string & data)
+{
 }

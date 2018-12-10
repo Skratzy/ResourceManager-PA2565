@@ -33,3 +33,7 @@ our::string OBJLoader::load(const std::string& path)
 
 	return ss.str();
 }
+
+void OBJLoader::write(our::string & data)
+{
+}
