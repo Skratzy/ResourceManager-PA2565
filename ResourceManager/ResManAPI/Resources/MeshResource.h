@@ -5,16 +5,6 @@
 #include "Resource.h"
 #include "../../Defines.h"
 
-struct vertex
-{
-	float x, y, z;
-};
-
-struct uv
-{
-	float u, v;
-};
-
 class MeshResource : public Resource
 {
 private:
@@ -25,34 +15,16 @@ private:
 	unsigned int m_indexCount;
 
 public:
-	MeshResource(
-		int vertexCount,
-		int normalsCount,
-		int texCoordsCount,
-		int indexCount,
-		const long GUID) : Resource(GUID)
-	{
-		vertices.resize(vertexCount);
-		normals.resize(normalsCount);
-		texCoords.resize(texCoordsCount);
-
-		indices_v.resize(indexCount);
-		indices_n.resize(indexCount);
-		indices_tx.resize(indexCount);
-	}
-
-	std::vector<vertex> vertices;
-	std::vector<vertex> normals; // Normals use the same struct as vertices (x, y, z)
-	std::vector<uv> texCoords;
 	MeshResource(std::vector<float>& vertices, std::vector<unsigned int>& indices, const long GUID);
 	virtual ~MeshResource();
 
-	std::vector<int> indices_v;
-	std::vector<int> indices_n;
-	std::vector<int> indices_tx;
+	std::vector<unsigned int> indices;
+
 	const sg_buffer& getVertexBuffer() const;
 	const sg_buffer& getIndexBuffer() const;
+
 	const bool getIsIndexed() const;
+
 	const unsigned int getVertexCount();
 	const unsigned int getIndexCount();
 };

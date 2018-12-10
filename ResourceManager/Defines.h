@@ -46,6 +46,8 @@
 #define HANDMADE_MATH_IMPLEMENTATION
 #define HANDMADE_MATH_NO_SSE
 
+#define SOKOL_LOG(s) RM_DEBUG_MESSAGE(s, 0)
+
 #ifdef __cplusplus
 extern "C" {
 #include "Sokol/HandmadeMath.h"
