@@ -6,6 +6,14 @@
 
 //#include "Resource.h"
 
+namespace our {
+	typedef std::basic_string<unsigned char> string;
+	typedef std::basic_stringstream<unsigned char> stringstream;
+
+	our::string convert(unsigned int data);
+	our::string convert(unsigned char* data);
+}
+
 class FormatLoader
 {
 protected:
@@ -13,7 +21,7 @@ protected:
 
 public:
 	virtual ~FormatLoader() {}
-	virtual std::string load(const std::string& path) = 0;
+	virtual our::string load(const std::string& path) = 0;
 
 	bool extensionSupported(const std::string& extension) {
 		for (auto ext : m_supportedExtensions) {
