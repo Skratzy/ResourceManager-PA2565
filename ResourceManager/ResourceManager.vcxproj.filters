@@ -33,78 +33,96 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Main.cpp">
+    <ClCompile Include="Sokol\d3d11entry.c">
       <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="ResourceManager.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="OBJLoader.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="LodePNG.cpp">
-      <Filter>Source Files\Textures %28CPP%29\.png %28CPP%29</Filter>
-    </ClCompile>
-    <ClCompile Include="PNGLoader.cpp">
-      <Filter>Source Files\Textures %28CPP%29\.png %28CPP%29</Filter>
-    </ClCompile>
-    <ClCompile Include="JPGLoader.cpp">
-      <Filter>Source Files\Textures %28CPP%29\.jpg %28CPP%29</Filter>
     </ClCompile>
     <ClCompile Include="texcube-d3d11.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Transform.cpp">
+    <ClCompile Include="Sokol\Objects\Transform.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="d3d11entry.c">
+    <ClCompile Include="ResManAPI\FormatLoaders\JPGLoader.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ResManAPI\FormatLoaders\LodePNG.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ResManAPI\FormatLoaders\OBJLoader.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ResManAPI\FormatLoaders\PNGLoader.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ResManAPI\Main.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ResManAPI\ResourceManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Sokol\Objects\Model.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ResManAPI\Resources\MeshResource.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ResManAPI\Resources\TextureResource.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="ResourceManager.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="FormatLoader.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Resource.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Defines.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="LodePNG.h">
+    <ClInclude Include="Sokol\d3d11entry.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="OBJLoader.h">
+    <ClInclude Include="Sokol\HandmadeMath.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="MyMesh.h">
+    <ClInclude Include="Sokol\sokol_gfx.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="PNGLoader.h">
-      <Filter>Header Files\Textures %28H%29\.png %28H%29</Filter>
-    </ClInclude>
-    <ClInclude Include="JPGLoader.h">
-      <Filter>Header Files\Textures %28H%29\.jpg %28H%29</Filter>
-    </ClInclude>
-    <ClInclude Include="TextureResource.h">
-      <Filter>Header Files\Textures %28H%29</Filter>
-    </ClInclude>
-    <ClInclude Include="CImg.h">
-      <Filter>Header Files\Textures %28H%29\.jpg %28H%29</Filter>
-    </ClInclude>
-    <ClInclude Include="d3d11entry.h">
+    <ClInclude Include="Sokol\Objects\Transform.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="HandmadeMath.h">
+    <ClInclude Include="Sokol\Objects\Model.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="sokol_gfx.h">
+    <ClInclude Include="ResManAPI\FormatLoaders\CImg.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Transform.hpp">
+    <ClInclude Include="ResManAPI\FormatLoaders\FormatLoader.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ResManAPI\FormatLoaders\JPGLoader.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ResManAPI\FormatLoaders\LodePNG.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ResManAPI\FormatLoaders\OBJ_Loader.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ResManAPI\FormatLoaders\OBJLoader.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ResManAPI\FormatLoaders\PNGLoader.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ResManAPI\Resources\MeshResource.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ResManAPI\Resources\Resource.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ResManAPI\Resources\TextureResource.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ResManAPI\ResourceManager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ResManAPI\FormatLoaders\tiny_obj_loader.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

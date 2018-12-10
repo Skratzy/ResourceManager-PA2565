@@ -43,15 +43,22 @@
 	default: break;\
 }}
 
-#define SOKOL_IMPL
-#define SOKOL_D3D11
-#define SOKOL_D3D11_SHADER_COMPILER
-#define SOKOL_LOG(s) OutputDebugStringA(s)
 #define HANDMADE_MATH_IMPLEMENTATION
 #define HANDMADE_MATH_NO_SSE
 
+#define SOKOL_LOG(s) RM_DEBUG_MESSAGE(s, 0)
+
+#ifdef __cplusplus
 extern "C" {
-#include "HandmadeMath.h"
+#include "Sokol/HandmadeMath.h"
+#include "Sokol/sokol_gfx.h"
 }
+#endif
+
+/* a uniform block with a model-view-projection matrix */
+typedef struct {
+	hmm_mat4 m;
+	hmm_mat4 vp;
+} vs_params_t;
 
 #endif //_RM_DEFINES_
