@@ -116,7 +116,7 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
     float rx = 0.0f, ry = 0.0f;
 	vs_params_t vsParams;
 	vsParams.vp = view_proj;
-	auto sunDirVec = HMM_Vec4(-1.f, 0.f, 0.f, 0.f);
+	auto sunDirVec = HMM_Vec4(0.f, -1.f, 0.f, 0.f);
 	vsParams.sunDir = sunDirVec;
 
 	// Initialize the resource manager and register the format loaders to it
@@ -127,16 +127,23 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 	rm.registerFormatLoader(RM_NEW(OBJLoader));
 
 	Transform sunDir;
-	Model model1(reinterpret_cast<MeshResource*>(rm.load("Assets/teapot.obj")), reinterpret_cast<TextureResource*>(rm.load("Assets/testImage.png")), pip);
-	model1.getTransform().translate(HMM_Vec3(0.f, -1.5f, -5.f));
+	std::vector<Model> models;
+	for (int i = 0; i < 10; i++) {
+		models.push_back(Model(reinterpret_cast<MeshResource*>(rm.load("Assets/teapot.obj")), reinterpret_cast<TextureResource*>(rm.load("Assets/testImage.png")), pip));
+		models.back().getTransform().translate(HMM_Vec3(0.f, -3.5f + float(i) / 5.f, -3.f - float(i) * 3.f));
+	}
     while (d3d11_process_events()) {
         /* draw frame */
         sg_begin_default_pass(&pass_action, d3d11_width(), d3d11_height());
 
-		sunDir.rotateAroundY(1.f);
-		vsParams.sunDir = HMM_MultiplyMat4ByVec4(sunDir.getMatrix(), sunDirVec);
+		//sunDir.rotateAroundY(1.f);
+		//vsParams.sunDir = HMM_MultiplyMat4ByVec4(sunDir.getMatrix(), sunDirVec);
 		
-		model1.draw(vsParams);
+		float index = 0.1f;
+		for (auto& model : models) {
+			model.getTransform().rotateAroundY(index++);
+			model.draw(vsParams);
+		}
 
         sg_end_pass();
         sg_commit();
