@@ -32,7 +32,7 @@ Resource* RMMeshLoader::load(const char* path, const long GUID)
 	std::getline(inputFile, tempString);
 	numberOfIndices = std::stoi(tempString);
 
-	verticesData.resize((numberOfVertices * 7) + 1);
+	verticesData.resize(numberOfVertices * 8);
 	for (int i = 0; i < verticesData.size(); i++) // ORDER: p.X, p.Y, p.Z, n.X, n.Y, n.Z, U, V
 	{
 		std::getline(inputFile, tempString, ',');

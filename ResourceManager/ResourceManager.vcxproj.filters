@@ -132,4 +132,8 @@
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
+  <ItemGroup>
+    <FxCompile Include="Assets\PixelShader.hlsl" />
+    <FxCompile Include="Assets\VertShader.hlsl" />
+  </ItemGroup>
 </Project>

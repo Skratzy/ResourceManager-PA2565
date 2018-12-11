@@ -59,12 +59,25 @@ our::string OBJReformatter::load(const std::string& filePath)
 			verticesData.push_back(attrib.vertices[3 * index.vertex_index + 1]);
 			verticesData.push_back(attrib.vertices[3 * index.vertex_index + 2]);
 
-			verticesData.push_back(attrib.normals[3 * index.normal_index + 0]);
-			verticesData.push_back(attrib.normals[3 * index.normal_index + 1]);
-			verticesData.push_back(attrib.normals[3 * index.normal_index + 2]);
+			if (attrib.normals.size() > 0) {
+				verticesData.push_back(attrib.normals[3 * index.normal_index + 0]);
+				verticesData.push_back(attrib.normals[3 * index.normal_index + 1]);
+				verticesData.push_back(attrib.normals[3 * index.normal_index + 2]);
+			}
+			else {
+				verticesData.push_back(-1.f);
+				verticesData.push_back(-1.f);
+				verticesData.push_back(0.f);
+			}
 
-			verticesData.push_back(attrib.texcoords[2 * index.texcoord_index + 0]);
-			verticesData.push_back(1.f - attrib.texcoords[2 * index.texcoord_index + 1]);
+			if (attrib.texcoords.size() > 0) {
+				verticesData.push_back(attrib.texcoords[2 * index.texcoord_index + 0]);
+				verticesData.push_back(1.f - attrib.texcoords[2 * index.texcoord_index + 1]);
+			}
+			else {
+				verticesData.push_back(0.f);
+				verticesData.push_back(0.f);
+			}
 		}
 	}
 
@@ -72,7 +85,7 @@ our::string OBJReformatter::load(const std::string& filePath)
 	/// ----------------------------------
 	std::string returnString = "";
 
-	int numberOfVertices = static_cast<int>(verticesData.size() / 7);
+	int numberOfVertices = static_cast<int>(verticesData.size() / 8);
 	int numberOfIndices = static_cast<int>(indices.size());
 
 	returnString += (std::to_string(numberOfVertices) + "\n");
