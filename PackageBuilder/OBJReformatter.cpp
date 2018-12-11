@@ -75,18 +75,18 @@ our::string OBJReformatter::load(const std::string& filePath)
 	int numberOfVertices = static_cast<int>(verticesData.size() / 7);
 	int numberOfIndices = static_cast<int>(indices.size());
 
-	returnString += (numberOfVertices + "\n");
-	returnString += (numberOfIndices + "\n");
+	returnString += (std::to_string(numberOfVertices) + "\n");
+	returnString += (std::to_string(numberOfIndices) + "\n");
 
 	for (int i = 0; i < verticesData.size(); i++) // ORDER: p.X, p.Y, p.Z, n.X, n.Y, n.Z, U, V
 	{
-		returnString += verticesData.at(i);
+		returnString += std::to_string(verticesData.at(i));
 		returnString += ",";
 	}
 
 	for (int i = 0; i < indices.size(); i++)
 	{
-		returnString += indices.at(i);
+		returnString += std::to_string(indices.at(i));
 		returnString += ",";
 	}
 	/// ----------------------------------------------------

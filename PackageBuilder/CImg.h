@@ -5,7 +5,7 @@
  #
  #  Description     : The C++ Template Image Processing Toolkit.
  #                    This file is the main component of the CImg Library project.
- #                    ( http://cimg.eu )
+ #                    ( http://cimg.eu )a
  #
  #  Project manager : David Tschumperle.
  #                    ( http://tschumperle.users.greyc.fr/ )

@@ -1,5 +1,5 @@
 #include "FormatLoader.h"
-#include "OBJLoader.h"
+#include "OBJReformatter.h"
 #include "PNGLoader.h"
 #include "JPGLoader.h"
 #include <experimental/filesystem>
@@ -8,92 +8,101 @@
 #include "MyMesh.h"
 #include "Defines.h"
 #include <ziplib/zip.h>
+#include "removeStack.h"
+#include <crtdbg.h>
 
 using namespace std::experimental::filesystem;
 
-void zipEntity(zip* archive, path path, std::vector<FormatLoader*> loaders) {
+void zipDirectory(zip* archive, path path) {
 	if (is_directory(path)) {
-		zip_dir_add(archive, path.generic_string().c_str(), 0);
-		recursive_directory_iterator end{};
-		for (recursive_directory_iterator iter(path); iter != end; ++iter) {
-			zipEntity(archive, iter->path(), loaders);
+		directory_iterator end{};
+		for (directory_iterator iter(path); iter != end; ++iter) {
+			zipDirectory(archive, iter->path());
 		}
-		//Add directory to archive
+		zip_dir_add(archive, path.string().c_str(), 0);
 	}
 	else if(is_regular_file(path))
 	{
-		std::string extension = path.extension().generic_string();
-		for (auto FL : loaders) {
-			if (FL->extensionSupported(extension)) {
-				our::string res = FL->load(path.string().c_str());//FIX GUID
+		zip_source* s = zip_source_file(archive, path.string().c_str(), 0, 0);
+		zip_file_add(archive, path.string().c_str(), s, 0);
+	}
+}
 
-				//Get loaded resource data and write to file.
+void convertDirectory(path path, std::vector<FormatLoader*> loaders) {
+		if (is_directory(path)) {
+			directory_iterator end{};
+			for (directory_iterator iter(path); iter != end; ++iter) {
+				convertDirectory(iter->path(), loaders);
+			}
+		}
+		else if (is_regular_file(path))
+		{	
+			std::string extension = path.extension().generic_string();
+			for (auto FL : loaders) {
 
-				std::ofstream myfile;
-				if (extension == ".obj") {
-					std::string file = path.stem().string();
-					file += ".mesh";
+				if (FL->extensionSupported(extension)) {
+					// actual file convertion
+					our::string fileContents = FL->load(path.string());
+					std::string convertedString;
 
-					//zip_source* s = zip_source_buffer(archive, &res, sizeof(res), 0);
-					zip_source* s = zip_source_file(archive, path.string().c_str(), 0, 0);
-					int index = zip_file_add(archive, file.c_str(), s, 0);
+					convertedString.resize(fileContents.size());
+
+					for (int i = 0; i < fileContents.size(); i++)
+						convertedString.at(i) = (static_cast<char>(fileContents.at(i)));
 					
-					//myfile.open(file.c_str());
 
-					////Write mesh specific data
-					//myfile << res;
+					if (extension == ".obj") {
+						// Temp code for creating a file
+						std::string file = path.parent_path().string() + "\\" + path.stem().string() + ".rmmesh";
+						std::string origin = file.substr(0, file.find("\\", 0));
+						file.erase(0, origin.length());
+						file = "Package" + file;
+						std::ofstream myFile;
+						myFile.open(file);
 
-					//myfile.close();
-					
+						myFile << convertedString;
+						myFile.close();
+					}
 				}
-
+				// If no supported extension are found: still add unconverted file?
 
 			}
 		}
-		//Add file to archive
+}
 
-	}
+void createPackage(path path, std::vector<FormatLoader*> loaders) {
+	// Creating temporary folder named Package
+	create_directory("Package");
+	std::experimental::filesystem::path package = std::experimental::filesystem::path("Package");
+	// Copy folder structure from original folder
+	copy(path, package, copy_options::directories_only | copy_options::recursive);
 
+	// Go through original folder and convert all files that are supported and put it in the temporary folder
+	convertDirectory(path, loaders);
+
+	// Zip the temporary folder
+	zip* archive = zip_open("Package.zip", ZIP_CREATE, 0);
+	zipDirectory(archive, package);
+	zip_close(archive);
+
+	// Remove temporary folder
+	std::experimental::filesystem::remove_all(package);
 }
 
 
+
 int main(int argc, char* argv[]) {
-	
+	_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
 	namespace fs = std::experimental::filesystem;
-	
+
 	std::vector<FormatLoader*> loaders;
 	loaders.push_back(new PNGLoader);
-	loaders.push_back(new OBJLoader);
+	loaders.push_back(new OBJReformatter);
 	loaders.push_back(new JPGLoader);
 
-	//fs::path folder = fs::path("Assets");
-	//zipEntity(folder, loaders);
+	fs::path folder = fs::path("testfolder2");
+	createPackage(folder, loaders);
 
-	//OBJLoader* obj = new malloc(sizeof(OBJLoader)) OBJLoader;
-
-
-
-	//loaders.emplace_back(new OBJLoader);
-	//loaders.back()->m_supportedExtensions.push_back("obj");
-	//loaders.back()->setExtension("obj");
-
-	//fs::path folder = fs::path(argv[0]);
-	//fs::path folder = fs::path("C:/Users/enukp/source/repos/Skratzy/ResourceManager/PackageBuilder/testfolder");
-
-	fs::path folder = fs::path("testfolder");
-
-	int err = 0;
-	zip* archive = zip_open("C:/Users/enukp/source/repos/Skratzy/ResourceManager/PackageBuilder/testarchive.zip", ZIP_CREATE, &err);
-
-
-
-	//zip_dir_add(archive, "C:/Users/enukp/source/repos/Skratzy/ResourceManager/PackageBuilder/testfolder3.zip", 0);
-
-	zipEntity(archive, folder, loaders);
-	zip_close(archive);
-
-
-	getchar();
 	return 0;
 }
 

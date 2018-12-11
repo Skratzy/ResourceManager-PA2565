@@ -20,6 +20,7 @@ extern "C" {
 #include "ResManAPI/FormatLoaders/PNGLoader.h"
 #include "ResManAPI/FormatLoaders/JPGLoader.h"
 #include "ResManAPI/FormatLoaders/OBJLoader.h"
+#include "ResManAPI/FormatLoaders/RMMeshLoader.h"
 #include "Sokol/Objects/Model.h"
 
 int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _In_ LPSTR lpCmdLine, _In_ int nCmdShow) {
@@ -126,9 +127,10 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 	rm.registerFormatLoader(RM_NEW(PNGLoader));
 	rm.registerFormatLoader(RM_NEW(JPGLoader));
 	rm.registerFormatLoader(RM_NEW(OBJLoader));
+	rm.registerFormatLoader(RM_NEW(RMMeshLoader));
 
 
-	Model model1(reinterpret_cast<MeshResource*>(rm.load("Assets/stuffWithNormals.obj")), reinterpret_cast<TextureResource*>(rm.load("Assets/chalet.jpg")), pip);
+	Model model1(reinterpret_cast<MeshResource*>(rm.load("Assets/man.rmmesh")), reinterpret_cast<TextureResource*>(rm.load("Assets/chalet.jpg")), pip);
 	model1.getTransform().translate(HMM_Vec3(0.f, -1.5f, 0.f));
     while (d3d11_process_events()) {
         /* draw frame */

@@ -5,6 +5,8 @@
 #include <iostream>
 #include <sstream>
 #include "TextureResource.h"
+#include "removeStack.h"
+#include "ziplib/zip.h"
 
 our::string our::convert(unsigned int data) {
 	return our::string((unsigned char*)(std::to_string(data).c_str()));
@@ -45,9 +47,10 @@ our::string PNGLoader::load(const std::string& path)
 		}
 	}
 
-	return res;
-}
+	//for (char c : res) {
+	//	static_cast<unsigned char*>(static_cast<void *>(&c));
+	//}
 
-void PNGLoader::write(our::string & data)
-{
+
+	return res;
 }

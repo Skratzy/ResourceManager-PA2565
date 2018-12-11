@@ -45,14 +45,17 @@
     <ClCompile Include="JPGLoader.cpp">
       <Filter>Source Files\Loaders</Filter>
     </ClCompile>
+    <ClCompile Include="removeStack.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="FormatLoader.cpp">
+      <Filter>Source Files\Loaders</Filter>
+    </ClCompile>
     <ClCompile Include="OBJReformatter.cpp">
       <Filter>Source Files\Loaders</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="FormatLoader.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="LodePNG.h">
       <Filter>Header Files\Libs</Filter>
     </ClInclude>
@@ -79,6 +82,12 @@
     </ClInclude>
     <ClInclude Include="CImg.h">
       <Filter>Header Files\Libs</Filter>
+    </ClInclude>
+    <ClInclude Include="removeStack.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="FormatLoader.h">
+      <Filter>Header Files\Loaders</Filter>
     </ClInclude>
     <ClInclude Include="OBJReformatter.h">
       <Filter>Header Files\Loaders</Filter>
