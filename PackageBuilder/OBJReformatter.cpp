@@ -5,7 +5,7 @@
 #define TINYOBJLOADER_IMPLEMENTATION
 #include "tiny_obj_loader.h"
 
-std::string OBJReformatter::load(const char* filePath)
+our::string OBJReformatter::load(const std::string& filePath)
 {
 	// OBJ_Loader Library Variables
 	/// ----------------------------------------
@@ -26,7 +26,7 @@ std::string OBJReformatter::load(const char* filePath)
 			&materials,
 			&warning,
 			&error,
-			filePath
+			filePath.c_str()
 		);
 	}
 	catch (const std::exception& e)
@@ -90,6 +90,9 @@ std::string OBJReformatter::load(const char* filePath)
 		returnString += ",";
 	}
 	/// ----------------------------------------------------
+	
+	auto constChars = returnString.c_str(); // get constant char* from string
+	auto unsignedChars = reinterpret_cast<unsigned char*>(const_cast<char*>(constChars));
 
-	return returnString;
+	return unsignedChars;
 }

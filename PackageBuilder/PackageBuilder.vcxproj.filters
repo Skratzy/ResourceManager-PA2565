@@ -45,7 +45,7 @@
     <ClCompile Include="JPGLoader.cpp">
       <Filter>Source Files\Loaders</Filter>
     </ClCompile>
-    <ClCompile Include="OBJReformater.cpp">
+    <ClCompile Include="OBJReformatter.cpp">
       <Filter>Source Files\Loaders</Filter>
     </ClCompile>
   </ItemGroup>
@@ -80,7 +80,7 @@
     <ClInclude Include="CImg.h">
       <Filter>Header Files\Libs</Filter>
     </ClInclude>
-    <ClInclude Include="OBJReformater.h">
+    <ClInclude Include="OBJReformatter.h">
       <Filter>Header Files\Loaders</Filter>
     </ClInclude>
   </ItemGroup>
