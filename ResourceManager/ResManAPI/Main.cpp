@@ -72,9 +72,15 @@
 //	zip_close(archive);
 //}
 //
-///*int main() {
-//	_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
-//	testReadTextures();
-//	getchar();
-//	return 0;
-//}*/
+
+#include "../ResourceManager/Tester.h"
+#include "../ResourceManager/RMTextureLoader.h"
+
+int main() {
+	Tester bot;
+	RMTextureLoader loadTester;
+
+	loadTester.load("", 0);
+	bot.openAndHandleAssetsFromZipArchive("zippedFile.zip");
+	return 0;
+}

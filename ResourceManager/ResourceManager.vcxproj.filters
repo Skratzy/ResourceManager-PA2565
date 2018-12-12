@@ -31,6 +31,12 @@
     <Filter Include="Source Files\Textures %28CPP%29\.jpg %28CPP%29">
       <UniqueIdentifier>{8142e93a-acd4-48bd-9236-ae72ca1309d0}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\TestCases">
+      <UniqueIdentifier>{ed04ba5e-f1f2-4f13-858c-57fc16864568}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\TestCases">
+      <UniqueIdentifier>{ec5a80a2-3383-4a4e-a164-bd3db20c8795}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Sokol\d3d11entry.c">
@@ -68,6 +74,9 @@
     </ClCompile>
     <ClCompile Include="ResManAPI\Resources\TextureResource.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Tester.cpp">
+      <Filter>Source Files\TestCases</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -124,6 +133,9 @@
     </ClInclude>
     <ClInclude Include="ResManAPI\FormatLoaders\tiny_obj_loader.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Tester.h">
+      <Filter>Header Files\TestCases</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
