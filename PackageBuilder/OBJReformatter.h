@@ -17,7 +17,7 @@ public:
 	OBJReformatter() { m_supportedExtensions.push_back(".obj"); };
 	~OBJReformatter() {};
 
-	our::string load(const std::string& filePath);
+	std::string load(const std::string& filePath);
 	void write(our::string &data) { std::cout << "WRITING!"; };
 };
 

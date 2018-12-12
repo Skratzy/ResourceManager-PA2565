@@ -52,13 +52,13 @@ void convertDirectory(path originPath, path currentPath, path targetPath, std::v
 					file = targetPath.string() + file;
 					std::ofstream myFile;
 					// Adding correct extension and creating file
-					/*if (extension == ".obj") {
+					if (extension == ".obj") {
 						file += currentPath.stem().string() + ".rmmesh";
 						myFile.open(file);
 						myFile << res;
 						myFile.close();
-					}*/
-					if (extension == ".png" || extension == ".jpg") {
+					}
+					else if (extension == ".png" || extension == ".jpg") {
 						file += currentPath.stem().string() + ".rmtex";
 						myFile.open(file);
 						myFile << res;
@@ -112,10 +112,10 @@ int main(int argc, char* argv[]) {
 	loaders.push_back(new JPGLoader);
 
 	// Origin path and target path
-	//path origin = path("Assets");
-	//path target = path("daPackage");
-	path origin = path(argv[1]);
-	path target = path(argv[2]);
+	path origin = path("Assets");
+	path target = path("daPackage");
+	//path origin = path(argv[1]);
+	//path target = path(argv[2]);
 
 	createPackage(origin, target, loaders);
 

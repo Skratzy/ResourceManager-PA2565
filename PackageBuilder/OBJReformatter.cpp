@@ -5,7 +5,7 @@
 #define TINYOBJLOADER_IMPLEMENTATION
 #include "tiny_obj_loader.h"
 
-our::string OBJReformatter::load(const std::string& filePath)
+std::string OBJReformatter::load(const std::string& filePath)
 {
 	// OBJ_Loader Library Variables
 	/// ----------------------------------------
@@ -103,9 +103,6 @@ our::string OBJReformatter::load(const std::string& filePath)
 		returnString += ",";
 	}
 	/// ----------------------------------------------------
-	
-	auto constChars = returnString.c_str(); // get constant char* from string
-	auto unsignedChars = reinterpret_cast<unsigned char*>(const_cast<char*>(constChars));
 
-	return unsignedChars;
+	return returnString;
 }
