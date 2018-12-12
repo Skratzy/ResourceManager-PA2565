@@ -136,8 +136,10 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 
 	Transform sunDir;
 	std::vector<Model*> models;
-	for (int i = 0; i < 10; i++) {
-		models.push_back(new (RM_MALLOC(sizeof(Model))) Model(reinterpret_cast<MeshResource*>(rm.load("Assets/cow-normals-test.obj")), reinterpret_cast<TextureResource*>(rm.load("Assets/testImage.png"))));
+	for (int i = 0; i < 1; i++) {
+		models.push_back(RM_NEW(Model));
+		std::function<void(Resource*)> callbackFunc = std::bind(&Model::setMeshNoDeref, models.back(), std::placeholders::_1);
+		rm.asyncLoad("Assets/teapot.obj", callbackFunc);
 		models.back()->getTransform().translate(HMM_Vec3(0.f, -3.5f + float(i) / 5.f, -3.f - float(i) * 3.f));
 	}
 
@@ -150,7 +152,7 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 		hmm_mat4 view = HMM_LookAt(HMM_Vec3(camEye.X, camEye.Y, camEye.Z), camCenter, camUp);
 		hmm_mat4 view_proj = HMM_MultiplyMat4(proj, view);
 		vsParams.vp = view_proj;
-		camEye = HMM_MultiplyMat4ByVec4(HMM_Rotate(1.f, camUp), camEye);
+		//camEye = HMM_MultiplyMat4ByVec4(HMM_Rotate(1.f, camUp), camEye);
 
         /* draw frame */
         sg_begin_default_pass(&pass_action, d3d11_width(), d3d11_height());
@@ -163,11 +165,12 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 			startTime = std::chrono::high_resolution_clock::now();
 			switchModels = true;
 		}
+		switchModels = false;
 		float index = 0.1f;
 		for (auto model : models) {
-			model->getTransform().rotateAroundY(index++);
+			model->getTransform().rotateAroundY(5.f);
 			model->draw(drawState, vsParams);
-			if (switchModels && false) {
+			if (switchModels) {
 				auto rndVal = std::rand() % 100;
 				
 				if (rndVal < 10) {

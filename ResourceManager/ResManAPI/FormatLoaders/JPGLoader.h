@@ -7,7 +7,9 @@ class Resource;
 
 class JPGLoader : public FormatLoader {
 public:
-	JPGLoader() { m_supportedExtensions.push_back(".jpg"); };
+	JPGLoader() { 
+		m_supportedExtensions.push_back(".jpg");
+	};
 	~JPGLoader() {};
 	/*
 	Returns a resource with the following data:

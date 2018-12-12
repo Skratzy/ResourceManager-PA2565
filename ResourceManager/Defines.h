@@ -15,7 +15,7 @@
 /*
 	TYPE: Type
 */
-#define RM_NEW(TYPE) new(RM_MALLOC(sizeof(TYPE))) TYPE
+#define RM_NEW(TYPE) new(RM_MALLOC(sizeof(TYPE))) TYPE()
 #define RM_FREE(s) free(s)
 #define RM_DELETE(s) delete s
 /*
