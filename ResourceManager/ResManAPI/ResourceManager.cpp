@@ -5,6 +5,8 @@
 #include "../Defines.h"
 #include "Resources/Resource.h"
 #include "FormatLoaders/FormatLoader.h"
+#include <ziplib/zip.h>
+#include <fstream>
 
 
 ResourceManager::ResourceManager()
@@ -38,6 +40,36 @@ Resource * ResourceManager::load(const char* path)
 	namespace fs = std::experimental::filesystem;
 	long hashedPath = m_pathHasher(path);
 
+	// Checking if the asset is in a package
+	std::string zipCheck = path;
+	size_t check = 0;
+	check = zipCheck.find(".zip");
+	bool loadZipped = false;
+	if (check < zipCheck.length()) {
+		// substrings for parts of the path
+		std::string zipLocation = zipCheck.substr(0, check + 4);
+		std::string zipPath = zipCheck.substr(check + 5, zipCheck.length());
+		
+		// Opening and extracting asset from package
+		zip* archive = zip_open(zipLocation.c_str(), 0, 0);
+		int index = zip_name_locate(archive, zipPath.c_str(), 0);
+		zip_stat_t stat;
+		zip_stat_index(archive, index, 0, &stat);
+		void* buffer = malloc(stat.size);
+		zip_file* file = zip_fopen(archive, zipPath.c_str(), 0);
+		zip_fread(file, buffer, stat.size);
+		std::ofstream aFile;
+		aFile.open(stat.name, std::ios::out | std::ios::binary);
+		aFile.write((char*)buffer, stat.size);
+		aFile.close();
+		zipCheck = stat.name;
+		zip_fclose(file);
+		zip_close(archive);
+		loadZipped = true;
+		free(buffer);
+	}
+
+
 
 	// Check if the resource already exists in the system
 	auto it = m_resources.find(hashedPath);
@@ -45,7 +77,6 @@ Resource * ResourceManager::load(const char* path)
 		// Found the resource
 		res = it->second;
 		res->refer();
-		return res;
 	}
 	// Else load it
 	else {
@@ -60,30 +91,38 @@ Resource * ResourceManager::load(const char* path)
 			// Found the resource
 			res = it->second;
 			res->refer();
-			return res;
 		}
-		std::string ext = fs::path(path).extension().generic_string();
+		else {
+			std::string ext = fs::path(path).extension().generic_string();
 
-		// Find the format loader corresponding to the extension
-		for (auto FL : m_formatLoaders) {
-			// Check if the format loader supports the extension
-			if (FL->extensionSupported(ext)) {
-				// Load the resource and return it
-				res = FL->load(path, hashedPath);
-				// Update memory usage
-				m_memUsage += res->getSize();
-				if (m_memUsage > m_capacity) {
-					RM_DEBUG_MESSAGE(("ResourceManager::load() - Memory usage exceeds the memory limit. (" + std::to_string(m_memUsage / (1024)) + "KB / " + std::to_string(m_capacity / (1024)) + "KB) (Usage / Capacity)"), 0);
+			// Find the format loader corresponding to the extension
+			for (auto FL : m_formatLoaders) {
+				// Check if the format loader supports the extension
+				if (FL->extensionSupported(ext)) {
+					// Load the resource and return it
+					if (!loadZipped) {
+						res = FL->load(path, hashedPath);
+					}
+					else
+					{
+						res = FL->load(zipCheck.c_str(), hashedPath);
+					}
+					// Update memory usage
+					m_memUsage += res->getSize();
+					if (m_memUsage > m_capacity) {
+						RM_DEBUG_MESSAGE(("ResourceManager::load() - Memory usage exceeds the memory limit. (" + std::to_string(m_memUsage / (1024)) + "KB / " + std::to_string(m_capacity / (1024)) + "KB) (Usage / Capacity)"), 0);
+					}
+					// Increase the reference count of the resource
+					res->refer();
+					// Add the loaded resource to the map
+					m_resources.emplace(hashedPath, res);
 				}
-				// Increase the reference count of the resource
-				res->refer();
-				// Add the loaded resource to the map
-				m_resources.emplace(hashedPath, res);
-				return res;
 			}
 		}
-
-		RM_DEBUG_MESSAGE("ResourceManager::load() - Did not find a format loader that supported the extension '" + ext + "'", 0);
+	}
+	if (loadZipped) {
+		// Deleting extracted file once loaded in to memory
+		fs::remove(zipCheck.c_str());
 	}
 	return res;
 	
