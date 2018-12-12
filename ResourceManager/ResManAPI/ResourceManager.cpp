@@ -61,7 +61,7 @@ Resource * ResourceManager::load(const char* path)
 			res = it->second;
 			res->refer();
 			return res;
-		}		
+		}
 		std::string ext = fs::path(path).extension().generic_string();
 
 		// Find the format loader corresponding to the extension
@@ -93,8 +93,9 @@ void ResourceManager::decrementReference(long key)
 {
 	if (m_resources.at(key)->derefer() == 0)
 	{
-		RM_FREE(m_resources.at(key));
 		m_memUsage -= m_resources.at(key)->getSize();
+		m_resources.at(key)->~Resource();
+		RM_FREE(m_resources.at(key));
 		m_resources.erase(key);
 	}	
 }

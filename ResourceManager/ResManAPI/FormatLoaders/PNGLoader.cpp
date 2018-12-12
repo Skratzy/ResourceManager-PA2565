@@ -15,7 +15,9 @@ Resource* PNGLoader::load(const char* path, const long GUID)
 		RM_DEBUG_MESSAGE(std::to_string(error) + lodepng_error_text(error) + " at filePath: " + path, 0);
 	}
 	else {
-		resource = new TextureResource(width, height, image, GUID);
+		unsigned int size = sizeof(TextureResource) + sizeof(unsigned int) * image.size();
+		resource = new (RM_MALLOC(size)) TextureResource(width, height, image, GUID);
+		resource->setSize(size);
 	}
 
 	return resource;

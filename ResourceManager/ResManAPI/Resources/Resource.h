@@ -10,7 +10,10 @@ private:
 
 public:
 	Resource(const long GUID)
-		: m_GUID(GUID) {}
+		: m_GUID(GUID) {
+		m_size = 0;
+		m_refCount = 0;
+	}
 	virtual ~Resource() {}
 
 	const long getGUID() const {
