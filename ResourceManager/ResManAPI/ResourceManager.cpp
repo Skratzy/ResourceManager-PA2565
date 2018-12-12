@@ -78,7 +78,8 @@ Resource * ResourceManager::load(const char* path)
 		// substrings for parts of the path
 		std::string zipLocation = zipCheck.substr(0, check + 4);
 		std::string zipPath = zipCheck.substr(check + 5, zipCheck.length());
-		
+		fs::path fileNamePath(path);
+		std::string fileName = fileNamePath.stem().string() + fileNamePath.extension().string();
 		// Opening and extracting asset from package
 		zip* archive = zip_open(zipLocation.c_str(), 0, 0);
 		int index = zip_name_locate(archive, zipPath.c_str(), 0);
@@ -88,10 +89,10 @@ Resource * ResourceManager::load(const char* path)
 		zip_file* file = zip_fopen(archive, zipPath.c_str(), 0);
 		zip_fread(file, buffer, stat.size);
 		std::ofstream aFile;
-		aFile.open(stat.name, std::ios::out | std::ios::binary);
+		aFile.open(fileName.c_str(), std::ios::out | std::ios::binary);
 		aFile.write((char*)buffer, stat.size);
 		aFile.close();
-		zipCheck = stat.name;
+		zipCheck = fileName;
 		zip_fclose(file);
 		zip_close(archive);
 		loadZipped = true;
