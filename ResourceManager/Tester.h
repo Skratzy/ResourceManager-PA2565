@@ -4,8 +4,6 @@
 #include <string>
 #include <vector>
 
-#include "../PackageBuilder/"
-
 struct object {
 	std::string meshPath;
 	std::string texturePaths;

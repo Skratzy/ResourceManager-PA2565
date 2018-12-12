@@ -75,10 +75,14 @@
 
 #include "../ResourceManager/Tester.h"
 #include "../ResourceManager/RMTextureLoader.h"
+#include "ResourceManager.h"
 
 int main() {
 	Tester bot;
 	RMTextureLoader loadTester;
+	ResourceManager &mngr = ResourceManager::getInstance();
+	mngr.registerFormatLoader(new RMTextureLoader);
+	Resource* res = mngr.load("DaPackage/testfile.rmtex");
 
 	loadTester.load("", 0);
 	bot.openAndHandleAssetsFromZipArchive("zippedFile.zip");

@@ -1,6 +1,7 @@
 #include "RMTextureLoader.h"
 #include <fstream>
 #include "../ResourceManager/ResManAPI/Resources/TextureResource.h"
+#include "../ResourceManager/ResManAPI/Resources/Resource.h"
 
 RMTextureLoader::RMTextureLoader()
 {

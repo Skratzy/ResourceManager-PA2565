@@ -150,11 +150,11 @@
     <ClCompile Include="ResManAPI\FormatLoaders\LodePNG.cpp" />
     <ClCompile Include="ResManAPI\FormatLoaders\OBJLoader.cpp" />
     <ClCompile Include="ResManAPI\FormatLoaders\PNGLoader.cpp" />
-    <ClCompile Include="ResManAPI\FormatLoaders\RMMeshLoader.cpp" />
     <ClCompile Include="ResManAPI\Main.cpp" />
     <ClCompile Include="ResManAPI\ResourceManager.cpp" />
     <ClCompile Include="ResManAPI\Resources\MeshResource.cpp" />
     <ClCompile Include="ResManAPI\Resources\TextureResource.cpp" />
+    <ClCompile Include="RMTextureLoader.cpp" />
     <ClCompile Include="Sokol\d3d11entry.c" />
     <ClCompile Include="Sokol\Objects\Model.cpp" />
     <ClCompile Include="Tester.cpp" />
@@ -169,12 +169,12 @@
     <ClInclude Include="ResManAPI\FormatLoaders\OBJLoader.h" />
     <ClInclude Include="ResManAPI\FormatLoaders\OBJ_Loader.h" />
     <ClInclude Include="ResManAPI\FormatLoaders\PNGLoader.h" />
-    <ClInclude Include="ResManAPI\FormatLoaders\RMMeshLoader.h" />
     <ClInclude Include="ResManAPI\FormatLoaders\tiny_obj_loader.h" />
     <ClInclude Include="ResManAPI\ResourceManager.h" />
     <ClInclude Include="ResManAPI\Resources\MeshResource.h" />
     <ClInclude Include="ResManAPI\Resources\Resource.h" />
     <ClInclude Include="ResManAPI\Resources\TextureResource.h" />
+    <ClInclude Include="RMTextureLoader.h" />
     <ClInclude Include="Sokol\d3d11entry.h" />
     <ClInclude Include="Defines.h" />
     <ClInclude Include="Sokol\HandmadeMath.h" />

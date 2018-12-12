@@ -3,13 +3,15 @@
 
 #include "ResManAPI/FormatLoaders/FormatLoader.h"
 
+class Resource;
+
 class RMTextureLoader : public FormatLoader {
 private:
 public:
 	RMTextureLoader();
 	~RMTextureLoader();
 
-	virtual Resource* load(const char* path, const long GUID);
+	Resource* load(const char* path, const long GUID);
 };
 
 
