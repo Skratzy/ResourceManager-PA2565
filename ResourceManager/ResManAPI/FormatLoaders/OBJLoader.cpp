@@ -59,6 +59,7 @@ Resource* OBJLoader::load(const char* path, const long GUID)
 			verticesData.push_back(attrib.vertices[3 * index.vertex_index + 1]);
 			verticesData.push_back(attrib.vertices[3 * index.vertex_index + 2]);
 			
+			// Check if there's normals data in file, else use faux data (Should calculate normals)
 			if (attrib.normals.size() > 0) {
 				verticesData.push_back(attrib.normals[3 * index.normal_index + 0]);
 				verticesData.push_back(attrib.normals[3 * index.normal_index + 1]);
@@ -70,6 +71,7 @@ Resource* OBJLoader::load(const char* path, const long GUID)
 				verticesData.push_back(0.f);
 			}
 
+			// Check if there's texCoord data in file, else use faux data
 			if (attrib.texcoords.size() > 0) {
 				verticesData.push_back(attrib.texcoords[2 * index.texcoord_index + 0]);
 				verticesData.push_back(1.f - attrib.texcoords[2 * index.texcoord_index + 1]);
@@ -81,8 +83,9 @@ Resource* OBJLoader::load(const char* path, const long GUID)
 		}
 	}
 
-	MeshResource* meshToBeReturned = new (RM_MALLOC(sizeof(MeshResource))) MeshResource(verticesData, indices, GUID);
-
+	unsigned int size = sizeof(MeshResource) + verticesData.size() * sizeof(float) + indices.size() * sizeof(unsigned int);
+	MeshResource* meshToBeReturned = new (RM_MALLOC(size)) MeshResource(verticesData, indices, GUID);
+	meshToBeReturned->setSize(size);
 	/// ----------------------------------------------------
 	return meshToBeReturned;
 }

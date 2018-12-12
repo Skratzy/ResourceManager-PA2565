@@ -5,7 +5,6 @@
 #include <iostream>
 #include <sstream>
 #include "TextureResource.h"
-#include "removeStack.h"
 #include "ziplib/zip.h"
 
 our::string our::convert(unsigned int data) {
@@ -15,7 +14,7 @@ our::string our::convert(unsigned char* data) {
 	return our::string(data);
 }
 
-our::string PNGLoader::load(const std::string& path)
+std::string PNGLoader::load(const std::string& path)
 {
 	using namespace our;
 	std::vector<unsigned char> image;
@@ -47,10 +46,12 @@ our::string PNGLoader::load(const std::string& path)
 		}
 	}
 
-	//for (char c : res) {
-	//	static_cast<unsigned char*>(static_cast<void *>(&c));
-	//}
 
-
-	return res;
+	std::string convertedString;
+	int size = res.size();
+	for (int i = 0; i < size; i++) {
+		std::string singleChar(1, static_cast<char>(res.at(i)));
+		convertedString.append(singleChar);
+	}
+	return convertedString;
 }

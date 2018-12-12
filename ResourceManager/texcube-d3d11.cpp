@@ -6,6 +6,9 @@
 #include <thread>
 #include <fstream>
 #include <sstream>
+#include <cstdlib>
+#include <ctime>
+#include <chrono>
 
 #define SOKOL_IMPL
 #define SOKOL_D3D11
@@ -111,12 +114,12 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 
     /* view-projection matrix */
     hmm_mat4 proj = HMM_Perspective(60.0f, static_cast<float>(width)/static_cast<float>(height), 0.01f, 1000.0f);
-    hmm_mat4 view = HMM_LookAt(HMM_Vec3(0.0f, 1.5f, 6.0f), HMM_Vec3(0.0f, 0.0f, 0.0f), HMM_Vec3(0.0f, 1.0f, 0.0f));
-    hmm_mat4 view_proj = HMM_MultiplyMat4(proj, view);
+	auto camEye = HMM_Vec4(0.0f, 1.5f, 6.0f, 0.f);
+	auto camCenter = HMM_Vec3(0.0f, 0.0f, 0.0f);
+	auto camUp = HMM_Vec3(0.0f, 1.0f, 0.0f);
 
     float rx = 0.0f, ry = 0.0f;
 	vs_params_t vsParams;
-	vsParams.vp = view_proj;
 	auto sunDirVec = HMM_Vec4(0.f, -1.f, 0.f, 0.f);
 	vsParams.sunDir = sunDirVec;
 
@@ -128,29 +131,79 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 	rm.registerFormatLoader(RM_NEW(OBJLoader));
 	rm.registerFormatLoader(RM_NEW(RMMeshLoader));
 
+	sg_draw_state drawState{ 0 };
+	drawState.pipeline = pip;
+
+	std::srand(std::time(nullptr));
+
 	Transform sunDir;
-	std::vector<Model> models;
+	std::vector<Model*> models;
 	for (int i = 0; i < 10; i++) {
-		models.push_back(Model(reinterpret_cast<MeshResource*>(rm.load("Assets/man.rmmesh")), reinterpret_cast<TextureResource*>(rm.load("Assets/testImage.png")), pip));
-		models.back().getTransform().translate(HMM_Vec3(0.f, -3.5f + float(i) / 5.f, -3.f - float(i) * 3.f));
+		models.push_back(new (RM_MALLOC(sizeof(Model))) Model(reinterpret_cast<MeshResource*>(rm.load("Assets/cow-normals.obj")), reinterpret_cast<TextureResource*>(rm.load("Assets/testImage.png"))));
+		models.back()->getTransform().translate(HMM_Vec3(0.f, -3.5f + float(i) / 5.f, -3.f - float(i) * 3.f));
 	}
+
+
+
+	auto startTime = std::chrono::high_resolution_clock::now();
     while (d3d11_process_events()) {
+
+		/*Extremely simple camera rotation*/
+		hmm_mat4 view = HMM_LookAt(HMM_Vec3(camEye.X, camEye.Y, camEye.Z), camCenter, camUp);
+		hmm_mat4 view_proj = HMM_MultiplyMat4(proj, view);
+		vsParams.vp = view_proj;
+		camEye = HMM_MultiplyMat4ByVec4(HMM_Rotate(1.f, camUp), camEye);
+
         /* draw frame */
         sg_begin_default_pass(&pass_action, d3d11_width(), d3d11_height());
 
 		//sunDir.rotateAroundY(1.f);
 		//vsParams.sunDir = HMM_MultiplyMat4ByVec4(sunDir.getMatrix(), sunDirVec);
 		
+		bool switchModels = false;
+		if (std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::high_resolution_clock::now() - startTime) > std::chrono::milliseconds(500)) {
+			startTime = std::chrono::high_resolution_clock::now();
+			switchModels = true;
+		}
 		float index = 0.1f;
-		for (auto& model : models) {
-			model.getTransform().rotateAroundY(index++);
-			model.draw(vsParams);
+		for (auto model : models) {
+			model->getTransform().rotateAroundY(index++);
+			model->draw(drawState, vsParams);
+			if (switchModels && false) {
+				auto rndVal = std::rand() % 100;
+				
+				if (rndVal < 10) {
+					model->setMesh(reinterpret_cast<MeshResource*>(rm.load("Assets/cow-normals.obj")));
+				}
+				else if (rndVal < 50){
+					model->setMesh(reinterpret_cast<MeshResource*>(rm.load("Assets/teapot.obj")));
+				}
+				else {
+					model->setMesh(reinterpret_cast<MeshResource*>(rm.load("Assets/cow-normals-test.obj")));
+				}
+
+				if (rndVal < 30) {
+					model->setTexture(reinterpret_cast<TextureResource*>(rm.load("Assets/testImage1.jpg")));
+				}
+				else if (rndVal < 50) {
+					model->setTexture(reinterpret_cast<TextureResource*>(rm.load("Assets/testImage.png")));
+				}
+				else {
+					model->setTexture(reinterpret_cast<TextureResource*>(rm.load("Assets/testFile.png")));
+				}
+			}
 		}
 
         sg_end_pass();
         sg_commit();
         d3d11_present();
     }
+
+	for (auto m : models) {
+		m->~Model();
+		::operator delete(m);
+	}
+
     sg_shutdown();
     d3d11_shutdown();
     return 0;

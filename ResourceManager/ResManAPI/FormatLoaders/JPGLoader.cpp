@@ -23,15 +23,17 @@ Resource * JPGLoader::load(const char* path, const long GUID)
 		for (unsigned int y = 0; y < height; y++) {
 			for (unsigned int x = 0; x < width; x++) {
 				// source.data(pixel_x, pixel_y, depth, color(0,1,2 = red,green,blue)
-				image.push_back(*source.data(x, y, 0, 0));
+				image.push_back(*source.data(x, y, 0, 0)); 
 				image.push_back(*source.data(x, y, 0, 1));
 				image.push_back(*source.data(x, y, 0, 2));
-				image.push_back(char(255));
+				image.push_back(unsigned char(255));
 			}
 		}
 
+		unsigned int size = sizeof(TextureResource) + sizeof(unsigned int) * image.size();
 		// Attach the formatted image to a textureresource
-		resource = new TextureResource(width, height, image, GUID);
+		resource = new (RM_MALLOC(size)) TextureResource(width, height, image, GUID);
+		resource->setSize(size);
 	}
 
 	return resource;

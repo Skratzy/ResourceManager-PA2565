@@ -23,7 +23,7 @@ protected:
 
 public:
 	virtual ~FormatLoader() {}
-	virtual our::string load(const std::string& path) = 0;
+	virtual std::string load(const std::string& path) = 0;
 	bool extensionSupported(const std::string& extension) {
 		for (auto ext : m_supportedExtensions) {
 			if (ext == extension)

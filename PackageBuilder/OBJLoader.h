@@ -14,7 +14,7 @@ public:
 
 	~OBJLoader() {};
 
-	our::string load(const std::string& path);
+	std::string load(const std::string& path);
 };
 
 #endif //_PT_OBJ_LOADER_HPP
