@@ -59,7 +59,7 @@ public:
 	void init(const unsigned int capacity);
 
 	Resource* load(const char* path);
-	Resource* asyncLoad(const char* path, std::function<void(Resource*)> callback);
+	void asyncLoad(const char* path, std::function<void(Resource*)> callback);
 
 	void decrementReference(long key);
 

@@ -113,7 +113,7 @@ Resource * ResourceManager::load(const char* path)
 	
 }
 
-Resource* ResourceManager::asyncLoad(const char * path, std::function<void(Resource*)> callback)
+void ResourceManager::asyncLoad(const char * path, std::function<void(Resource*)> callback)
 {
 	long hashedPath = m_pathHasher(path);
 	Resource* res = nullptr;
@@ -153,8 +153,6 @@ Resource* ResourceManager::asyncLoad(const char * path, std::function<void(Resou
 			m_asyncResJobs.emplace(hashedPath, AsyncJob{ path, callbacks });
 			m_cond.notify_one();
 		}
-
-		return nullptr;
 	}
 }
 
