@@ -9,6 +9,7 @@
 #include <functional>
 #include <thread>
 #include <condition_variable>
+#include <queue>
 
 class Resource;
 class FormatLoader;
@@ -33,6 +34,7 @@ private:
 		const char* filepath;
 		std::vector<std::function<void(Resource*)>> callbacks;
 	};
+	std::queue<long> m_asyncJobQueue;
 	std::map<long, AsyncJob> m_asyncResJobs;
 	std::thread m_asyncLoadThread;
 	std::condition_variable m_cond;

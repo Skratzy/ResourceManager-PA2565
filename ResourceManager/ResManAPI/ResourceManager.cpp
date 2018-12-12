@@ -15,10 +15,14 @@ void ResourceManager::asyncLoadStart()
 
 		// Critical region
 		if (m_asyncResJobs.size() > 0) {
-			auto currJob = m_asyncResJobs.begin();
+			long GUID = m_asyncJobQueue.front();
+			m_asyncJobQueue.pop();
+			auto currJob = m_asyncResJobs.find(GUID);
 			Resource* res = load(currJob->second.filepath);
-			for (auto callback : currJob->second.callbacks)
+			for (auto callback : currJob->second.callbacks) {
 				callback(res);
+				res->refer();
+			}
 			m_asyncResJobs.erase(currJob);
 		}
 	}
@@ -132,14 +136,14 @@ void ResourceManager::asyncLoad(const char * path, std::function<void(Resource*)
 		std::lock_guard<std::mutex> lock(m_asyncLoadMutex);
 
 		// Check if the resource already exists in the system
-		it = m_resources.find(hashedPath);
+		/*it = m_resources.find(hashedPath);
 		if (it != m_resources.end()) {
 			// Found the resource
 			res = it->second;
 			res->refer();
 			callback(res);
 			return;
-		}
+		}*/
 		
 		// Find out if the job is already queued
 		auto asyncJobsIt = m_asyncResJobs.find(hashedPath);
@@ -151,6 +155,7 @@ void ResourceManager::asyncLoad(const char * path, std::function<void(Resource*)
 			std::vector<std::function<void(Resource*)>> callbacks;
 			callbacks.push_back(callback);
 			m_asyncResJobs.emplace(hashedPath, AsyncJob{ path, callbacks });
+			m_asyncJobQueue.push(hashedPath);
 			m_cond.notify_one();
 		}
 	}
