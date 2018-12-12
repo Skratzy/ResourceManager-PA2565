@@ -142,7 +142,7 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 	}
 
 	for (auto m : models)
-		rm.asyncLoad("Assets/teapot.obj", std::bind(&Model::setMeshNoDeref, m, std::placeholders::_1));
+		rm.asyncLoad("Assets/cow-normals.obj", std::bind(&Model::setMeshNoDeref, m, std::placeholders::_1));
 
 
 

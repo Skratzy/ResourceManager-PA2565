@@ -37,6 +37,7 @@ private:
 	std::thread m_asyncLoadThread;
 	std::condition_variable m_cond;
 	std::mutex m_asyncMutex;
+	std::mutex m_asyncLoadMutex;
 	bool m_running;
 
 

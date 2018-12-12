@@ -129,7 +129,7 @@ void ResourceManager::asyncLoad(const char * path, std::function<void(Resource*)
 	}
 	else {
 		// Critical region
-		std::lock_guard<std::mutex> lock(m_asyncMutex);
+		std::lock_guard<std::mutex> lock(m_asyncLoadMutex);
 
 		// Check if the resource already exists in the system
 		it = m_resources.find(hashedPath);
