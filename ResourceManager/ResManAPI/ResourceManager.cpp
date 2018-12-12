@@ -5,6 +5,8 @@
 #include "../Defines.h"
 #include "Resources/Resource.h"
 #include "FormatLoaders/FormatLoader.h"
+#include <fstream>
+#include <ziplib/zip.h>
 
 
 void ResourceManager::asyncLoadStart()
