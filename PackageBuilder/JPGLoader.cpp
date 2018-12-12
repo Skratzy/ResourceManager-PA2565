@@ -9,7 +9,7 @@
 
 using namespace cimg_library;
 
-our::string JPGLoader::load(const std::string& path)
+std::string JPGLoader::load(const std::string& path)
 {
 	using namespace our;
 	CImg<unsigned char> source(path.c_str());
@@ -53,6 +53,11 @@ our::string JPGLoader::load(const std::string& path)
 			res.append(convert(image.at(i)));
 		}
 	}
-
-	return res;
+	std::string convertedString;
+	int size = res.size();
+	for (int i = 0; i < size; i++) {
+		std::string singleChar(1, static_cast<char>(res.at(i)));
+		convertedString.append(singleChar);
+	}
+	return convertedString;
 }

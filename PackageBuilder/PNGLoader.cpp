@@ -15,7 +15,7 @@ our::string our::convert(unsigned char* data) {
 	return our::string(data);
 }
 
-our::string PNGLoader::load(const std::string& path)
+std::string PNGLoader::load(const std::string& path)
 {
 	using namespace our;
 	std::vector<unsigned char> image;
@@ -47,5 +47,12 @@ our::string PNGLoader::load(const std::string& path)
 		}
 	}
 
-	return res;
+
+	std::string convertedString;
+	int size = res.size();
+	for (int i = 0; i < size; i++) {
+		std::string singleChar(1, static_cast<char>(res.at(i)));
+		convertedString.append(singleChar);
+	}
+	return convertedString;
 }

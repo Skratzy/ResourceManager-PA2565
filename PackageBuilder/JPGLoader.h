@@ -23,7 +23,7 @@ public:
 	2------->
 	3------->
 	*/
-	our::string load(const std::string& path);
+	std::string load(const std::string& path);
 };
 
 #endif
