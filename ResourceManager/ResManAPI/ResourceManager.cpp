@@ -7,20 +7,48 @@
 #include "FormatLoaders/FormatLoader.h"
 
 
+void ResourceManager::asyncLoadStart()
+{
+	while (m_running) {
+		std::unique_lock<std::mutex> lock(m_asyncMutex);
+		m_cond.wait(lock);
+
+		// Critical region
+		if (m_asyncResJobs.size() > 0) {
+			long GUID = m_asyncJobQueue.front();
+			m_asyncJobQueue.pop();
+			auto currJob = m_asyncResJobs.find(GUID);
+			Resource* res = load(currJob->second.filepath);
+			for (auto callback : currJob->second.callbacks) {
+				callback(res);
+				res->refer();
+			}
+			m_asyncResJobs.erase(currJob);
+		}
+	}
+}
+
 ResourceManager::ResourceManager()
 {
 	m_capacity = 0;
 	m_memUsage = 0;
 	m_initialized = false;
+	m_running = true;
+
+	// Start the async loading thread
+	m_asyncLoadThread = std::thread(std::bind(&ResourceManager::asyncLoadStart, this));
 }
 
 
 ResourceManager::~ResourceManager()
 {
+	m_running = false;
+	m_cond.notify_all();
 	for (auto FL : m_formatLoaders)
 		RM_DELETE(FL);
 	for (auto RES : m_resources)
 		RM_DELETE(RES.second);
+	m_asyncLoadThread.join();
 }
 
 
@@ -87,6 +115,50 @@ Resource * ResourceManager::load(const char* path)
 	}
 	return res;
 	
+}
+
+void ResourceManager::asyncLoad(const char * path, std::function<void(Resource*)> callback)
+{
+	long hashedPath = m_pathHasher(path);
+	Resource* res = nullptr;
+
+	// Check if the resource already exists in the system
+	auto it = m_resources.find(hashedPath);
+	if (it != m_resources.end()) {
+		// Found the resource
+		res = it->second;
+		res->refer();
+		callback(res);
+		return;
+	}
+	else {
+		// Critical region
+		std::lock_guard<std::mutex> lock(m_asyncLoadMutex);
+
+		// Check if the resource already exists in the system
+		/*it = m_resources.find(hashedPath);
+		if (it != m_resources.end()) {
+			// Found the resource
+			res = it->second;
+			res->refer();
+			callback(res);
+			return;
+		}*/
+		
+		// Find out if the job is already queued
+		auto asyncJobsIt = m_asyncResJobs.find(hashedPath);
+		// The job already exists, push back another callback
+		if (asyncJobsIt != m_asyncResJobs.end()) {
+			asyncJobsIt->second.callbacks.push_back(callback);
+		}
+		else {
+			std::vector<std::function<void(Resource*)>> callbacks;
+			callbacks.push_back(callback);
+			m_asyncResJobs.emplace(hashedPath, AsyncJob{ path, callbacks });
+			m_asyncJobQueue.push(hashedPath);
+			m_cond.notify_one();
+		}
+	}
 }
 
 void ResourceManager::decrementReference(long key)
