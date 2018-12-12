@@ -24,6 +24,7 @@ extern "C" {
 #include "ResManAPI/FormatLoaders/PNGLoader.h"
 #include "ResManAPI/FormatLoaders/JPGLoader.h"
 #include "ResManAPI/FormatLoaders/OBJLoader.h"
+#include "ResManAPI/FormatLoaders/RMMeshLoader.h"
 #include "Sokol/Objects/Model.h"
 
 
@@ -128,6 +129,7 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 	rm.registerFormatLoader(RM_NEW(PNGLoader));
 	rm.registerFormatLoader(RM_NEW(JPGLoader));
 	rm.registerFormatLoader(RM_NEW(OBJLoader));
+	rm.registerFormatLoader(RM_NEW(RMMeshLoader));
 
 	sg_draw_state drawState{ 0 };
 	drawState.pipeline = pip;
