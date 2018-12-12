@@ -24,6 +24,7 @@ extern "C" {
 #include "ResManAPI/FormatLoaders/PNGLoader.h"
 #include "ResManAPI/FormatLoaders/JPGLoader.h"
 #include "ResManAPI/FormatLoaders/OBJLoader.h"
+#include "ResManAPI/FormatLoaders/RMMeshLoader.h"
 #include "Sokol/Objects/Model.h"
 
 
@@ -128,6 +129,7 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 	rm.registerFormatLoader(RM_NEW(PNGLoader));
 	rm.registerFormatLoader(RM_NEW(JPGLoader));
 	rm.registerFormatLoader(RM_NEW(OBJLoader));
+	rm.registerFormatLoader(RM_NEW(RMMeshLoader));
 
 	sg_draw_state drawState{ 0 };
 	drawState.pipeline = pip;
@@ -136,11 +138,14 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 
 	Transform sunDir;
 	std::vector<Model*> models;
-	for (int i = 0; i < 10; i++) {
-		models.push_back(new (RM_MALLOC(sizeof(Model))) Model(reinterpret_cast<MeshResource*>(rm.load("Assets/cow-normals.obj")), reinterpret_cast<TextureResource*>(rm.load("Assets/testImage.png"))));
-		models.back()->getTransform().translate(HMM_Vec3(0.f, -3.5f + float(i) / 5.f, -3.f - float(i) * 3.f));
+	for (int i = 0; i < 2; i++) {
+		models.push_back(RM_NEW(Model));
+		models.back()->getTransform().translate(HMM_Vec3(0.f, -3.5f + float(i) / 2.5f, -3.f - float(i) * 3.f));
 	}
 
+	
+	rm.asyncLoad("Assets/stuffWithNormals.obj", std::bind(&Model::setMeshNoDeref, models[1], std::placeholders::_1));
+	rm.asyncLoad("Assets/cow-normals.obj", std::bind(&Model::setMeshNoDeref, models[0], std::placeholders::_1));
 
 
 	auto startTime = std::chrono::high_resolution_clock::now();
@@ -150,7 +155,7 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 		hmm_mat4 view = HMM_LookAt(HMM_Vec3(camEye.X, camEye.Y, camEye.Z), camCenter, camUp);
 		hmm_mat4 view_proj = HMM_MultiplyMat4(proj, view);
 		vsParams.vp = view_proj;
-		camEye = HMM_MultiplyMat4ByVec4(HMM_Rotate(1.f, camUp), camEye);
+		//camEye = HMM_MultiplyMat4ByVec4(HMM_Rotate(1.f, camUp), camEye);
 
         /* draw frame */
         sg_begin_default_pass(&pass_action, d3d11_width(), d3d11_height());
@@ -163,11 +168,12 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 			startTime = std::chrono::high_resolution_clock::now();
 			switchModels = true;
 		}
+		switchModels = false;
 		float index = 0.1f;
 		for (auto model : models) {
-			model->getTransform().rotateAroundY(index++);
+			model->getTransform().rotateAroundY(5.f);
 			model->draw(drawState, vsParams);
-			if (switchModels && false) {
+			if (switchModels) {
 				auto rndVal = std::rand() % 100;
 				
 				if (rndVal < 10) {

@@ -5,6 +5,7 @@
 #include <string>
 
 #include "../Resources/Resource.h"
+#include "../../Defines.h"
 
 class FormatLoader
 {

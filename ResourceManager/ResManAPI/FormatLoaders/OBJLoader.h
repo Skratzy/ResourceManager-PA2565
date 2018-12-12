@@ -12,7 +12,9 @@ private:
 
 
 public:
-	OBJLoader() { m_supportedExtensions.push_back(".obj"); }
+	OBJLoader() {
+		m_supportedExtensions.push_back(".obj");
+	}
 	virtual ~OBJLoader() {}
 
 	virtual Resource* load(const char* path, const long GUID);

@@ -75,6 +75,9 @@
     <ClCompile Include="ResManAPI\Resources\TextureResource.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="ResManAPI\FormatLoaders\RMMeshLoader.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
     <ClCompile Include="Tester.cpp">
       <Filter>Source Files\TestCases</Filter>
     </ClCompile>
@@ -132,6 +135,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="ResManAPI\FormatLoaders\tiny_obj_loader.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ResManAPI\FormatLoaders\RMMeshLoader.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Tester.h">

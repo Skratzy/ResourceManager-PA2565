@@ -1,5 +1,5 @@
 #include "FormatLoader.h"
-#include "OBJLoader.h"
+#include "OBJReformatter.h"
 #include "PNGLoader.h"
 #include "JPGLoader.h"
 #include <experimental/filesystem>
@@ -52,13 +52,13 @@ void convertDirectory(path originPath, path currentPath, path targetPath, std::v
 					file = targetPath.string() + file;
 					std::ofstream myFile;
 					// Adding correct extension and creating file
-					/*if (extension == ".obj") {
+					if (extension == ".obj") {
 						file += currentPath.stem().string() + ".rmmesh";
 						myFile.open(file);
 						myFile << res;
 						myFile.close();
-					}*/
-					if (extension == ".png" || extension == ".jpg") {
+					}
+					else if (extension == ".png" || extension == ".jpg") {
 						file += currentPath.stem().string() + ".rmtex";
 						myFile.open(file);
 						myFile << res;
@@ -108,14 +108,14 @@ int main(int argc, char* argv[]) {
 	// Adding loaders
 	std::vector<FormatLoader*> loaders;
 	loaders.push_back(new PNGLoader);
-	//loaders.push_back(new OBJLoader);
+	loaders.push_back(new OBJReformatter); // Previously OBJLoader
 	loaders.push_back(new JPGLoader);
 
 	// Origin path and target path
-	//path origin = path("Assets");
-	//path target = path("daPackage");
-	path origin = path(argv[1]);
-	path target = path(argv[2]);
+	path origin = path("Assets");
+	path target = path("daPackage");
+	//path origin = path(argv[1]);
+	//path target = path(argv[2]);
 
 	createPackage(origin, target, loaders);
 

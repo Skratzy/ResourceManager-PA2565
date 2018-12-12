@@ -48,6 +48,9 @@
     <ClCompile Include="FormatLoader.cpp">
       <Filter>Source Files\Loaders</Filter>
     </ClCompile>
+    <ClCompile Include="OBJReformatter.cpp">
+      <Filter>Source Files\Loaders</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="LodePNG.h">
@@ -82,6 +85,9 @@
     </ClInclude>
     <ClInclude Include="Defines.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="OBJReformatter.h">
+      <Filter>Header Files\Loaders</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -136,6 +136,7 @@
     <ClCompile Include="LodePNG.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="OBJLoader.cpp" />
+    <ClCompile Include="OBJReformatter.cpp" />
     <ClCompile Include="PNGLoader.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -146,6 +147,7 @@
     <ClInclude Include="LodePNG.h" />
     <ClInclude Include="MyMesh.h" />
     <ClInclude Include="OBJLoader.h" />
+    <ClInclude Include="OBJReformatter.h" />
     <ClInclude Include="OBJ_Loader.h" />
     <ClInclude Include="PNGLoader.h" />
     <ClInclude Include="Resource.h" />
