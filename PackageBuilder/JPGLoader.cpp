@@ -5,7 +5,6 @@
 
 #define cimg_use_jpeg
 #include "CImg.h"
-#include "removeStack.h"
 
 using namespace cimg_library;
 

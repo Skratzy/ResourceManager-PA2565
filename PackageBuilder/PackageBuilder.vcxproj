@@ -137,7 +137,6 @@
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="OBJLoader.cpp" />
     <ClCompile Include="PNGLoader.cpp" />
-    <ClCompile Include="removeStack.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CImg.h" />
@@ -149,7 +148,6 @@
     <ClInclude Include="OBJLoader.h" />
     <ClInclude Include="OBJ_Loader.h" />
     <ClInclude Include="PNGLoader.h" />
-    <ClInclude Include="removeStack.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="TextureResource.h" />
   </ItemGroup>
