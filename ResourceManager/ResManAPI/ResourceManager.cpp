@@ -76,10 +76,11 @@ Resource * ResourceManager::load(const char* path)
 	bool loadZipped = false;
 	if (check < zipCheck.length()) {
 		// substrings for parts of the path
+		fs::path filePath(path);
+		zipCheck = filePath.string();
 		std::string zipLocation = zipCheck.substr(0, check + 4);
 		std::string zipPath = zipCheck.substr(check + 5, zipCheck.length());
-		fs::path fileNamePath(path);
-		std::string fileName = fileNamePath.stem().string() + fileNamePath.extension().string();
+		std::string fileName = filePath.filename().string();
 		// Opening and extracting asset from package
 		zip* archive = zip_open(zipLocation.c_str(), 0, 0);
 		int index = zip_name_locate(archive, zipPath.c_str(), 0);
