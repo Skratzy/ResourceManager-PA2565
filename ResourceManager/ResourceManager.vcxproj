@@ -150,6 +150,7 @@
     <ClCompile Include="ResManAPI\FormatLoaders\LodePNG.cpp" />
     <ClCompile Include="ResManAPI\FormatLoaders\OBJLoader.cpp" />
     <ClCompile Include="ResManAPI\FormatLoaders\PNGLoader.cpp" />
+    <ClCompile Include="ResManAPI\FormatLoaders\RMMeshLoader.cpp" />
     <ClCompile Include="ResManAPI\Main.cpp" />
     <ClCompile Include="ResManAPI\ResourceManager.cpp" />
     <ClCompile Include="ResManAPI\Resources\MeshResource.cpp" />
@@ -167,6 +168,7 @@
     <ClInclude Include="ResManAPI\FormatLoaders\OBJLoader.h" />
     <ClInclude Include="ResManAPI\FormatLoaders\OBJ_Loader.h" />
     <ClInclude Include="ResManAPI\FormatLoaders\PNGLoader.h" />
+    <ClInclude Include="ResManAPI\FormatLoaders\RMMeshLoader.h" />
     <ClInclude Include="ResManAPI\FormatLoaders\tiny_obj_loader.h" />
     <ClInclude Include="ResManAPI\ResourceManager.h" />
     <ClInclude Include="ResManAPI\Resources\MeshResource.h" />
