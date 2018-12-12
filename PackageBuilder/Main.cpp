@@ -97,7 +97,7 @@ int main(int argc, char* argv[]) {
 
 	std::vector<FormatLoader*> loaders;
 	loaders.push_back(new PNGLoader);
-	loaders.push_back(new OBJReformatter);
+	loaders.push_back(new OBJReformatter); // Previously OBJLoader
 	loaders.push_back(new JPGLoader);
 
 	fs::path folder = fs::path("testfolder2");
