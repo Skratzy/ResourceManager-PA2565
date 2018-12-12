@@ -124,11 +124,12 @@ Resource* ResourceManager::asyncLoad(const char * path, std::function<void(Resou
 		// Found the resource
 		res = it->second;
 		res->refer();
-		return res;
+		callback(res);
+		return;
 	}
 	else {
 		// Critical region
-		std::unique_lock<std::mutex> lock(m_asyncMutex);
+		std::lock_guard<std::mutex> lock(m_asyncMutex);
 
 		// Check if the resource already exists in the system
 		it = m_resources.find(hashedPath);
@@ -136,7 +137,8 @@ Resource* ResourceManager::asyncLoad(const char * path, std::function<void(Resou
 			// Found the resource
 			res = it->second;
 			res->refer();
-			return res;
+			callback(res);
+			return;
 		}
 		
 		// Find out if the job is already queued
