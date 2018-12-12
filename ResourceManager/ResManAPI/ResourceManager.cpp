@@ -11,7 +11,8 @@ void ResourceManager::asyncLoadStart()
 {
 	while (m_running) {
 		std::unique_lock<std::mutex> lock(m_asyncMutex);
-		m_cond.wait(lock);
+		if(m_asyncResJobs.size() == 0)
+			m_cond.wait(lock);
 
 		// Critical region
 		if (m_asyncResJobs.size() > 0) {
@@ -23,6 +24,7 @@ void ResourceManager::asyncLoadStart()
 				callback(res);
 				res->refer();
 			}
+			res->derefer();
 			m_asyncResJobs.erase(currJob);
 		}
 	}

@@ -141,9 +141,9 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 		models.back()->getTransform().translate(HMM_Vec3(0.f, -3.5f + float(i) / 2.5f, -3.f - float(i) * 3.f));
 	}
 
-	for (auto m : models)
-		rm.asyncLoad("Assets/cow-normals.obj", std::bind(&Model::setMeshNoDeref, m, std::placeholders::_1));
-
+	
+	rm.asyncLoad("Assets/stuffWithNormals.obj", std::bind(&Model::setMeshNoDeref, models[1], std::placeholders::_1));
+	rm.asyncLoad("Assets/cow-normals.obj", std::bind(&Model::setMeshNoDeref, models[0], std::placeholders::_1));
 
 
 	auto startTime = std::chrono::high_resolution_clock::now();
