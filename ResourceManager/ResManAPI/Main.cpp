@@ -72,19 +72,19 @@
 //	zip_close(archive);
 //}
 //
-
-#include "../ResourceManager/Tester.h"
-#include "../ResourceManager/RMTextureLoader.h"
-#include "ResourceManager.h"
-
-int main() {
-	Tester bot;
-	RMTextureLoader loadTester;
-	ResourceManager &mngr = ResourceManager::getInstance();
-	mngr.registerFormatLoader(new RMTextureLoader);
-	Resource* res = mngr.load("testfile.rmtex");
-
-	loadTester.load("", 0);
-	bot.openAndHandleAssetsFromZipArchive("zippedFile.zip");
-	return 0;
-}
+//
+//#include "../ResourceManager/Tester.h"
+//#include "../ResourceManager/RMTextureLoader.h"
+//#include "ResourceManager.h"
+// MAIN USED FOR TESTING BY DANIEL
+//int main() {
+//	Tester bot;
+//	RMTextureLoader loadTester;
+//	ResourceManager &mngr = ResourceManager::getInstance();
+//	mngr.registerFormatLoader(new RMTextureLoader);
+//	Resource* res = mngr.load("testfile.rmtex");
+//
+//	loadTester.load("", 0);
+//	bot.openAndHandleAssetsFromZipArchive("zippedFile.zip");
+//	return 0;
+//}

@@ -69,39 +69,6 @@ Resource * ResourceManager::load(const char* path)
 	namespace fs = std::experimental::filesystem;
 	long hashedPath = m_pathHasher(path);
 
-	// Checking if the asset is in a package
-	std::string zipCheck = path;
-	size_t check = 0;
-	check = zipCheck.find(".zip");
-	bool loadZipped = false;
-	if (check < zipCheck.length()) {
-		// substrings for parts of the path
-		std::string zipLocation = zipCheck.substr(0, check + 4);
-		std::string zipPath = zipCheck.substr(check + 5, zipCheck.length());
-		
-		// Opening and extracting asset from package
-		zip* archive = zip_open(zipLocation.c_str(), 0, 0);
-		int index = zip_name_locate(archive, zipPath.c_str(), 0);
-		if (index < 0)
-			std::cout << "ERROR: COULD NOT FIND FILEPATH: " << zipPath.c_str();
-		zip_stat_t stat;
-		zip_stat_index(archive, index, 0, &stat);
-		void* buffer = malloc(stat.size);
-		zip_file* file = zip_fopen(archive, zipPath.c_str(), 0);
-		zip_fread(file, buffer, stat.size);
-		std::ofstream aFile;
-		aFile.open(stat.name, std::ios::out | std::ios::binary);
-		aFile.write((char*)buffer, stat.size);
-		aFile.close();
-		zipCheck = stat.name;
-		zip_fclose(file);
-		zip_close(archive);
-		loadZipped = true;
-		free(buffer);
-	}
-
-
-
 	// Check if the resource already exists in the system
 	auto it = m_resources.find(hashedPath);
 	if (it != m_resources.end()) {
@@ -131,13 +98,7 @@ Resource * ResourceManager::load(const char* path)
 				// Check if the format loader supports the extension
 				if (FL->extensionSupported(ext)) {
 					// Load the resource and return it
-					if (!loadZipped) {
 						res = FL->load(path, hashedPath);
-					}
-					else
-					{
-						res = FL->load(zipCheck.c_str(), hashedPath);
-					}
 					// Update memory usage
 					m_memUsage += res->getSize();
 					if (m_memUsage > m_capacity) {
@@ -151,10 +112,7 @@ Resource * ResourceManager::load(const char* path)
 			}
 		}
 	}
-	if (loadZipped) {
-		// Deleting extracted file once loaded in to memory
-		fs::remove(zipCheck.c_str());
-	}
+
 	return res;
 	
 }

@@ -146,6 +146,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="ResManAPI\FormatLoaders\FormatLoader.cpp" />
     <ClCompile Include="ResManAPI\FormatLoaders\JPGLoader.cpp" />
     <ClCompile Include="ResManAPI\FormatLoaders\LodePNG.cpp" />
     <ClCompile Include="ResManAPI\FormatLoaders\OBJLoader.cpp" />
