@@ -16,9 +16,20 @@ RMTextureLoader::~RMTextureLoader()
 
 Resource * RMTextureLoader::load(const char * path, const long GUID)
 {
-//	using namespace our;
 	using namespace std;
-	ifstream inputStream(path, std::ios_base::in | std::ios_base::binary);
+
+	// If it's in a zip, deal with it appropriately
+	std::string filePath = path;
+	size_t check = 0;
+	check = filePath.find(".zip");
+	bool loadZipped = false;
+	if (check < filePath.length()) {
+		loadZipped = true;
+		filePath = extractFile(path, check);
+	}
+
+	// Start the loading process with the correct filepath
+	ifstream inputStream(filePath, std::ios_base::in | std::ios_base::binary);
 	string width;
 	string height;
 	string lineData;
