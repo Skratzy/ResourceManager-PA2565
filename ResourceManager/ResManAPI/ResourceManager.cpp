@@ -70,34 +70,36 @@ Resource * ResourceManager::load(const char* path)
 	long hashedPath = m_pathHasher(path);
 
 	// Checking if the asset is in a package
-	std::string zipCheck = path;
+	std::string zipPath = path;
 	size_t check = 0;
-	check = zipCheck.find(".zip");
+	check = zipPath.find(".zip");
 	bool loadZipped = false;
-	if (check < zipCheck.length()) {
+
+	if (check < zipPath.length()) {
 		// substrings for parts of the path
 		fs::path filePath(path);
-		zipCheck = filePath.string();
-		std::string zipLocation = zipCheck.substr(0, check + 4);
-		std::string zipPath = zipCheck.substr(check + 5, zipCheck.length());
+		zipPath = filePath.string();
+		std::string zipLocation = zipPath.substr(0, check + 4);
+		std::string pathInPackage = zipPath.substr(check + 5, zipPath.length());
 		std::string fileName = filePath.filename().string();
 		// Opening and extracting asset from package
 		zip* archive = zip_open(zipLocation.c_str(), 0, 0);
-		int index = zip_name_locate(archive, zipPath.c_str(), 0);
+		int index = zip_name_locate(archive, pathInPackage.c_str(), 0);
 		zip_stat_t stat;
 		zip_stat_index(archive, index, 0, &stat);
 		void* buffer = malloc(stat.size);
-		zip_file* file = zip_fopen(archive, zipPath.c_str(), 0);
+		zip_file* file = zip_fopen(archive, pathInPackage.c_str(), 0);
 		zip_fread(file, buffer, stat.size);
 		std::ofstream aFile;
 		aFile.open(fileName.c_str(), std::ios::out | std::ios::binary);
 		aFile.write((char*)buffer, stat.size);
 		aFile.close();
-		zipCheck = fileName;
 		zip_fclose(file);
 		zip_close(archive);
-		loadZipped = true;
 		free(buffer);
+
+		zipPath = fileName;
+		loadZipped = true;
 	}
 
 
@@ -136,7 +138,7 @@ Resource * ResourceManager::load(const char* path)
 					}
 					else
 					{
-						res = FL->load(zipCheck.c_str(), hashedPath);
+						res = FL->load(zipPath.c_str(), hashedPath);
 					}
 					// Update memory usage
 					m_memUsage += res->getSize();
@@ -153,7 +155,7 @@ Resource * ResourceManager::load(const char* path)
 	}
 	if (loadZipped) {
 		// Deleting extracted file once loaded in to memory
-		fs::remove(zipCheck.c_str());
+		fs::remove(zipPath.c_str());
 	}
 	return res;
 	

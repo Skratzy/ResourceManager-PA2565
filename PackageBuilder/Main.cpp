@@ -71,7 +71,7 @@ void convertDirectory(path originPath, path currentPath, path targetPath, std::v
 			if (!extensionSupported) {
 				std::string copyStringPath = targetPath.string() + "\\" + currentPath.stem().string() + extension;
 				path copyPath(copyStringPath);
-				copy_file(currentPath, copyPath);
+				copy_file(currentPath, copyPath, copy_options::skip_existing);
 			}
 		}
 }
@@ -108,14 +108,14 @@ int main(int argc, char* argv[]) {
 	// Adding loaders
 	std::vector<FormatLoader*> loaders;
 	loaders.push_back(new PNGLoader);
-	loaders.push_back(new OBJReformatter); // Previously OBJLoader
+	loaders.push_back(new OBJReformatter);
 	loaders.push_back(new JPGLoader);
 
 	// Origin path and target path
-	path origin = path("Assets");
-	path target = path("daPackage");
-	//path origin = path(argv[1]);
-	//path target = path(argv[2]);
+	//path origin = path("../ResourceManager/testAssets");
+	//path target = path("../Release/AssetPackage");
+	path origin = path(argv[1]);
+	path target = path(argv[2]);
 
 	createPackage(origin, target, loaders);
 
