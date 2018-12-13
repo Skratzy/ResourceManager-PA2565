@@ -175,7 +175,7 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 	models.push_back(RM_NEW(Model));
 	start = std::chrono::high_resolution_clock::now();
 	// OBJ in Zip loading test
-	models.back()->setMesh(reinterpret_cast<MeshResource*>(rm.load("Assets/Assets.zip/Assets/meshes/teapot.obj")));
+	models.back()->setMesh(reinterpret_cast<MeshResource*>(rm.load("Assets/AssetsPackage.zip/AssetsPackage/meshes/teapot.obj")));
 	timeTaken = std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::high_resolution_clock::now() - start).count();
 	debugMsg = std::string("Loading of teapot.obj from zip took: " + std::to_string(timeTaken) + "ms.");
 	RM_DEBUG_MESSAGE(debugMsg, 0);
