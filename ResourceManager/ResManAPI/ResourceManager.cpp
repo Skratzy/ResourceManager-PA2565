@@ -82,6 +82,8 @@ Resource * ResourceManager::load(const char* path)
 		// Opening and extracting asset from package
 		zip* archive = zip_open(zipLocation.c_str(), 0, 0);
 		int index = zip_name_locate(archive, zipPath.c_str(), 0);
+		if (index < 0)
+			std::cout << "ERROR: COULD NOT FIND FILEPATH: " << zipPath.c_str();
 		zip_stat_t stat;
 		zip_stat_index(archive, index, 0, &stat);
 		void* buffer = malloc(stat.size);

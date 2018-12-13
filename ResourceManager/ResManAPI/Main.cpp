@@ -82,7 +82,7 @@ int main() {
 	RMTextureLoader loadTester;
 	ResourceManager &mngr = ResourceManager::getInstance();
 	mngr.registerFormatLoader(new RMTextureLoader);
-	Resource* res = mngr.load("DaPackage/testfile.rmtex");
+	Resource* res = mngr.load("testfile.rmtex");
 
 	loadTester.load("", 0);
 	bot.openAndHandleAssetsFromZipArchive("zippedFile.zip");
