@@ -6,11 +6,22 @@
 #define TINYOBJLOADER_IMPLEMENTATION
 #include "tiny_obj_loader.h"
 
+#include <experimental/filesystem>
 #include <map>
 #include <unordered_map>
 
 Resource* OBJLoader::load(const char* path, const long GUID)
 {	
+	// Checking if the asset is in a package
+	std::string filePath = path;
+	size_t check = 0;
+	check = filePath.find(".zip");
+	bool loadZipped = false;
+	if (check < filePath.length()) {
+		loadZipped = true;
+		filePath = extractFile(path, check);
+	}
+
 	// OBJ_Loader Library Variables
 	/// ----------------------------------------
 	tinyobj::attrib_t attrib;
@@ -30,7 +41,7 @@ Resource* OBJLoader::load(const char* path, const long GUID)
 			&materials,
 			&warning,
 			&error,
-			path
+			filePath.c_str()
 		);
 	}
 	catch (const std::exception& e)
@@ -87,5 +98,11 @@ Resource* OBJLoader::load(const char* path, const long GUID)
 	MeshResource* meshToBeReturned = new (RM_MALLOC(size)) MeshResource(verticesData, indices, GUID);
 	meshToBeReturned->setSize(size);
 	/// ----------------------------------------------------
+
+	if (loadZipped) {
+		// Deleting extracted file once loaded in to memory
+		std::experimental::filesystem::remove(filePath.c_str());
+	}
+
 	return meshToBeReturned;
 }

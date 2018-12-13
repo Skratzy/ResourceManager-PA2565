@@ -72,6 +72,9 @@
     <ClCompile Include="ResManAPI\FormatLoaders\RMMeshLoader.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="ResManAPI\FormatLoaders\FormatLoader.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Defines.h">

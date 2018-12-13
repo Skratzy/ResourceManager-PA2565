@@ -1,21 +1,35 @@
 #include "JPGLoader.h"
 #include "../Resources/TextureResource.h"
+#include <experimental/filesystem>
 
 #define cimg_use_jpeg
 #include "CImg.h"
+
 
 Resource * JPGLoader::load(const char* path, const long GUID)
 {
 	using namespace cimg_library;
 
-	CImg<unsigned char> source(path);
+	// Checking if the asset is in a package
+	std::string filePath = path;
+	size_t check = 0;
+	check = filePath.find(".zip");
+	bool loadZipped = false;
+	if (check < filePath.length()) {
+		loadZipped = true;
+		filePath = extractFile(path, check);
+	}
+
+	CImg<unsigned char> source(filePath.c_str());
 	unsigned int width = source.width();
 	unsigned int height = source.height();
 	std::vector<unsigned char> image;
 	Resource* resource = nullptr;
+
+
 	
 	if (source.size() == 0) {
-		std::string debugMessage = (path + std::string(" did not load succesfully!"));
+		std::string debugMessage = (filePath.c_str() + std::string(" did not load succesfully!"));
 		RM_DEBUG_MESSAGE(debugMessage, 0);
 	}
 	else {
@@ -34,6 +48,11 @@ Resource * JPGLoader::load(const char* path, const long GUID)
 		// Attach the formatted image to a textureresource
 		resource = new (RM_MALLOC(size)) TextureResource(width, height, image, GUID);
 		resource->setSize(size);
+	}
+
+	if (loadZipped) {
+		// Deleting extracted file once loaded in to memory
+		std::experimental::filesystem::remove(filePath.c_str());
 	}
 
 	return resource;

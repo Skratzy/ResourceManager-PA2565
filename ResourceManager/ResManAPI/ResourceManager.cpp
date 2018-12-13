@@ -69,41 +69,6 @@ Resource * ResourceManager::load(const char* path)
 	namespace fs = std::experimental::filesystem;
 	long hashedPath = m_pathHasher(path);
 
-	// Checking if the asset is in a package
-	std::string zipPath = path;
-	size_t check = 0;
-	check = zipPath.find(".zip");
-	bool loadZipped = false;
-
-	if (check < zipPath.length()) {
-		// substrings for parts of the path
-		fs::path filePath(path);
-		zipPath = filePath.string();
-		std::string zipLocation = zipPath.substr(0, check + 4);
-		std::string pathInPackage = zipPath.substr(check + 5, zipPath.length());
-		std::string fileName = filePath.filename().string();
-		// Opening and extracting asset from package
-		zip* archive = zip_open(zipLocation.c_str(), 0, 0);
-		int index = zip_name_locate(archive, pathInPackage.c_str(), 0);
-		zip_stat_t stat;
-		zip_stat_index(archive, index, 0, &stat);
-		void* buffer = malloc(stat.size);
-		zip_file* file = zip_fopen(archive, pathInPackage.c_str(), 0);
-		zip_fread(file, buffer, stat.size);
-		std::ofstream aFile;
-		aFile.open(fileName.c_str(), std::ios::out | std::ios::binary);
-		aFile.write((char*)buffer, stat.size);
-		aFile.close();
-		zip_fclose(file);
-		zip_close(archive);
-		free(buffer);
-
-		zipPath = fileName;
-		loadZipped = true;
-	}
-
-
-
 	// Check if the resource already exists in the system
 	auto it = m_resources.find(hashedPath);
 	if (it != m_resources.end()) {
@@ -133,13 +98,7 @@ Resource * ResourceManager::load(const char* path)
 				// Check if the format loader supports the extension
 				if (FL->extensionSupported(ext)) {
 					// Load the resource and return it
-					if (!loadZipped) {
 						res = FL->load(path, hashedPath);
-					}
-					else
-					{
-						res = FL->load(zipPath.c_str(), hashedPath);
-					}
 					// Update memory usage
 					m_memUsage += res->getSize();
 					if (m_memUsage > m_capacity) {
@@ -153,10 +112,7 @@ Resource * ResourceManager::load(const char* path)
 			}
 		}
 	}
-	if (loadZipped) {
-		// Deleting extracted file once loaded in to memory
-		fs::remove(zipPath.c_str());
-	}
+
 	return res;
 	
 }
