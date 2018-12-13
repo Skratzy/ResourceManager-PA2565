@@ -24,10 +24,15 @@ vs_out main(vs_in inp)
     outp.pos = mul(mvp, inp.pos);
 	outp.uv = inp.uv;
 	
-    float3 lightDir = float3(0.0f, 1.0f, 0.0f);
-    float4 color = float4(1.0f, 1.0f, 1.0f, 1.0f);
+    float3 midDayLightDir = float3(0.0f, 1.0f, 0.0f);
+    float3 lightDir = midDayLightDir - sunDir.xyz;
+    float r = abs(lightDir.y) * 0.8f;
+    float g = abs(lightDir.y) * 0.5f;
+    float b = abs(lightDir.z) * 0.5f;
+
+    float4 color = float4(r, g, b, 1.0f);
     float3 normal = mul(inp.normal, m).xyz;
-    float lightIntensity = saturate(dot(normalize(normal), normalize(-sunDir.xyz)));
+    float lightIntensity = saturate(dot(normalize(normal), normalize(sunDir.xyz)));
 
     outp.color = saturate(color * lightIntensity);
 	return outp;

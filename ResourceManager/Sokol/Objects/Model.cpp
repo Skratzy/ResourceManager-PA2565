@@ -8,8 +8,8 @@
 Model::Model()
 	: m_transform(Transform())
 {
-	m_mesh = reinterpret_cast<MeshResource*>(ResourceManager::getInstance().load("Assets/tempOBJRes.obj"));
-	m_texture = reinterpret_cast<TextureResource*>(ResourceManager::getInstance().load("Assets/tempJPGRes.jpg"));
+	m_mesh = reinterpret_cast<MeshResource*>(ResourceManager::getInstance().load("Assets/meshes/tempOBJRes.obj"));
+	m_texture = reinterpret_cast<TextureResource*>(ResourceManager::getInstance().load("Assets/textures/tempJPGRes.jpg"));
 	m_vertexCount = m_mesh->getVertexCount();
 	m_indexCount = m_mesh->getIndexCount();
 }
