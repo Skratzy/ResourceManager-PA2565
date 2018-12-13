@@ -79,18 +79,18 @@
 #include "../ResourceManager/ResManAPI/FormatLoaders/PNGLoader.h"
 
 #include "ResourceManager.h"
-// MAIN USED FOR TESTING BY DANIEL
-int main() {
-	ResourceManager &mngr = ResourceManager::getInstance();
-	mngr.registerFormatLoader(new JPGLoader);
-	mngr.registerFormatLoader(new PNGLoader);
-	mngr.registerFormatLoader(new RMTextureLoader);
-	Resource* res0 = mngr.load("Assets/testfile.png");
-	Resource* res1 = mngr.load("Assets/testfile.jpg");
-	Resource* res2 = mngr.load("testfile.rmtex");
-
-
-	Tester tester;
-	tester.openAndHandleAssetsFromZipArchive("zippedFile.zip");
-	return 0;
-}
+//// MAIN USED FOR TESTING BY DANIEL
+//int main() {
+//	ResourceManager &mngr = ResourceManager::getInstance();
+//	mngr.registerFormatLoader(new JPGLoader);
+//	mngr.registerFormatLoader(new PNGLoader);
+//	mngr.registerFormatLoader(new RMTextureLoader);
+//	Resource* res0 = mngr.load("Assets/testfile.png");
+//	Resource* res1 = mngr.load("Assets/testfile.jpg");
+//	Resource* res2 = mngr.load("testfile.rmtex");
+//
+//
+//	Tester tester;
+//	tester.openAndHandleAssetsFromZipArchive("zippedFile.zip");
+//	return 0;
+//}
