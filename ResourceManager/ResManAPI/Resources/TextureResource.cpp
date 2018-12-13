@@ -16,6 +16,10 @@ TextureResource::TextureResource(int width, int height, std::vector<unsigned cha
 	m_imgBuffer = sg_make_image(&sgid);
 }
 
+TextureResource::~TextureResource() {
+	sg_destroy_image(m_imgBuffer);
+}
+
 sg_image & TextureResource::getImage()
 {
 	return m_imgBuffer;

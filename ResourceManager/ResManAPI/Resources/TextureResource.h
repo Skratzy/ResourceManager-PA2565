@@ -17,7 +17,7 @@ private:
 public:
 	// Constructor is used to attach image to the resource
 	TextureResource(int width, int height, std::vector<unsigned char> image, const long GUID);
-	~TextureResource() {};
+	~TextureResource();
 
 	sg_image& getImage();
 };
