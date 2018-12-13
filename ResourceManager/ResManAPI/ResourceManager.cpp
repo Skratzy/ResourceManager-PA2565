@@ -8,7 +8,7 @@
 #include <fstream>
 #include <ziplib/zip.h>
 
-
+// Only a single thread will ever run this function
 void ResourceManager::asyncLoadStart()
 {
 	while (m_running) {
@@ -18,17 +18,28 @@ void ResourceManager::asyncLoadStart()
 
 		// Critical region
 		if (m_asyncResJobs.size() > 0) {
+			// Get the GUID for the next resource job
 			long GUID = m_asyncJobQueue.front();
 			m_asyncJobQueue.pop();
+			// Find the job
 			auto currJob = m_asyncResJobs.find(GUID);
 			Resource* res = load(currJob->second.filepath);
-			for (auto callback : currJob->second.callbacks) {
-				callback(res);
-				res->refer();
+			{
+				std::unique_lock<std::mutex> critLock(m_asyncLoadMutex);
+				// Runs through all callbacks for the current job
+				for (auto callback : currJob->second.callbacks) {
+					callback(res);
+					// Increase the reference to the resource
+					res->refer();
+				}
+				// Decreases the reference from the resource (the initial load)
+				res->derefer();
+				// Remove the finished job from the map
+				m_asyncResJobs.erase(currJob);
+				critLock.unlock();
 			}
-			res->derefer();
-			m_asyncResJobs.erase(currJob);
 		}
+		lock.unlock();
 	}
 }
 
@@ -166,7 +177,7 @@ void ResourceManager::asyncLoad(const char * path, std::function<void(Resource*)
 	long hashedPath = m_pathHasher(path);
 	Resource* res = nullptr;
 
-	// Check if the resource already exists in the system
+	// Check if the resource already exists in the system (avoid getting locked in a mutex)
 	auto it = m_resources.find(hashedPath);
 	if (it != m_resources.end()) {
 		// Found the resource
@@ -179,15 +190,16 @@ void ResourceManager::asyncLoad(const char * path, std::function<void(Resource*)
 		// Critical region
 		std::lock_guard<std::mutex> lock(m_asyncLoadMutex);
 
-		// Check if the resource already exists in the system
-		/*it = m_resources.find(hashedPath);
+		// Check if the resource already exists in the system (Avoid assigning the job if it was done
+		//	during the lock)
+		it = m_resources.find(hashedPath);
 		if (it != m_resources.end()) {
 			// Found the resource
 			res = it->second;
 			res->refer();
 			callback(res);
 			return;
-		}*/
+		}
 		
 		// Find out if the job is already queued
 		auto asyncJobsIt = m_asyncResJobs.find(hashedPath);

@@ -31,15 +31,15 @@ std::string OBJReformatter::load(const std::string& filePath)
 	}
 	catch (const std::exception& e)
 	{
-		std::cout << (e.what(), 1);
+		std::cerr << (e.what()) << std::endl;
 	}
 
 	if (attrib.vertices.size() < 1)
-		std::cout << ("Couldn't find any vertex positions in " + std::string(filePath), 1);
+		std::cerr << ("Couldn't find any vertex positions in " + std::string(filePath)) << std::endl;
 	if (attrib.normals.size() < 1)
-		std::cout << ("Couldn't find any vertex normals in " + std::string(filePath), 1);
+		std::cerr << ("Couldn't find any vertex normals in " + std::string(filePath)) << std::endl;
 	if (attrib.texcoords.size() < 1)
-		std::cout << ("Couldn't find any vertex UVs in " + std::string(filePath), 1);
+		std::cerr << ("Couldn't find any vertex UVs in " + std::string(filePath)) << std::endl;
 	/// -----------------------------------------------------------------------------------
 
 	// STEP 2: GO THROUGH THE DATA
