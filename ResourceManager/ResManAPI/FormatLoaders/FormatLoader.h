@@ -12,9 +12,15 @@ class FormatLoader
 protected:
 	std::vector<std::string> m_supportedExtensions;
 
+protected:
+	std::string extractFile(const char* path, size_t check);
+	void* readFile(const char* path, size_t check);
+
 public:
 	virtual ~FormatLoader() {}
 	virtual Resource* load(const char* path, const long GUID) = 0;
+
+
 
 	bool extensionSupported(const std::string& extension) {
 		for (auto ext : m_supportedExtensions) {
