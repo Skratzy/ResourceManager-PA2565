@@ -20,10 +20,6 @@ std::string FormatLoader::extractFile(const char* path, size_t check) {
 		RM_DEBUG_MESSAGE("Error while trying to open zip archive: " + zipLocation, 1);
 
 
-	zip_error_t* zipError = new zip_error_t;
-	zip_error_init(zipError);
-
-
 	int index = zip_name_locate(archive, pathInPackage.c_str(), 0);
 	zip_stat_t stat;
 	zip_stat_index(archive, index, 0, &stat);

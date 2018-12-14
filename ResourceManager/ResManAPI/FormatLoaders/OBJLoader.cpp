@@ -77,8 +77,8 @@ Resource* OBJLoader::load(const char* path, const long GUID)
 				verticesData.push_back(attrib.normals[3 * index.normal_index + 2]);
 			}
 			else {
-				verticesData.push_back(-1.f);
-				verticesData.push_back(-1.f);
+				verticesData.push_back(1.f);
+				verticesData.push_back(1.f);
 				verticesData.push_back(0.f);
 			}
 

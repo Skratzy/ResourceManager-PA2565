@@ -275,6 +275,7 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 	/*
 	*	Thread-safety
 	*/
+	// Test thread-safety on normal loading
 	std::atomic_int aInt = 0;
 	int numPtrs = 2;
 	std::vector<Resource*> resPtrs(numPtrs);
@@ -287,10 +288,38 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 	t2.join();
 	models.push_back(RM_NEW(Model));
 	models.back()->setMeshNoDeref(resPtrs[0]);
-	models.back()->getTransform().translate(HMM_Vec3(0.f, 0.f, -5.f));
+	models.back()->getTransform().translate(HMM_Vec3(0.f, 0.f, -15.f));
 	models.push_back(RM_NEW(Model));
 	models.back()->setMeshNoDeref(resPtrs[1]);
-	models.back()->getTransform().translate(HMM_Vec3(0.f, -3.f, -5.f));
+	models.back()->getTransform().translate(HMM_Vec3(0.f, -3.f, -15.f));
+
+	// Test thread-safety on async loading
+	auto threadAsyncFunc = [&rm, &aInt, &resPtrs](const char* path, std::function<void(Resource*)> callback) {
+		rm.asyncLoad(path, callback);
+	};
+	models.push_back(RM_NEW(Model));
+	models.back()->getTransform().translate(HMM_Vec3(2.f, 0.f, -15.f));
+	std::thread t3(threadAsyncFunc, "Assets/meshes/cow-normals-test.obj", std::bind(&Model::setMeshNoDeref, models.back(), std::placeholders::_1));
+	models.push_back(RM_NEW(Model));
+	models.back()->getTransform().translate(HMM_Vec3(-2.f, 0.f, -15.f));
+	std::thread t4(threadAsyncFunc, "Assets/meshes/cow-normals.obj", std::bind(&Model::setMeshNoDeref, models.back(), std::placeholders::_1));
+	t3.join();
+	t4.join();
+
+
+	// Append a bunch of async asset loading jobs
+	models.push_back(RM_NEW(Model));
+	models.back()->getTransform().translate(HMM_Vec3(2.f, -3.f, -10.f));
+	rm.asyncLoad("Assets/meshes/cow-nonormals.obj", std::bind(&Model::setMeshNoDeref, models.back(), std::placeholders::_1));
+	rm.asyncLoad("Assets/textures/testImage.png", std::bind(&Model::setTexNoDeref, models.back(), std::placeholders::_1));
+	models.push_back(RM_NEW(Model));
+	models.back()->getTransform().translate(HMM_Vec3(-2.f, -3.f, -10.f));
+	rm.asyncLoad("Assets/meshes/cow-nonormals.obj", std::bind(&Model::setMeshNoDeref, models.back(), std::placeholders::_1));
+	rm.asyncLoad("Assets/textures/testImage1.jpg", std::bind(&Model::setTexNoDeref, models.back(), std::placeholders::_1));
+	models.push_back(RM_NEW(Model));
+	models.back()->getTransform().translate(HMM_Vec3(2.f, -7.f, -10.f));
+	rm.asyncLoad("Assets/meshes/cow-normals.obj", std::bind(&Model::setMeshNoDeref, models.back(), std::placeholders::_1));
+	rm.asyncLoad("Assets/textures/testImage.png", std::bind(&Model::setTexNoDeref, models.back(), std::placeholders::_1));
 
 	/*
 		End of testcases
