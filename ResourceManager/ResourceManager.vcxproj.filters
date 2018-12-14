@@ -42,9 +42,6 @@
     <ClCompile Include="Sokol\d3d11entry.c">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="texcube-d3d11.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Sokol\Objects\Transform.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -82,6 +79,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="ResManAPI\FormatLoaders\RMTextureLoader.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ResManMain.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

@@ -159,7 +159,7 @@
     <ClCompile Include="ResManAPI\FormatLoaders\RMTextureLoader.cpp" />
     <ClCompile Include="Sokol\d3d11entry.c" />
     <ClCompile Include="Sokol\Objects\Model.cpp" />
-    <ClCompile Include="texcube-d3d11.cpp" />
+    <ClCompile Include="ResManMain.cpp" />
     <ClCompile Include="Sokol\Objects\Transform.cpp" />
   </ItemGroup>
   <ItemGroup>
