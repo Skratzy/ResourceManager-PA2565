@@ -4,8 +4,6 @@
 #include "LodePNG.h"
 #include <iostream>
 #include <sstream>
-#include "TextureResource.h"
-#include "ziplib/zip.h"
 
 our::string our::convert(unsigned int data) {
 	return our::string((unsigned char*)(std::to_string(data).c_str()));

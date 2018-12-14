@@ -1,7 +1,5 @@
 #include "JPGLoader.h"
-#include "TextureResource.h"
 #include <iostream>
-#include <ziplib/zip.h>
 
 #define cimg_use_jpeg
 #include "CImg.h"

@@ -18,7 +18,6 @@ public:
 	~OBJReformatter() {};
 
 	std::string load(const std::string& filePath);
-	void write(our::string &data) { std::cout << "WRITING!"; };
 };
 
 #endif

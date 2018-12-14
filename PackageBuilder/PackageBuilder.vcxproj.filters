@@ -36,16 +36,10 @@
     <ClCompile Include="LodePNG.cpp">
       <Filter>Source Files\Libs</Filter>
     </ClCompile>
-    <ClCompile Include="OBJLoader.cpp">
-      <Filter>Source Files\Loaders</Filter>
-    </ClCompile>
     <ClCompile Include="PNGLoader.cpp">
       <Filter>Source Files\Loaders</Filter>
     </ClCompile>
     <ClCompile Include="JPGLoader.cpp">
-      <Filter>Source Files\Loaders</Filter>
-    </ClCompile>
-    <ClCompile Include="FormatLoader.cpp">
       <Filter>Source Files\Loaders</Filter>
     </ClCompile>
     <ClCompile Include="OBJReformatter.cpp">
@@ -56,26 +50,11 @@
     <ClInclude Include="LodePNG.h">
       <Filter>Header Files\Libs</Filter>
     </ClInclude>
-    <ClInclude Include="OBJ_Loader.h">
-      <Filter>Header Files\Libs</Filter>
-    </ClInclude>
-    <ClInclude Include="OBJLoader.h">
-      <Filter>Header Files\Loaders</Filter>
-    </ClInclude>
     <ClInclude Include="PNGLoader.h">
       <Filter>Header Files\Loaders</Filter>
     </ClInclude>
     <ClInclude Include="JPGLoader.h">
       <Filter>Header Files\Loaders</Filter>
-    </ClInclude>
-    <ClInclude Include="MyMesh.h">
-      <Filter>Header Files\Resources</Filter>
-    </ClInclude>
-    <ClInclude Include="Resource.h">
-      <Filter>Header Files\Resources</Filter>
-    </ClInclude>
-    <ClInclude Include="TextureResource.h">
-      <Filter>Header Files\Resources</Filter>
     </ClInclude>
     <ClInclude Include="CImg.h">
       <Filter>Header Files\Libs</Filter>

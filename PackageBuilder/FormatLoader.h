@@ -32,8 +32,6 @@ public:
 		return false;
 	}
 
-	void write(our::string &data, std::string zippedName, zip* archive);
-
 };
 
 #endif //_RM_FORMAT_LOADER_
