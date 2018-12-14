@@ -57,12 +57,18 @@ ResourceManager::ResourceManager()
 
 ResourceManager::~ResourceManager()
 {
+}
+
+void ResourceManager::cleanup()
+{
 	m_running = false;
 	m_cond.notify_all();
 	for (auto FL : m_formatLoaders)
 		RM_DELETE(FL);
-	for (auto RES : m_resources)
-		RM_DELETE(RES.second);
+	for (auto RES : m_resources) {
+		RES.second->~Resource();
+		RM_FREE(RES.second);
+	}
 	m_asyncLoadThread.join();
 }
 

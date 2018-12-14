@@ -356,6 +356,7 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 		::operator delete(m);
 	}
 
+	rm.cleanup();
 	sg_shutdown();
 	d3d11_shutdown();
 	return 0;

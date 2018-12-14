@@ -58,6 +58,7 @@ public:
 
 	ResourceManager();
 	~ResourceManager();
+	void cleanup();
 
 	void init(const unsigned int capacity);
 
