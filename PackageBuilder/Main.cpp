@@ -117,8 +117,6 @@ int main(int argc, char* argv[]) {
 	loaders.push_back(new JPGLoader);
 
 	// Origin path and target path
-	//path origin = path("../ResourceManager/testAssets");
-	//path target = path("../Release/AssetPackage");
 	path origin = path(argv[1]);
 	path target = path(argv[2]);
 
