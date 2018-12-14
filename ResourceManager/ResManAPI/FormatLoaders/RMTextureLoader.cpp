@@ -138,7 +138,8 @@ Resource * RMTextureLoader::load(const char * path, const long GUID)
 		std::stoi(width),	// int std::string_to_int(string)
 		std::stoi(height),	//
 		imageData,
-		GUID
+		GUID,
+		path
 	);
 	res->setSize(size);
 	

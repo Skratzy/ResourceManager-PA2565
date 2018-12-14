@@ -125,7 +125,7 @@ Resource * ResourceManager::load(const char* path)
 						RM_DEBUG_MESSAGE(("ResourceManager::load() - Memory usage exceeds the memory limit. (" + std::to_string(m_memUsage / (1024)) + "KB / " + std::to_string(m_capacity / (1024)) + "KB) (Usage / Capacity)"), 0);
 						RM_DEBUG_MESSAGE("Resource in memory:", 0);
 						for (auto res : m_resources)
-							RM_DEBUG_MESSAGE("Resource GUID: " + std::to_string(res.second->getGUID()) + " size: " + std::to_string(res.second->getSize()), 0);
+							RM_DEBUG_MESSAGE("Resource: " + std::string(res.second->getPath()) + " GUID: " + std::to_string(res.second->getGUID()) + " size: " + std::to_string(res.second->getSize()), 0);
 #endif
 					}
 					// Increase the reference count of the resource

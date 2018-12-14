@@ -95,7 +95,7 @@ Resource* OBJLoader::load(const char* path, const long GUID)
 	}
 
 	unsigned int size = sizeof(MeshResource) + verticesData.size() * sizeof(float) + indices.size() * sizeof(unsigned int);
-	MeshResource* meshToBeReturned = new (RM_MALLOC(size)) MeshResource(verticesData, indices, GUID);
+	MeshResource* meshToBeReturned = new (RM_MALLOC(size)) MeshResource(verticesData, indices, GUID, path);
 	meshToBeReturned->setSize(size);
 	/// ----------------------------------------------------
 

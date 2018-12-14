@@ -1,7 +1,7 @@
 #include "TextureResource.h"
 
-TextureResource::TextureResource(int width, int height, std::vector<unsigned char> image, const long GUID)
-	: Resource(GUID)
+TextureResource::TextureResource(int width, int height, std::vector<unsigned char> image, const long GUID, const char* path)
+	: Resource(GUID, path)
 {
 	sg_image_desc sgid{ 0 };
 	sg_image_content sgic{ 0 };

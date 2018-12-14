@@ -5,12 +5,13 @@ class Resource
 {
 private:
 	const long m_GUID;
+	const char* m_path;
 	unsigned int m_refCount;
 	unsigned int m_size;	// Initialize at inheritors constructor!
 
 public:
-	Resource(const long GUID)
-		: m_GUID(GUID) {
+	Resource(const long GUID, const char* path)
+		: m_GUID(GUID), m_path(path) {
 		m_size = 0;
 		m_refCount = 0;
 	}
@@ -18,6 +19,10 @@ public:
 
 	const long getGUID() const {
 		return m_GUID;
+	}
+
+	const char* getPath() const {
+		return m_path;
 	}
 
 	unsigned int refer() {

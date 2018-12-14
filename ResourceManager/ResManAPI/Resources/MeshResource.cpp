@@ -1,7 +1,7 @@
 #include "MeshResource.h"
 
-MeshResource::MeshResource(std::vector<float>& vertices, std::vector<unsigned int>& indices, const long GUID)
-	: Resource(GUID)
+MeshResource::MeshResource(std::vector<float>& vertices, std::vector<unsigned int>& indices, const long GUID, const char* path)
+	: Resource(GUID, path)
 {
 	// Build vertex buffer
 	sg_buffer_desc sgVbd{ 0 };

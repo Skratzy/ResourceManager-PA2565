@@ -46,7 +46,7 @@ Resource * JPGLoader::load(const char* path, const long GUID)
 
 		unsigned int size = sizeof(TextureResource) + sizeof(unsigned int) * image.size();
 		// Attach the formatted image to a textureresource
-		resource = new (RM_MALLOC(size)) TextureResource(width, height, image, GUID);
+		resource = new (RM_MALLOC(size)) TextureResource(width, height, image, GUID, path);
 		resource->setSize(size);
 	}
 

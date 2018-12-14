@@ -26,7 +26,7 @@ Resource* PNGLoader::load(const char* path, const long GUID)
 	}
 	else {
 		unsigned int size = sizeof(TextureResource) + sizeof(unsigned int) * image.size();
-		resource = new (RM_MALLOC(size)) TextureResource(width, height, image, GUID);
+		resource = new (RM_MALLOC(size)) TextureResource(width, height, image, GUID, path);
 		resource->setSize(size);
 	}
 	if (loadZipped) {
