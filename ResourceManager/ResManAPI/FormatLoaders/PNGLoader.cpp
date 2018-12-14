@@ -4,6 +4,7 @@
 #include "LodePNG.h"
 #include <experimental/filesystem>
 
+// asdfasdfasdfd
 Resource* PNGLoader::load(const char* path, const long GUID)
 {
 	std::vector<unsigned char> image;

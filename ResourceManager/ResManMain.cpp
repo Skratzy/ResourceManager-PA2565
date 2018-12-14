@@ -37,13 +37,11 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 	_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
 
 	// Open a debug console window if running in debug mode
-//#ifdef _DEBUG
 	AllocConsole();
 	FILE* a;
 	freopen_s(&a, "CONIN$", "r", stdin);
 	freopen_s(&a, "CONOUT$", "w", stdout);
 	freopen_s(&a, "CONOUT$", "w", stderr);
-//#endif
 
 	/* setup d3d11 app wrapper and sokol_gfx */
     const int msaa_samples = 4;
@@ -113,8 +111,6 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 
 	/* default pass action (clear to gray) */
 	sg_pass_action pass_action = { 0 };
-	//sg_color_attachment_action sgcaa{ SG_ACTION_CLEAR, 0.f };
-	//pass_action.colors[0] = sgcaa;
 
     /* view-projection matrix */
     hmm_mat4 proj = HMM_Perspective(60.0f, static_cast<float>(width)/static_cast<float>(height), 0.01f, 1000.0f);
@@ -144,18 +140,6 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 
 	Transform sunDir;
 	std::vector<Model*> models;
-	/*for (int i = 0; i < 2; i++) {
-		models.push_back(RM_NEW(Model));
-		models.back()->getTransform().translate(HMM_Vec3(0.f, -3.5f + float(i) / 2.5f, -3.f - float(i) * 3.f));
-	}*/
-
-	//Model* house = RM_NEW(Model);
-	//rm.asyncLoad("Assets/teapot.obj", std::bind(&Model::setMeshNoDeref, house, std::placeholders::_1));
-	//rm.asyncLoad("Assets/testImage1.jpg", std::bind(&Model::setTexNoDeref, house, std::placeholders::_1));
-	//models.push_back(house);
-	//house->getTransform().translate(HMM_Vec3(0.f, -10.f, -20.f));
-	//house->getTransform().setScale(HMM_Vec3(10.f, 10.f, 10.f));
-	
 	/*
 		Testcases
 	*/
@@ -334,7 +318,6 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 		hmm_mat4 view = HMM_LookAt(HMM_Vec3(camEye.X, camEye.Y, camEye.Z), camCenter, camUp);
 		hmm_mat4 view_proj = HMM_MultiplyMat4(proj, view);
 		vsParams.vp = view_proj;
-		//camEye = HMM_MultiplyMat4ByVec4(HMM_Rotate(1.f, camUp), camEye);
 
         /* draw frame */
         sg_begin_default_pass(&pass_action, d3d11_width(), d3d11_height());
@@ -350,7 +333,6 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 		switchModels = false;
 		float index = 0.1f;
 		for (auto model : models) {
-			//model->getTransform().rotateAroundY(5.f);
 			model->draw(drawState, vsParams);
 			if (switchModels) {
 				auto rndVal = std::rand() % 100;

@@ -142,7 +142,6 @@ Resource * RMTextureLoader::load(const char * path, const long GUID)
 		path
 	);
 	res->setSize(size);
-	
-	// Return it out!
+
 	return res;
 }

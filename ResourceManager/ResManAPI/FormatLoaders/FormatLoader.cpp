@@ -46,11 +46,9 @@ void* FormatLoader::readFile(const char* path, size_t check) {
 	// substrings for parts of the path
 	std::experimental::filesystem::path filePath(path);
 	std::string zipPath = filePath.string();
-	// Convert from double back-slash to forward-slash (damnit windows...)
-	//std::replace(zipPath.begin(), zipPath.end(), '\\', '/');
 	std::string zipLocation = zipPath.substr(0, check + 4);
 	std::string pathInPackage = zipPath.substr(check + 5, zipPath.length());
-	// Opening and extracting asset from package
+	// Opening and reading asset from package
 	zip* archive = zip_open(zipLocation.c_str(), 0, 0);
 	if (!archive)
 		RM_DEBUG_MESSAGE("Error while trying to open zip archive: " + zipLocation, 1);

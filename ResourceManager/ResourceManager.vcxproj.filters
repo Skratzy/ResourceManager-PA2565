@@ -57,9 +57,6 @@
     <ClCompile Include="ResManAPI\FormatLoaders\PNGLoader.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="ResManAPI\Main.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="ResManAPI\ResourceManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>

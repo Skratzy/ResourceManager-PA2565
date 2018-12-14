@@ -152,7 +152,6 @@
     <ClCompile Include="ResManAPI\FormatLoaders\OBJLoader.cpp" />
     <ClCompile Include="ResManAPI\FormatLoaders\PNGLoader.cpp" />
     <ClCompile Include="ResManAPI\FormatLoaders\RMMeshLoader.cpp" />
-    <ClCompile Include="ResManAPI\Main.cpp" />
     <ClCompile Include="ResManAPI\ResourceManager.cpp" />
     <ClCompile Include="ResManAPI\Resources\MeshResource.cpp" />
     <ClCompile Include="ResManAPI\Resources\TextureResource.cpp" />

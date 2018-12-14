@@ -69,7 +69,6 @@ public:
 
 	void registerFormatLoader(FormatLoader* formatLoader);
 
-	//void incrementReference(long key); SHOULDN'T BE NEEDED (done when loading already existing)
 };
 
 #endif //_RM_RESOURCE_MANAGER_
