@@ -1,4 +1,1 @@
-PackageBuilder.exe srcFolder targetZip
-PackageBuilder.exe srcFolder target2
-PackageBuilder.exe srcFolder target3
-PackageBuilder.exe srcFolder target4
+PackageBuilder.exe Assets AssetsPackage

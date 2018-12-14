@@ -32,7 +32,7 @@ vs_out main(vs_in inp)
 
     float4 color = float4(r, g, b, 1.0f);
     float3 normal = mul(inp.normal, m).xyz;
-    float lightIntensity = saturate(dot(normalize(normal), normalize(sunDir.xyz)));
+    float lightIntensity = saturate(dot(normalize(normal), normalize(-sunDir.xyz)));
 
     outp.color = saturate(color * lightIntensity);
 	return outp;

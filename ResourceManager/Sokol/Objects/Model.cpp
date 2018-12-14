@@ -49,7 +49,6 @@ void Model::setMesh(MeshResource * mesh)
 }
 
 void Model::setMeshNoDeref(Resource* mesh) {
-	RM_DEBUG_MESSAGE("Got a callback!", 0);
 	m_mesh = reinterpret_cast<MeshResource*>(mesh);
 	m_vertexCount = m_mesh->getVertexCount();
 	m_indexCount = m_mesh->getIndexCount();

@@ -15,14 +15,20 @@ void zipDirectory(zip* archive, path path) {
 	if (is_directory(path)) {
 		directory_iterator end{};
 		for (directory_iterator iter(path); iter != end; ++iter) {
-			zipDirectory(archive, iter->path());
+			std::string zipPath = iter->path().string();
+			// Convert from double back-slash to forward-slash (damnit windows...)
+			std::replace(zipPath.begin(), zipPath.end(), '\\', '/');
+			zipDirectory(archive, zipPath);
 		}
 		zip_dir_add(archive, path.string().c_str(), 0);
 	}
 	else if(is_regular_file(path))
 	{
-		zip_source* s = zip_source_file(archive, path.string().c_str(), 0, 0);
-		zip_file_add(archive, path.string().c_str(), s, 0);
+		std::string filePath = path.string();
+		// Convert from double back-slash to forward-slash (damnit windows...)
+		std::replace(filePath.begin(), filePath.end(), '\\', '/');
+		zip_source* s = zip_source_file(archive, filePath.c_str(), 0, 0);
+		zip_file_add(archive, filePath.c_str(), s, 0);
 	}
 }
 
@@ -103,7 +109,6 @@ void createPackage(path originPath, path targetPath, std::vector<FormatLoader*> 
 int main(int argc, char* argv[]) {
 	_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
 	namespace fs = std::experimental::filesystem;
-
 
 	// Adding loaders
 	std::vector<FormatLoader*> loaders;

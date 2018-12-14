@@ -10,7 +10,6 @@ class MeshResource : public Resource
 private:
 	sg_buffer m_vertexBuffer;
 	sg_buffer m_indexBuffer;
-	bool m_isIndexed;
 	unsigned int m_vertexCount;
 	unsigned int m_indexCount;
 
@@ -23,10 +22,8 @@ public:
 	const sg_buffer& getVertexBuffer() const;
 	const sg_buffer& getIndexBuffer() const;
 
-	const bool getIsIndexed() const;
-
-	const unsigned int getVertexCount();
-	const unsigned int getIndexCount();
+	const unsigned int getVertexCount() const;
+	const unsigned int getIndexCount() const;
 };
 
 #endif
