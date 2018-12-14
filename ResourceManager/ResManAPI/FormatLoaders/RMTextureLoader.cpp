@@ -1,9 +1,9 @@
 #include "RMTextureLoader.h"
 #include <fstream>
 #include <sstream>
-#include "../ResourceManager/ResManAPI/Resources/TextureResource.h"
-#include "../ResourceManager/ResManAPI/Resources/Resource.h"
-#include "Defines.h"
+#include "../Resources/TextureResource.h"
+#include "../Resources/Resource.h"
+#include "../../Defines.h"
 
 RMTextureLoader::RMTextureLoader()
 {
@@ -33,7 +33,7 @@ Resource * RMTextureLoader::load(const char * path, const long GUID)
 
 	string colourData[4];
 	enum COLOR { RED, BLUE, GREEN, ALPHA, COUNT };
-	int lineIndex = 0;
+	unsigned int lineIndex = 0;
 
 	// Start the loading process with the correct filepath
 	if (!loadZipped) {
@@ -51,7 +51,6 @@ Resource * RMTextureLoader::load(const char * path, const long GUID)
 			// Per color, read the color until a comma is met, last element should be a newline
 			for (int currentColor = COLOR::RED; currentColor < COLOR::COUNT; currentColor++) {
 				// Fetch all the data until a newline is met
-				unsigned char character;
 
 				for (; lineIndex < lineData.size();) {
 					string color;

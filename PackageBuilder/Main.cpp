@@ -124,7 +124,7 @@ int main(int argc, char* argv[]) {
 
 	createPackage(origin, target, loaders);
 
-	for (int i = 0; i < loaders.size(); i++) {
+	for (unsigned int i = 0; i < loaders.size(); i++) {
 		delete loaders.at(i);
 	}
 

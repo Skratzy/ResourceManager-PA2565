@@ -115,11 +115,18 @@ Resource * ResourceManager::load(const char* path)
 				// Check if the format loader supports the extension
 				if (FL->extensionSupported(ext)) {
 					// Load the resource and return it
-						res = FL->load(path, hashedPath);
+					res = FL->load(path, hashedPath);
 					// Update memory usage
 					m_memUsage += res->getSize();
 					if (m_memUsage > m_capacity) {
+#ifdef _DEBUG
 						RM_DEBUG_MESSAGE(("ResourceManager::load() - Memory usage exceeds the memory limit. (" + std::to_string(m_memUsage / (1024)) + "KB / " + std::to_string(m_capacity / (1024)) + "KB) (Usage / Capacity)"), 0);
+#else
+						RM_DEBUG_MESSAGE(("ResourceManager::load() - Memory usage exceeds the memory limit. (" + std::to_string(m_memUsage / (1024)) + "KB / " + std::to_string(m_capacity / (1024)) + "KB) (Usage / Capacity)"), 0);
+						RM_DEBUG_MESSAGE("Resource in memory:", 0);
+						for (auto res : m_resources)
+							RM_DEBUG_MESSAGE("Resource GUID: " + std::to_string(res.second->getGUID()) + " size: " + std::to_string(res.second->getSize()), 0);
+#endif
 					}
 					// Increase the reference count of the resource
 					res->refer();

@@ -20,10 +20,10 @@ std::string FormatLoader::extractFile(const char* path, size_t check) {
 		RM_DEBUG_MESSAGE("Error while trying to open zip archive: " + zipLocation, 1);
 
 
-	int index = zip_name_locate(archive, pathInPackage.c_str(), 0);
+	auto index = zip_name_locate(archive, pathInPackage.c_str(), 0);
 	zip_stat_t stat;
 	zip_stat_index(archive, index, 0, &stat);
-	void* buffer = malloc(stat.size);
+	void* buffer = malloc(static_cast<size_t>(stat.size));
 	zip_file* file = zip_fopen(archive, pathInPackage.c_str(), 0);
 	if (!file)
 		RM_DEBUG_MESSAGE("Libzip error: (" + std::string(zip_strerror(archive)) + ") on path: (" + pathInPackage + ").", 1);
@@ -55,10 +55,10 @@ void* FormatLoader::readFile(const char* path, size_t check) {
 	if (!archive)
 		RM_DEBUG_MESSAGE("Error while trying to open zip archive: " + zipLocation, 1);
 
-	int index = zip_name_locate(archive, pathInPackage.c_str(), 0);
+	auto index = zip_name_locate(archive, pathInPackage.c_str(), 0);
 	zip_stat_t stat;
 	zip_stat_index(archive, index, 0, &stat);
-	void* buffer = malloc(stat.size);
+	void* buffer = malloc(static_cast<size_t>(stat.size));
 	zip_file* file = zip_fopen(archive, pathInPackage.c_str(), 0);
 	if (!file)
 		RM_DEBUG_MESSAGE("Libzip error: (" + std::string(zip_strerror(archive)) + ") on path: (" + pathInPackage + ").", 1);

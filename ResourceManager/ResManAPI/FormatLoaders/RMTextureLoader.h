@@ -1,7 +1,7 @@
 #ifndef _RM_TEXTURE_LOADER_H
 #define _RM_TEXTURE_LOADER_H
 
-#include "ResManAPI/FormatLoaders/FormatLoader.h"
+#include "FormatLoader.h"
 
 class Resource;
 

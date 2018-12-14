@@ -26,7 +26,7 @@ extern "C" {
 #include "ResManAPI/FormatLoaders/JPGLoader.h"
 #include "ResManAPI/FormatLoaders/OBJLoader.h"
 #include "ResManAPI/FormatLoaders/RMMeshLoader.h"
-#include "RMTextureLoader.h"
+#include "ResManAPI/FormatLoaders/RMTextureLoader.h"
 #include "Sokol/Objects/Model.h"
 
 
@@ -129,7 +129,7 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 
 	// Initialize the resource manager and register the format loaders to it
 	ResourceManager &rm = ResourceManager::getInstance();
-	rm.init(1024 * 5000000);
+	rm.init(1024 * 2000);
 	rm.registerFormatLoader(RM_NEW(PNGLoader));
 	rm.registerFormatLoader(RM_NEW(JPGLoader));
 	rm.registerFormatLoader(RM_NEW(OBJLoader));

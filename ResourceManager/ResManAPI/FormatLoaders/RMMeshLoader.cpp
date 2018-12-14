@@ -86,7 +86,10 @@ Resource* RMMeshLoader::load(const char* path, const long GUID)
 		free(ptr);
 	}
 
-	MeshResource* meshToBeReturned = new (RM_MALLOC(sizeof(MeshResource))) MeshResource(verticesData, indices, GUID);
+
+	unsigned int size = sizeof(MeshResource) + verticesData.size() * sizeof(float) + indices.size() * sizeof(unsigned int);
+	MeshResource* meshToBeReturned = new (RM_MALLOC(size)) MeshResource(verticesData, indices, GUID);
+	meshToBeReturned->setSize(size);
 
 	/// ----------------------------------------------------
 	return meshToBeReturned;
