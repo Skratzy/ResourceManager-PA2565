@@ -22,7 +22,11 @@ freely, subject to the following restrictions:
 
 Libraries used
 libzip - Copyright (C) 1999-2018 Dieter Baron and Thomas Klausner
+
 freeglut - http://freeglut.sourceforge.net/ 
+
 libjpeg - http://libjpeg.sourceforge.net/
+
 lodepng - Copyright (c) 2005-2018 Lode Vandevenne
+
 cimg - http://cimg.eu/
