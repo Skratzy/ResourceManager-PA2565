@@ -20,7 +20,9 @@ freely, subject to the following restrictions:
     3. This notice may not be removed or altered from any source
     distribution.
 
+
 Libraries used
+
 libzip - Copyright (C) 1999-2018 Dieter Baron and Thomas Klausner
 
 freeglut - http://freeglut.sourceforge.net/ 
